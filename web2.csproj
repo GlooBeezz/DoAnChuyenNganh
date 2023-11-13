@@ -122,7 +122,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
+    <Compile Include="Areas\Student\Controllers\HomeStudentController.cs" />
     <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
+    <Compile Include="Areas\Teacher\Controllers\HomeTeacherController.cs" />
     <Compile Include="Areas\Teacher\TeacherAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -204,13 +206,14 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Student\Controllers\" />
     <Folder Include="Areas\Student\Data\" />
+    <Folder Include="Areas\Student\Views\HomeStudent\" />
     <Folder Include="Areas\Student\Views\Shared\" />
-    <Folder Include="Areas\Teacher\Controllers\" />
     <Folder Include="Areas\Teacher\Data\" />
+    <Folder Include="Areas\Teacher\Views\HomeTeacher\" />
     <Folder Include="Areas\Teacher\Views\Shared\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Default\" />
     <Folder Include="Views\Student\" />
   </ItemGroup>
   <ItemGroup>
