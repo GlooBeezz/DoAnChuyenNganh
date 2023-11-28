@@ -133,6 +133,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Scripts\chart.js" />
     <Content Include="Content\adminSite.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -169,6 +170,7 @@
     <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Teacher.cshtml" />
     <Content Include="Areas\Student\Views\web.config" />
     <Content Include="Areas\Teacher\Views\web.config" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Classes.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -204,7 +206,7 @@
     <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\App_LocalResources\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Student\Data\" />
     <Folder Include="Areas\Student\Views\HomeStudent\" />
@@ -214,7 +216,6 @@
     <Folder Include="Areas\Teacher\Views\Shared\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Default\" />
-    <Folder Include="Views\Student\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
