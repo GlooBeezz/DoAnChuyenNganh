@@ -1,9 +1,149 @@
-﻿
+﻿@model List<web2.Models.HocVien>
 @{
     ViewBag.Title = "Quản lý học viên";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
- 
+
+
 }
 
-<h2>Manage_Student</h2>
+<div class="container">
+    <div class="row">
+        <div class="col display-5" style="text-align:center">Quản lý học viên</div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-sm-12 col-md-6 col-xl-6 ">
+            <p>Chọn lớp:</p>
+            <select class="form-select mt-3" id="selhv" name="sellisthv">
+                <option>Lop 1</option>
+                <option>Lop 2</option>
+                <option>Lop 3</option>
+                <option>Lop 4</option>
+            </select>
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-6 ">
+            <p>Nhập mã học viên:</p>
+            <div class="input-group">
+                <span class="input-group-text">Mã học viên</span>
+                <input type="text" class="form-control" placeholder="ex: hv01,..">
+                <button class="btn btn-success" type="submit">Tìm</button>
+            </div>
+        </div>
+    </div>
+    <Hr />
+
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+            <label for="" class="form-label">Mã học viên:</label>
+            <input type="text" class="form-control" id="mahv" placeholder="mã">
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+            <label for="" class="form-label">Tên học viên:</label>
+            <input type="text" class="form-control" id="tenhv" placeholder="tên">
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+            <label for="" class="form-label">Ngày sinh:</label>
+            <input type="text" class="form-control" id="ngaysinh" placeholder="Ngày sinh">
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+            <label for="" class="form-label">Email:</label>
+            <input type="text" class="form-control" id="email" placeholder="mail">
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+            <label for="" class="form-label">Địa chỉ:</label>
+            <input type="text" class="form-control" id="diachi" placeholder="địa chỉ">
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+            <label for="" class="form-label">Tài khoản:</label>
+            <input type="text" class="form-control" id="tk" placeholder="tk">
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+            <label for="" class="form-label">Mật khẩu:</label>
+            <input type="text" class="form-control" id="mk" placeholder="mk">
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+            <label>Phân quyền:</label>
+            <select class="form-select mt-2" id="selphanquyen" name="selphanquyen">
+                <option>Giáo viên</option>
+                <option>Học viên</option>
+                <option>Nhà quản trị</option>
+            </select>
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+            <label>Các lớp học tham gia:</label>
+            <select class="form-select mt-2" id="sellophv" name="sellophv">
+                <option>Lớp 1</option>
+                <option>Lớp 2</option>
+                <option>Lớp 3</option>
+            </select>
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+            <label for="" class="form-label">Thêm lớp học:</label>
+            <input type="text" class="form-control" id="lop" placeholder="lớp">
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+            <label>Trạng thái học phí:</label>
+            <select class="form-select mt-2" id="selhocphi" name="selhocphi">
+                <option>Đã đóng</option>
+                <option>Chưa đóng</option>
+            </select>
+        </div>
+    </div>
+    <div class="row d-grid gap-2">
+        <button class="btn btn-success" type="button">Lưu</button>
+    </div>
+    <hr />
+    <div class="row">
+        <h3 class="col" style="text-align:center">Bảng kết quả</h3>
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Mã học viên</th>
+                    <th>Họ và tên</th>
+                    <th>Ngày sinh</th>
+                    <th>Số điện thoại</th>
+                    <th>Email</th>
+                    <th>Địa chỉ</th>
+                    <th>Tài khoản</th>
+                    <th>Mật khẩu</th>
+                    <th>Phân quyền</th>
+                    <th>Lớp học tham gia</th>
+                    <th>Tình trạng học phí</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th>@item.Ma_hoc_vien</th>
+                        <th>@item.Ho_va_ten</th>
+                        <th>@item.Ngay_sinh</th>
+                        <th>@item.Sdt</th>
+                        <th>@item.Email</th>
+                        <th>@item.Dia_chi</th>
+                        <th>@item.Tai_khoan</th>
+                        <th>@item.Mat_khau</th>
+                        @if (item.Phan_quyen == true)
+                        {
+                            <th>Học viên</th>
+                        }
+                        else if (item.Phan_quyen == false)
+                        {
+                            <th>Giáo viên</th>
+                        }
+                        <th>@item.Lop_hoc_tham_gia</th>
+                        @if (item.Trang_thai_hoc_phi == true)
+                        {
+                            <th>Đã đóng học phí</th>
+                        }
+                        else {  <th>Chưa đóng học phí</th>}
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
 

@@ -26,6 +26,7 @@ li {
 /* Layout skeleton */
 
 .wrapper {
+    position:relative;
     align-items: stretch;
     display: flex;
     width: 100%;

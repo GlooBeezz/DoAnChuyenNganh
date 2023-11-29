@@ -12,9 +12,9 @@
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper ">
         <!-- Sidebar -->
-        <aside id="sidebar">
+        <aside id="sidebar" style="margin-top:60px;position:fixed;height:78.5%">
             <div class="h-100 bg-primary">
                 <div class="sidebar-logo">
                     <a href="~/Areas/Admin/Views/HomeAdmin/Index.cshtml">Phố thị Music <br /><p>Trung tâm quản lý</p></a>
@@ -103,8 +103,8 @@
             </div>
         </aside>
         <!-- Main Component -->
-        <div class="main">
-            <nav class="navbar navbar-expand px-3 border-bottom bg-primary">
+        <div class="main ">
+            <nav class="navbar navbar-expand px-3 border-bottom bg-primary fixed-top">
                 <!-- Button for sidebar toggle -->
                 <div class="container-fluid">
                     <button class="btn" type="button" data-bs-theme="dark">
@@ -140,7 +140,7 @@
                     </div>
                 </div> 
             </nav>
-            <main class="content px-3 py-2">
+            <main class="content px-3 py-2" style="margin-top:60px; height:100%">
                 <div class="container-fluid">
                     <div class="mb-3">
                         @RenderBody()
