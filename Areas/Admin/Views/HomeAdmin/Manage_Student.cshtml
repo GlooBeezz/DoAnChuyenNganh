@@ -20,86 +20,27 @@
                 <option>Lop 4</option>
             </select>
         </div>
-        <div class="col-sm-12 col-md-6 col-xl-6 ">
+        <div class="col-sm-12 col-md-6 col-xl-6">
             <p>Nhập mã học viên:</p>
-            <div class="input-group">
+            <form class="input-group" method="get" onsubmit="updateLink()">
                 <span class="input-group-text">Mã học viên</span>
-                <input type="text" class="form-control" placeholder="ex: hv01,..">
-                <button class="btn btn-success" type="submit">Tìm</button>
-            </div>
+                <input type="text" class="form-control" id="maHocVienInput" placeholder="ex: hv01,..">
+                <a id="findLink" class="btn btn-success">Tìm</a>
+            </form>
         </div>
     </div>
-    <Hr />
-
-    <div class="row">
-        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-            <label for="" class="form-label">Mã học viên:</label>
-            <input type="text" class="form-control" id="mahv" placeholder="mã">
-        </div>
-        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-            <label for="" class="form-label">Tên học viên:</label>
-            <input type="text" class="form-control" id="tenhv" placeholder="tên">
-        </div>
-        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-            <label for="" class="form-label">Ngày sinh:</label>
-            <input type="text" class="form-control" id="ngaysinh" placeholder="Ngày sinh">
-        </div>
-        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-            <label for="" class="form-label">Email:</label>
-            <input type="text" class="form-control" id="email" placeholder="mail">
-        </div>
-        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-            <label for="" class="form-label">Địa chỉ:</label>
-            <input type="text" class="form-control" id="diachi" placeholder="địa chỉ">
-        </div>
-        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-            <label for="" class="form-label">Tài khoản:</label>
-            <input type="text" class="form-control" id="tk" placeholder="tk">
-        </div>
-        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-            <label for="" class="form-label">Mật khẩu:</label>
-            <input type="text" class="form-control" id="mk" placeholder="mk">
-        </div>
-        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-            <label>Phân quyền:</label>
-            <select class="form-select mt-2" id="selphanquyen" name="selphanquyen">
-                <option>Giáo viên</option>
-                <option>Học viên</option>
-                <option>Nhà quản trị</option>
-            </select>
-        </div>
-        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-            <label>Các lớp học tham gia:</label>
-            <select class="form-select mt-2" id="sellophv" name="sellophv">
-                <option>Lớp 1</option>
-                <option>Lớp 2</option>
-                <option>Lớp 3</option>
-            </select>
-        </div>
-        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-            <label for="" class="form-label">Thêm lớp học:</label>
-            <input type="text" class="form-control" id="lop" placeholder="lớp">
-        </div>
-        <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-            <label>Trạng thái học phí:</label>
-            <select class="form-select mt-2" id="selhocphi" name="selhocphi">
-                <option>Đã đóng</option>
-                <option>Chưa đóng</option>
-            </select>
-        </div>
-    </div>
-    <div class="row d-grid gap-2">
-        <button class="btn btn-success" type="button">Lưu</button>
+    <div class="row d-grid gap-2 mt-4 mb-3">
+        <a >@Html.ActionLink("Thêm học viên mới","Add_Student","HomeAdmin", new {area = "Admin" }, new {@class= "btn btn-success" })</a>
     </div>
     <hr />
     <div class="row">
         <h3 class="col" style="text-align:center">Bảng kết quả</h3>
     </div>
     <div class="row">
-        <table class="table">
-            <thead>
+        <table class="table " style="text-align:center">
+            <thead class="bg-info bg-gradient">
                 <tr>
-                    <th>Mã học viên</th>
+                    <th>Mã</th>
                     <th>Họ và tên</th>
                     <th>Ngày sinh</th>
                     <th>Số điện thoại</th>
@@ -110,35 +51,42 @@
                     <th>Phân quyền</th>
                     <th>Lớp học tham gia</th>
                     <th>Tình trạng học phí</th>
+                    <th colspan="2">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <th>@item.Ma_hoc_vien</th>
-                        <th>@item.Ho_va_ten</th>
-                        <th>@item.Ngay_sinh</th>
-                        <th>@item.Sdt</th>
-                        <th>@item.Email</th>
-                        <th>@item.Dia_chi</th>
-                        <th>@item.Tai_khoan</th>
-                        <th>@item.Mat_khau</th>
+                        <td>@item.Ma_hoc_vien</td>
+                        <td>@item.Ho_va_ten</td>
+                        <td>@item.NgaySinhFormatted</td>
+                        <td>@item.Sdt</td>
+                        <td>@item.Email</td>
+                        <td>@item.Dia_chi</td>
+                        <td>@item.Tai_khoan</td>
+                        <td>@item.Mat_khau</td>
                         @if (item.Phan_quyen == true)
                         {
-                            <th>Học viên</th>
+                            <td>Học viên</td>
                         }
                         else if (item.Phan_quyen == false)
                         {
-                            <th>Giáo viên</th>
+                            <td>Giáo viên</td>
                         }
-                        <th>@item.Lop_hoc_tham_gia</th>
+                        <td>@item.Lop_hoc_tham_gia</td>
                         @if (item.Trang_thai_hoc_phi == true)
                         {
-                            <th>Đã đóng học phí</th>
+                            <td>Đã đóng học phí</td>
                         }
-                        else {  <th>Chưa đóng học phí</th>}
-
+                        else {  <td class="text-danger">Chưa đóng học phí</td>}
+                    <td colspan="2" style="display:inline-flex">
+                        <a>@Html.ActionLink("Sửa", "Edit_Student_Infor", "HomeAdmin", new { area = "Admin", maHocVien = item.Ma_hoc_vien }, new { @class = "btn btn-primary" })</a> 
+                        <form id="form-delete-@item.Ma_hoc_vien" action="@Url.Action("Delete_Student_Infor", "HomeAdmin", new { area = "Admin" })" method="post">
+                            <input type="hidden" name="maHocVien" value="@item.Ma_hoc_vien" />
+                            <button type="submit" class="btn btn-danger">Xoá</button>
+                        </form>
+                    </td>
                     </tr>
                 }
 
@@ -146,4 +94,12 @@
         </table>
     </div>
 </div>
-
+<script>
+    function updateLink() {
+        var maHocVien = document.getElementById("maHocVienInput").value;
+        var url = '@Url.Action("Find_Student", "HomeAdmin", new { area = "Admin", maHocVien = "__maHocVien__" })';
+        url = url.replace("__maHocVien__", maHocVien);
+        document.getElementById("findLink").href = url;
+        return false;
+    }
+</script>

@@ -27,8 +27,11 @@ namespace web2.Models
         public string Ma_hoc_vien { get; set; }
         public string Lop_hoc_tham_gia { get; set; }
         public bool Trang_thai_hoc_phi { get; set; }
-        
-        
+        public string NgaySinhFormatted
+        {
+            get { return Ngay_sinh.ToString("dd/MM/yyyy"); }
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BaiTapDaNop> BaiTapDaNops { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
