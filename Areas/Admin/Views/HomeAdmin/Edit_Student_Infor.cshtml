@@ -21,7 +21,11 @@
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Ngày sinh:</label>
-        <input type="date" class="form-control" id="ngaysinh" name="NgaySinh" value="@Model.Ngay_sinh_formatted">
+        <input type="text" class="form-control" id="tenhv" placeholder="Tên" name="NgaySinh" value="@Model.Ngay_sinh_formatted">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Cập nhật ngày sinh:</label>
+        <input type="date" class="form-control" id="ngaysinh" name="NgaySinhNew"  />
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Sđt:</label>
@@ -46,13 +50,12 @@
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label>Phân quyền:</label>
         <select class="form-select mt-2" id="selphanquyen" name="PhanQuyen">
-            <option value="false" @(Model.Phan_quyen == false ? "selected" : "")>Giáo viên</option>
             <option value="true" @(Model.Phan_quyen == true ? "selected" : "")>Học viên</option>
         </select>
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label>Thêm lớp học:</label>
-        <select class="form-select mt-2" id="sellophv" name="Lop">
+        <select class="form-select mt-2" id="sellophv" name="ThemLop">
             @foreach (var lop in db.LopHocs.ToList())
             {
                 <option value="@lop.Ma_lop">@lop.Ten_lop_hoc</option>
@@ -61,7 +64,7 @@
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Các lớp học hiện tại:</label>
-        <input type="text" class="form-control" id="lop" placeholder="lớp" name="ThemLop" value="@Model.Lop_hoc_tham_gia">
+        <input type="text" class="form-control" id="lop" placeholder="lớp" name="Lop" value="@Model.Lop_hoc_tham_gia">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label>Trạng thái học phí:</label>
