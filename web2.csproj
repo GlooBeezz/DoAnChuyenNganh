@@ -284,6 +284,9 @@
     <Content Include="Areas\Teacher\Views\HomeTeacher\Manage_Schedule.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Student_Infor.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Add_Student.cshtml" />
+    <Content Include="Areas\Teacher\Views\HomeTeacher\AddDocument.cshtml" />
+    <Content Include="Areas\Teacher\Views\HomeTeacher\EditDocument.cshtml" />
+    <Content Include="Areas\Teacher\Views\HomeTeacher\DeleteDocument.cshtml" />
     <None Include="Models\.editorconfig" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
