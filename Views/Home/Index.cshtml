@@ -4,7 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Active = "home";
 }
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 <script>
     $(document).ready(function () {
         $("#customButtonStudy").click(function () {
@@ -13,55 +16,71 @@
     });
 </script>
 <style>
-    body{
-        margin-top:10px;
-        margin-bottom:10px;
+    body {
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
+
     .sec {
         min-height: auto;
         min-width: auto;
     }
-    .section1{
-        height:500px;
-        z-index:1;
+
+    .section1 {
+        height: 500px;
+        z-index: 1;
         background-position: 50% 50%;
-        display:block;
-       
-        position:relative;
+        display: block;
+        position: relative;
     }
+
     .section2 {
-        height:150px;
-        width:auto;
-      
-       
+        height: 150px;
+        width: auto;
     }
-    .sec1-left{
-       
-        max-width:50%;
+
+    .sec1-left {
+        max-width: 50%;
         padding: 0 10px 20px 10px;
     }
-    .sec1-right{
-        position:relative;
-        display:block;
 
-    }
-    .section3{
-        height:350px;
-       
-    }
-    .section4{
-        height:650px;
-        
-    }
-    .section5{
-        height:350px;
-       
+    .sec1-right {
+        position: relative;
+        display: block;
     }
 
+    .section3 {
+        height: 350px;
+    }
 
+    .section4 {
+        height: 650px;
+    }
+
+    .sec section5 {
+        height: 350px;
+    }
+
+    .sec5-left {
+        min-height: auto;
+        min-width: auto;
+        max-width: 40%;
+        height: 350px;
+    }
+
+
+    .sec5-right {
+        min-height: auto;
+        min-width: auto;
+        max-width: 60%;
+    }
+
+    .section6 {
+        height: 150px;
+    }
 </style>
 
-<body>
+<body style="max-width:1300px">
     @* ảnh tự chuyển động *@
     <div class="bg-white " style="height:600px;width:100%">
         @*<h2 class="text-primary">Phố Thị Music - Nơi tài năng toả sáng </h2>
@@ -113,7 +132,7 @@
 
     </div>
 
-    <div class="sec section1" style="sec1">
+    <div class="sec section1 container" style="">
         <div class="row ">
             <div class="col-6 sec1-left">
                 ben a
@@ -126,7 +145,7 @@
 
     </div>
 
-    <div class="sec section2   ">
+    <div class="sec section2 container  ">
 
         <div style="display: flex; align-items: center; width:300px">
             <button class="btn btn-outline-success btn-lg" id="customButtonStudy">Bắt đầu nào!</button>
@@ -147,13 +166,75 @@
     </div>
 
     @* nhận xét từ ph *@
-    <div class="sec section5">
+    <div class="sec section5 container">
+        <div class="row">
+            <div class="col-4 sec5-left">
+                <img src="~/source/section5a.png" class="img-thumbnail" style="border:none" />
+            </div>
+            <div class="col-8 sec5-right">
+                <div style="height:40px"></div>
+                <h3 class="text-center fw-bold"> <span style="color:black">Cảm Nhận</span> <span style="color:orangered">Của Phụ Huynh</span></h3>
+
+                <div class="CMT">
+                    <div class="Fly-cmt">
+                        <img class="rounded d-block mx-auto  " src="~/source/person1.png" style="position:center ;height:100px;width:100px;margin-top:20px" />
+                        <div style="margin-top:15px ; min-height:auto;min-height:auto;">
+                            <p class="text-center">aaaaa</p>
+                        </div>
+                    </div>
+
+                    <div class="Fly-cmt">
+                        <img class="rounded d-block mx-auto  " src="~/source/person1.png" style="position:center ;height:100px;width:100px;margin-top:20px" />
+                        <div style="margin-top:15px ; min-height:auto;min-height:auto;">
+                            <p class="text-center">bbbbbb</p>
+                        </div>
+                    </div>
+
+                    <div class="Fly-cmt">
+                        <img class="rounded d-block mx-auto  " src="~/source/person1.png" style="position:center ;height:100px;width:100px;margin-top:20px" />
+                        <div style="margin-top:15px ; min-height:auto;min-height:auto;">
+                            <p class="text-center">ccccccc</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @* kết thúc *@
+    <div class="sec section6 ">
+
+
+
+
+
 
 
     </div>
 
 
 
-
-
+    @* file java cho file index *@
+    <script src="~/Views/Home/style/Index.js"></script>
+    <link rel="stylesheet" href="~/Views/Home/style/_Layout.css" />
 </body>
+
+@*
+    #box{
+      width:100px;
+      height:100px;
+      background: red;
+      transition: all 0.7s ease-in-out;
+    /*   -moz-transition:all  1s ;
+      -webkit-transition: all 1s ; */
+
+    }
+    #box:hover{
+      background: yellow;
+      transform: translateX(500px);
+
+    }
+
+*@

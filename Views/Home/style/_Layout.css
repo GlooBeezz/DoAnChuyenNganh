@@ -1,1 +1,12 @@
-﻿
+﻿.CMT {
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.Fly-cmt {
+    display: none;
+}
+img{
+    width:100%;
+}

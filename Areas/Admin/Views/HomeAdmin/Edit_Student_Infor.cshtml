@@ -10,7 +10,7 @@
     <div class="col display-5" style="text-align:center">Chỉnh sửa học viên</div>
 </div>
 <Hr />
-<form class="row" action="@Url.Action("Submit_Edit_Student_Infor", "HomeAdmin", new { area = "Admin" })" method="post">
+<form class="row" action="@Url.Action("Submit_Edit_Student_Infor", "HomeAdmin", new { area = "Admin" })" method="post" id="inputForm">
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Mã học viên:</label>
         <input type="text" class="form-control" id="mahv" placeholder="Mã" name="Ma" value="@Model.Ma_hoc_vien" readonly>
@@ -25,7 +25,7 @@
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Cập nhật ngày sinh:</label>
-        <input type="date" class="form-control" id="ngaysinh" name="NgaySinhNew"  />
+        <input type="date" class="form-control" id="ngaysinh" name="NgaySinhNew" />
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Sđt:</label>
@@ -50,12 +50,14 @@
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label>Phân quyền:</label>
         <select class="form-select mt-2" id="selphanquyen" name="PhanQuyen">
+            <option value="">Nhấn để chọn</option>
             <option value="true" @(Model.Phan_quyen == true ? "selected" : "")>Học viên</option>
         </select>
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label>Thêm lớp học:</label>
         <select class="form-select mt-2" id="sellophv" name="ThemLop">
+            <option value="">Nhấn để chọn</option>
             @foreach (var lop in db.LopHocs.ToList())
             {
                 <option value="@lop.Ma_lop">@lop.Ten_lop_hoc</option>
@@ -69,6 +71,7 @@
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label>Trạng thái học phí:</label>
         <select class="form-select mt-2" id="selhocphi" name="HocPhi" value="@Model.Trang_thai_hoc_phi">
+            <option value="">Nhấn để chọn</option>
             <option value="true">Đã đóng học phí</option>
             <option value="false">Chưa đóng học phí</option>
         </select>
@@ -77,4 +80,31 @@
         <button class="btn btn-success" type="submit" name="submit">Lưu</button>
     </div>
 </form>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var form = document.getElementById('inputForm');
+        form.addEventListener('submit', function (event) {
+            var checkInputs = document.getElementById('inputForm').querySelectorAll('input');
+            checkInputs.forEach(function (input) {
+                if (input.value.trim() === "") {
+                    event.preventDefault();
+                    input.classList.add('is-invalid');
+                }
+                else {
+                    input.classList.remove('is-invalid')
+                }
+            });
+            var checkSelects = document.getElementById('inputForm').querySelectorAll('select');
+            checkSelects.forEach(function (select) {
+                if (select.value.trim() === "") {
+                    event.preventDefault();
+                    input.classList.add('is-invalid');
+                }
+                else {
+                    input.classList.remove('is-invalid')
+                }
+            });
+        });
+    });
+</script>

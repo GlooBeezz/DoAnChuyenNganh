@@ -4,12 +4,11 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
     web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
 }
-
 <div class="row">
     <div class="col display-5" style="text-align:center">Thêm học viên</div>
 </div>
 <Hr />
-<form class="row" action="@Url.Action("Submit_Add_Student", "HomeAdmin", new { area = "Admin" })">
+<form class="row" action="@Url.Action("Submit_Add_Student", "HomeAdmin", new { area = "Admin" })" id="inputForm">
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Mã học viên:</label>
         <input type="text" class="form-control" id="mahv" placeholder="Mã" name="Ma">
@@ -20,7 +19,7 @@
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Ngày sinh:</label>
-        <input type="date" class="form-control" id="ngaysinh" name="NgaySinh" val>
+        <input type="date" class="form-control" id="ngaysinh" name="NgaySinh">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Sđt:</label>
@@ -45,13 +44,15 @@
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label>Phân quyền:</label>
         <select class="form-select mt-2" id="selphanquyen" name="PhanQuyen">
+            <option value="">Nhấn để chọn</option>
             <option value="true">Học viên</option>
         </select>
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label>Các lớp học tham gia:</label>
         <select class="form-select mt-2" id="sellophv" name="Lop">
-            @foreach(var lop in db.LopHocs.ToList())
+            <option value="">Nhấn để chọn</option>
+            @foreach (var lop in db.LopHocs.ToList())
             {
                 <option value="@lop.Ma_lop">@lop.Ten_lop_hoc</option>
             }
@@ -64,14 +65,41 @@
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label>Trạng thái học phí:</label>
         <select class="form-select mt-2" id="selhocphi" name="HocPhi">
+            <option value="">Nhấn để chọn</option>
             <option value="true">Đã đóng học phí</option>
             <option value="false">Chưa đóng học phí</option>
         </select>
     </div>
     <div class="row d-grid gap-2">
-        <button class="btn btn-success" type="submit" name="submit">Lưu</button>
+        <input class="btn btn-success" type="submit" name="submit">Lưu
     </div>
 </form>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var form = document.getElementById('inputForm');
+        form.addEventListener('submit', function (event) {
+            var checkInputs = document.getElementById('inputForm').querySelectorAll('input');
+            checkInputs.forEach(function (input) {
+                if (input.value.trim() === "") {
+                    event.preventDefault();
+                    input.classList.add('is-invalid');
+                }
+                else {
+                    input.classList.remove('is-invalid')
+                }
+            });
+            var checkSelects = document.getElementById('inputForm').querySelectorAll('select');
+            checkSelects.forEach(function (select) {
+                if (select.value.trim() === "") {
+                    event.preventDefault();
+                    input.classList.add('is-invalid');
+                }
+                else {
+                    input.classList.remove('is-invalid')
+                }
+            });
+        });
+    });
+</script>
 
