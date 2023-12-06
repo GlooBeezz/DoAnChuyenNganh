@@ -10,7 +10,7 @@
     <div class="col display-5" style="text-align:center">Chỉnh sửa học viên</div>
 </div>
 <Hr />
-<form class="row" action="@Url.Action("Submit_Edit_Student_Infor", "HomeAdmin", new { area = "Admin" })" method="post" id="inputForm">
+<form class="row" action="@Url.Action("Submit_Edit_Teacher_Infor", "HomeAdmin", new { area = "Admin" })" method="post" id="inputForm">
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Mã học viên:</label>
         <input type="text" class="form-control" id="mahv" placeholder="Mã" name="Ma" value="@Model.Ma_hoc_vien" readonly>
@@ -33,7 +33,7 @@
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Email:</label>
-        <input type="text" class="form-control" id="email" placeholder="Email" name="Email" value="@Model.Email">
+        <input type="email" class="form-control" id="email" placeholder="Email" name="Email" value="@Model.Email">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Địa chỉ:</label>
@@ -65,7 +65,7 @@
         </select>
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Các lớp học hiện tại:</label>
+        <label for="" class="form-label">Lớp học hiện tại:</label>
         <input type="text" class="form-control" id="lop" placeholder="lớp" name="Lop" value="@Model.Lop_hoc_tham_gia">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">

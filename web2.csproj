@@ -220,6 +220,7 @@
       <DependentUpon>Modeladmin.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Adminshow\HomController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Scripts\chart.js" />
@@ -290,6 +291,9 @@
     <Content Include="Areas\Teacher\Views\HomeTeacher\EditDocument.cshtml" />
     <Content Include="Areas\Teacher\Views\HomeTeacher\DeleteDocument.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Add_Teacher.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Teacher.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Teacher_Infor.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Class.cshtml" />
     <None Include="Models\.editorconfig" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -336,7 +340,6 @@
     <Folder Include="Areas\Student\Views\HomeStudent\" />
     <Folder Include="Areas\Student\Views\Shared\" />
     <Folder Include="Areas\Teacher\Data\" />
-    <Folder Include="Views\Adminshow\" />
     <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
