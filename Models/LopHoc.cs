@@ -36,7 +36,9 @@ namespace web2.Models
         public System.DateTime Ngay_bat_dau { get; set; }
         public System.DateTime Ngay_ket_thuc { get; set; }
         public int So_tiet_hoc { get; set; }
-    
+        public string Ngay_bat_dau_formatted=> Ngay_bat_dau.ToString("dd/MM/yyyy");
+        public string Ngay_ket_thuc_formatted => Ngay_ket_thuc.ToString("dd/MM/yyyy");
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BaiTap> BaiTaps { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,32 +1,28 @@
-﻿@{
-    ViewBag.Title = "Thêm giáo viên";
+﻿
+@{
+    ViewBag.Title = "Thêm lớp học";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
-    web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
 }
 <div class="row">
-    <div class="col display-5" style="text-align:center">Thêm giáo viên</div>
+    <div class="col display-5" style="text-align:center">Thêm lớp học</div>
 </div>
 <Hr />
-<form class="row" action="@Url.Action("Submit_Add_Teacher", "HomeAdmin", new { area = "Admin" })" id="inputForm">
+<form class="row" action="@Url.Action("Submit_Add_Class", "HomeAdmin", new { area = "Admin" })" id="inputForm">
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Mã giáo viên:</label>
-        <input type="text" class="form-control" id="mahv" placeholder="Mã" name="Ma">
+        <label for="" class="form-label">Mã lớp học:</label>
+        <input type="text" class="form-control" id="ma" placeholder="Mã" name="Ma">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Tên giáo viên:</label>
-        <input type="text" class="form-control" id="tenhv" placeholder="Tên" name="Ten">
+        <label for="" class="form-label">Tên lớp học:</label>
+        <input type="text" class="form-control" id="ten" placeholder="Tên" name="Ten">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Ngày sinh:</label>
-        <input type="date" class="form-control" id="ngaysinh" name="NgaySinh">
-    </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Sđt:</label>
-        <input type="text" class="form-control" id="sdt" placeholder="Số điện thoại" name="Sdt">
+        <label for="" class="form-label">Mô tả:</label>
+        <input type="text" class="form-control" id="mota" placeholder="Mô tả" name="MoTa">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Email:</label>
-        <input type="email" class="form-control" id="email" placeholder="Email" name="Email">
+        <input type="text" class="form-control" id="email" placeholder="Email" name="Email">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Địa chỉ:</label>
@@ -105,13 +101,8 @@
                     select.classList.remove('is-invalid')
                 }
             });
-            var ngaySinhValue = $('ngaysinh').val();
-            if (ngaySinhValue === "" || ngaySinhValue === null) {
-                alert("Vui lòng nhập đầy đủ thông tin!");
-                event.preventDefault();
-            }
+            
         });
     });
 </script>
-
 

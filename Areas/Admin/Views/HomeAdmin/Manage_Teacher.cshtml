@@ -78,28 +78,11 @@
                         <td>@item.Luong_co_ban</td>
                         <td>@item.Ma_lop_giang_day</td>
                         <td colspan="2" style="display:inline-flex">
-                            <a>@Html.ActionLink("Sửa", "Edit_Student_Infor", "HomeAdmin", new { area = "Admin", maGiaoVien = item.Ma_giao_vien }, new { @class = "btn btn-primary" })</a>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Xoá</button>
-                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5 text-danger" id="deleteModalLabel">Bạn có chắc nhắn muốn xoá Giáo viên @item.Ho_va_ten không?</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Toàn bộ thông tin của giáo viên @item.Ho_va_ten, với mã là @item.Ma_giao_vien sẽ được xoá toàn bộ!!!
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
-                                            <form id="form-delete-@item.Ma_giao_vien" action="@Url.Action("Delete_Student_Infor", "HomeAdmin", new { area = "Admin" })" method="post">
-                                                <input type="hidden" name="maHocVien" value="@item.Ma_giao_vien" />
-                                                <button type="submit" class="btn btn-success">Xoá</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <a>@Html.ActionLink("Sửa", "Edit_Teacher_Infor", "HomeAdmin", new { area = "Admin", maGiaoVien = item.Ma_giao_vien }, new { @class = "btn btn-primary" })</a>
+                            <form id="form-delete-@item.Ma_giao_vien" action="@Url.Action("Delete_Teacher_Infor", "HomeAdmin", new { area = "Admin" })" method="post">
+                                <input type="hidden" name="maGiaoVien" value="@item.Ma_giao_vien" />
+                                <button type="submit" class="btn btn-success">Xoá</button>
+                            </form>
                         </td>
                     </tr>
                 }
