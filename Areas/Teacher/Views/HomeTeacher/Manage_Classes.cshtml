@@ -1,5 +1,59 @@
-﻿@{
+﻿@model List<web2.Models.LopHoc>
+
+@{
+    ViewBag.Title = "Manage Classes";
     Layout = "~/Areas/Teacher/Views/Shared/_LayoutPageTeacher.cshtml";
 }
 
+<div class="row">
+    <div class="col-md-12">
+        <h2>Manage Classes</h2>
 
+        @if (Model != null && Model.Any())
+        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Class ID</th>
+                        <th>Course ID</th>
+                        <th>Class Name</th>
+                        <th>Class Room</th>
+                        <th>Student Count</th>
+                        <th>Description</th>
+                        <th>Timetable ID</th>
+                        <th>Add Document</th> <!-- New column for the button -->
+                        <!-- Add more columns as needed -->
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var lopHoc in Model)
+                    {
+                        <tr>
+                            <td>@lopHoc.Ma_lop</td>
+                            <td>@lopHoc.Ma_khoa_hoc</td>
+                            <td>@lopHoc.Ten_lop_hoc</td>
+                            <td>@lopHoc.Phong_hoc</td>
+                            <td>@lopHoc.So_luong_hoc_vien</td>
+                            <td>@lopHoc.Mo_ta</td>
+                            <td>@lopHoc.Ma_thoi_gian_bieu</td>
+                            <td>
+                                <a href="@Url.Action("AddDocument", "HomeTeacher", new { classId = lopHoc.Ma_lop })" class="btn btn-primary">Add Document</a>
+                            </td>
+                            <!-- Add more cells based on your model properties -->
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No classes available.</p>
+        }
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="@Url.Action("Index", "HomeTeacher")" class="btn btn-primary">Trở lại</a>
+            </div>
+        </div>
+    </div>
+</div>

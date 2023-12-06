@@ -1,5 +1,65 @@
-﻿@{
+﻿@model IEnumerable<web2.Models.TaiLieu>
+@{
     Layout = "~/Areas/Teacher/Views/Shared/_LayoutPageTeacher.cshtml";
 }
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Documents</title>
+    @Styles.Render("~/Content/your-styles.css")
+</head>
+<body>
 
+    <div class="container mt-5">
+        <h2>Quản lý Tài liệu</h2>
+
+        <div id="document-list">
+            <!-- Hiển thị danh sách tài liệu -->
+            @if (Model != null && Model.Any())
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tiêu đề</th>
+                            <th>Đường dẫn</th>
+                            <th>Ngày upload</th>
+                            <th>Giáo viên</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var document in Model)
+                        {
+                            <tr>
+                                <td>@document.Ten_tai_lieu</td>
+                                <td>@document.Duong_dan</td>
+                                <td>@document.Ngay_upload.ToString("yyyy-MM-dd")</td>
+                                <td>@document.Ma_giang_vien</td>
+                                <td>
+                                    <a href="@Url.Action("EditDocument", "HomeTeacher", new { documentId = document.Ma_tai_lieu })" class="btn btn-primary">Sửa</a>
+                                    <a href="@Url.Action("DeleteDocument", "HomeTeacher", new { documentId = document.Ma_tai_lieu })" class="btn btn-danger">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Không có tài liệu nào để hiển thị.</p>
+            }
+        </div>
+
+        <div id="document-form">
+            <!-- Nút để chuyển hướng đến trang thêm tài liệu -->
+            <a href="@Url.Action("AddDocument", "HomeTeacher")" class="btn btn-success">Thêm Tài liệu</a>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/your-scripts")
+
+</body>
+</html>
