@@ -139,6 +139,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
+    <Compile Include="Areas\Admin\Data\DanhSachGiaoVien.cs" />
+    <Compile Include="Areas\Admin\Data\GiaoVienManage.cs" />
     <Compile Include="Areas\Admin\Data\DanhSachHocViencs.cs" />
     <Compile Include="Areas\Admin\Data\DataAccess.cs" />
     <Compile Include="Areas\Admin\Data\HocVienManage.cs" />
@@ -287,6 +289,7 @@
     <Content Include="Areas\Teacher\Views\HomeTeacher\AddDocument.cshtml" />
     <Content Include="Areas\Teacher\Views\HomeTeacher\EditDocument.cshtml" />
     <Content Include="Areas\Teacher\Views\HomeTeacher\DeleteDocument.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Teacher.cshtml" />
     <None Include="Models\.editorconfig" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

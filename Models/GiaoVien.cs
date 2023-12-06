@@ -12,7 +12,7 @@ namespace web2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class GiaoVien
+    public partial class GiaoVien:NguoiDung
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public GiaoVien()
@@ -29,7 +29,11 @@ namespace web2.Models
         public string Ma_lop_giang_day { get; set; }
         public string Ma_bang_luong { get; set; }
         public string Ma_tai_lieu_tai_len { get; set; }
-    
+        public string NgaySinhFormatted
+        {
+            get { return Ngay_sinh.ToString("dd/MM/yyyy"); }
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BaiTap> BaiTaps { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
