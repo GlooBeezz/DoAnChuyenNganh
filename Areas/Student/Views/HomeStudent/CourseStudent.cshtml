@@ -1,7 +1,9 @@
-﻿@{
+﻿@model List<web2.Models.KhoaHoc>
+@{
     ViewBag.Title = "CourseStudent";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
     ViewBag.Active = "coursestudent";
+    web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
 }
 
 <!DOCTYPE html>
@@ -13,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="~/Content/Study.css" />
     <style>
         .card {
-            height: auto;
+            height: 610px;
         }
 
             .card img {
@@ -34,57 +36,23 @@
         </div>
         <h4>Khóa học hiện tại:</h4><br />
         <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12">
+            @foreach( var kh in Model){
+
+                <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="card mb-5 shadow-sm">
                     <img src="https://img.freepik.com/premium-vector/boy-girl-playing-piano_97632-600.jpg" class="img-fluid" />
                     <div class="card-body">
-                        <h4 class="card-title">Khóa học:</h4>
+                        <h4 class="card-title">Khóa học:@kh.Ten_khoa_hoc</h4>
                         <div class="card-text">
                             <p>
-                                Khoá học dành cho học viên từ 6 đến 18 tuổi trình độ nhập môn, cơ bản, người mới bắt đầu, không yêu cầu kiến thức âm nhạc trước đây. Học viên sẽ tìm hiểu về các nguyên tắc cơ bản của piano, bàn phím, các nút và ngón tay. Họ sẽ học cách đọc các ký hiệu âm nhạc đơn giản và chơi các giai điệu cơ bản.
+                              @kh.Mo_ta
                             </p><br />
                         </div>
-                        <div style="position: absolute; bottom: 20px; right: 15px;">
-                            <a href="#" class="btn btn-outline-primary rounded-4 float-end" style="border-width:2px;border-radius:5px;top:50%">Tiếp tục</a>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
-
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card mb-5 shadow-sm">
-                    <img src="https://img.freepik.com/premium-vector/boy-girl-playing-piano_97632-600.jpg" class="img-fluid" />
-                    <div class="card-body">
-                        <h4 class="card-title">Khóa học:</h4>
-                        <div class="card-text">
-                            <p>
-                                Khoá học dành cho học viên từ 6 đến 18 tuổi trình độ nhập môn, cơ bản, người mới bắt đầu, không yêu cầu kiến thức âm nhạc trước đây. Học viên sẽ tìm hiểu về các nguyên tắc cơ bản của piano, bàn phím, các nút và ngón tay. Họ sẽ học cách đọc các ký hiệu âm nhạc đơn giản và chơi các giai điệu cơ bản.
-                            </p><br />
-                        </div>
-                        <div style="position: absolute; bottom: 20px; right: 15px;">
-                            <a href="#" class="btn btn-outline-primary rounded-4 float-end" style="border-width:2px;border-radius:5px;top:50%">Tiếp tục</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card mb-5 shadow-sm">
-                    <img src="https://img.freepik.com/premium-vector/boy-girl-playing-piano_97632-600.jpg" class="img-fluid" />
-                    <div class="card-body">
-                        <h4 class="card-title">Khóa học:</h4>
-                        <div class="card-text">
-                            <p>
-                                Khoá học dành cho học viên từ 6 đến 18 tuổi trình độ nhập môn, cơ bản, người mới bắt đầu, không yêu cầu kiến thức âm nhạc trước đây. Học viên sẽ tìm hiểu về các nguyên tắc cơ bản của piano, bàn phím, các nút và ngón tay. Họ sẽ học cách đọc các ký hiệu âm nhạc đơn giản và chơi các giai điệu cơ bản.
-                            </p><br />
-                        </div>
-                        <div style="position: absolute; bottom: 20px; right: 15px;">
-                            <a href="#" class="btn btn-outline-primary rounded-4 float-end" style="border-width:2px;border-radius:5px;top:50%">Tiếp tục</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            }
         </div>
         <div class="container">
             <div class="row">
@@ -125,6 +93,6 @@
                 </div>
             </div>
         </div>
-
+    </div>
 </body>
 </html>
