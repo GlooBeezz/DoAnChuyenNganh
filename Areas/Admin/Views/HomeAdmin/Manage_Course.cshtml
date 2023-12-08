@@ -43,23 +43,29 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Ma_khoa_hoc</td>
-                        <td>@item.Ten_khoa_hoc</td>
-                        <td>@item.Mo_ta</td>
-                        <td>@item.Hoc_phi</td>
-                        <td>@item.Nguon_anh</td>
-                        <td colspan="2" style="display:inline-flex">
-                            <a>@Html.ActionLink("Sửa", "Edit_Course_Infor", "HomeAdmin", new { area = "Admin", maKhoaHoc = @item.Ma_khoa_hoc }, new { @class = "btn btn-primary" })</a>
-                            <form id="form-delete-@item.Ma_khoa_hoc" action="@Url.Action("Delete_Course_Infor", "HomeAdmin", new { area = "Admin" })" method="post">
-                                <input type="hidden" name="maKhoaHoc" value="@item.Ma_khoa_hoc" />
-                                <button type="submit" class="btn btn-danger">Xoá</button>
-                            </form>
-                        </td>
-                    </tr>
-                }
+                @{
+                    if (Model != null) {
+
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Ma_khoa_hoc</td>
+                                <td>@item.Ten_khoa_hoc</td>
+                                <td>@item.Mo_ta</td>
+                                <td>@item.Hoc_phi</td>
+                                <td>@item.Nguon_anh</td>
+                                <td colspan="2" style="display:inline-flex">
+                                    <a>@Html.ActionLink("Sửa", "Edit_Course_Infor", "HomeAdmin", new { area = "Admin", maKhoaHoc = @item.Ma_khoa_hoc }, new { @class = "btn btn-primary" })</a>
+                                    <form id="form-delete-@item.Ma_khoa_hoc" action="@Url.Action("Delete_Course_Infor", "HomeAdmin", new { area = "Admin" })" method="post">
+                                        <input type="hidden" name="maKhoaHoc" value="@item.Ma_khoa_hoc" />
+                                        <button type="submit" class="btn btn-danger">Xoá</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            }
+
+                        }
+                    }
             </tbody>
         </table>
 
