@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Thêm lớp học";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+    web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
+}
+<div class="row">
+    <div class="col display-5" style="text-align:center">Thêm lớp học</div>
+</div>
+<Hr />
+<form class="row" action="@Url.Action("Submit_Add_Class", "HomeAdmin", new { area = "Admin" })" id="inputForm">
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Mã lớp học:</label>
+        <input type="text" class="form-control" id="ma" placeholder="Mã" name="Ma">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Tên lớp học:</label>
+        <input type="text" class="form-control" id="ten" placeholder="Tên" name="Ten">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Mô tả:</label>
+        <input type="text" class="form-control" id="mota" placeholder="Mô tả" name="MoTa">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Phòng học:</label>
+        <input type="text" class="form-control" id="phong" placeholder="Phòng học" name="Phong">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Mã thời khoá biểu:</label>
+        <input type="text" class="form-control" id="matkb" placeholder="Mã thời khoá biểu" name="MaTKB">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Ngày bắt đầu:</label>
+        <input type="date" class="form-control" id="ngaybd" name="NgayBD">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Ngày kết thúc:</label>
+        <input type="date" class="form-control" id="ngaykt" name="NgayKT">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Số tiết:</label>
+        <input type="number" class="form-control" id="sotiet" placeholder="Số tiết học" name="SoTiet">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label>Khoá học:</label>
+        <select class="form-select mt-2" id="selkhoa" name="KhoaHoc">
+            <option value="">Nhấn để chọn</option>
+            @foreach (var khoa in db.KhoaHocs.ToList())
+            {
+                <option value="@khoa.Ma_khoa_hoc">@khoa.Ten_khoa_hoc</option>
+            }
+        </select>
+    </div>
+    <hr />
+    <div class="row d-grid gap-2">
+        <input class="btn btn-success" type="submit" name="submit" value="Lưu">
+    </div>
+</form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var form = document.getElementById('inputForm');
+        form.addEventListener('submit', function (event) {
+            var checkInputs = document.getElementById('inputForm').querySelectorAll('input');
+            checkInputs.forEach(function (input) {
+                if (input.value.trim() === "") {
+                    event.preventDefault();
+                    input.classList.add('is-invalid');
+                }
+                else {
+                    input.classList.remove('is-invalid')
+                }
+            });
+            var checkSelects = document.getElementById('inputForm').querySelectorAll('select');
+            checkSelects.forEach(function (select) {
+                if (select.value.trim() === "") {
+                    event.preventDefault();
+                    select.classList.add('is-invalid');
+                }
+                else {
+                    select.classList.remove('is-invalid')
+                }
+            });
+            
+        });
+    });
+</script>
+
