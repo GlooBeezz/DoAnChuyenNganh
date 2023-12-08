@@ -144,16 +144,11 @@
     <Compile Include="Areas\Admin\Data\DanhSachHocViencs.cs" />
     <Compile Include="Areas\Admin\Data\DataAccess.cs" />
     <Compile Include="Areas\Admin\Data\HocVienManage.cs" />
- 
-    <Compile Include="Areas\Admin\Data\hocVienManage.cs" />
-    <Compile Include="Areas\Student\Data\DanhSachKhoaHoc.cs" />
-    <Compile Include="Areas\Student\Data\KhoaHocManage.cs" />
     <Compile Include="Areas\Student\Controllers\HomeStudentController.cs" />
     <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Areas\Teacher\Controllers\HomeTeacherController.cs" />
     <Compile Include="Areas\Teacher\TeacherAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminshowController.cs" />
-
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -343,9 +338,6 @@
     <None Include="Views\Home\style\.editorconfig" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Models\" />
     <Folder Include="App_Data\App_LocalResources\" />
     <Folder Include="Areas\Student\Data\" />
     <Folder Include="Areas\Student\Views\HomeStudent\" />
