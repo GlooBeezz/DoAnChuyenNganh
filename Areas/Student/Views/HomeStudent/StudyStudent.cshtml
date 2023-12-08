@@ -1,10 +1,10 @@
-﻿@model List<web2.Models.KhoaHoc>
-@{
-    ViewBag.Title = "StudyStudent";
-    Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
-    ViewBag.Active = "studystudent";
-    web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
-}
+﻿    @model List<web2.Models.KhoaHoc>
+    @{
+        ViewBag.Title = "StudyStudent";
+        Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+        ViewBag.Active = "studystudent";
+        web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
+    }
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +36,7 @@
         <div class="row">
             @foreach (var kh in Model)
             {
-              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="card mb-5 shadow-sm">
                         <img src="https://img.freepik.com/premium-vector/boy-girl-playing-piano_97632-600.jpg" class="img-fluid" />
                         <div class="card-body">
@@ -53,28 +53,30 @@
                                 <div style="float: right;">
                                     <a href="#" class="btn btn-outline-warning rounded-0 registerButton" data-course-id="@kh.Ma_khoa_hoc">Đăng Ký</a>
                                 </div>
-                                <script>
-                                    var registerButtons = document.querySelectorAll('.registerButton');
-                                    registerButtons.forEach(function(button) {
-                                        button.addEventListener('click', function(event) {
-                                            event.preventDefault();
-                                            var courseId = button.getAttribute('data-course-id');
-                                            var confirmation = confirm("Bạn muốn đăng ký khoá học này?");
 
-                                            if (confirmation) {
-                                                var url = '@Url.Action("RegisterCourse", "CourseStudent", new { area = "Student" })' + '?courseId=' + courseId;
-                                                window.location.href = url;
-                                            } else {
-                                                window.history.back();
-                                            }
-                                        });
-                                    });
-                                </script>
+                            </div>
                         </div>
                     </div>
-                 </div>
-               </div>
+                </div>
             }
+        <script>
+                 var registerButtons = document.querySelectorAll('.registerButton');
+                   registerButtons.forEach(function(button) {
+                    button.addEventListener('click', function(event) {
+                       event.preventDefault();
+                  var courseId = button.getAttribute('data-course-id');
+                  var confirmation = confirm("Bạn muốn đăng ký khoá học này?");
+
+                     if (confirmation) {
+                        var url = '@Url.Action("CourseStudent", "HomeStudent", new { area = "Student", courseId = "__courseId__" })';
+                        url = url.replace('__courseId__', courseId);
+                        window.location.href = url;
+                    } else {
+                        window.history.back();
+                    }
+                       });
+                    });
+        </script>           
         </div>
         </div>
 </body>

@@ -41,39 +41,47 @@ namespace web2.Areas.Student.Controllers
         {
             return View();
         }
-        public ActionResult CourseStudent( string  courseId)
+        public ActionResult CourseStudent(string courseId, string register = "")
         {
-            KhoaHoc khoahoc = GetCourseInformation(courseId);
 
-            if (khoahoc == null)
+            if (!string.IsNullOrEmpty(courseId))
             {
-   
-                return HttpNotFound();
+                KhoaHoc khoahoc = GetCourseInformation(courseId);
+
+                if (khoahoc == null)
+                {
+
+                    return HttpNotFound();
+                }
+                return View("CourseStudent",khoahoc);
             }
-            return View("CourseStudent", khoahoc); 
+            return RedirectToAction("Error");
         }
         private KhoaHoc GetCourseInformation(string courseId)
         {
-            KhoaHoc khoahoc = null; 
+            KhoaHoc khoahoc = null;
             string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities3"].ConnectionString;
+
             using (SqlConnection conn = new SqlConnection(connStr))
             {
                 conn.Open();
-                string query = "SELECT Ma_Khoa_Hoc, Ten_Khoa_Hoc, Mo_Ta, Hoc_Phi, Nguon_anh FROM KhoaHoc WHERE Ma_Khoa_Hoc = @CourseId";
+                string query = "SELECT Ma_khoa_hoc, Ten_khoa_hoc, Mo_ta, Hoc_phi, Nguon_anh FROM KhoaHoc WHERE Ma_khoa_hoc = @CourseId";
+
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@CourseId", courseId);
+
                     using (SqlDataReader rd = cmd.ExecuteReader())
                     {
                         if (rd.Read())
                         {
                             khoahoc = new KhoaHoc
                             {
-                                Ma_khoa_hoc = rd["Ma_Khoa_Hoc"].ToString(),
-                                Ten_khoa_hoc = rd["Ten_Khoa_Hoc"].ToString(),
-                                Mo_ta = rd["Mo_Ta"].ToString(),
-                                Hoc_phi = Convert.ToDecimal(rd["Hoc_Phi"]),
-                                Nguon_anh = rd["Nguon_Anh"].ToString()
+                                Ma_khoa_hoc = rd["Ma_khoa_hoc"].ToString(),
+                                Ten_khoa_hoc = rd["Ten_khoa_hoc"].ToString(),
+                                Mo_ta = rd["Mo_ta"].ToString(),
+                                Hoc_phi = Convert.ToDecimal(rd["Hoc_phi"]),
+                                Nguon_anh = rd["Nguon_anh"].ToString()
                             };
                         }
                     }
@@ -82,7 +90,8 @@ namespace web2.Areas.Student.Controllers
 
             return khoahoc;
         }
-        public ActionResult StudyStudent()
+        //ham truy vấn dữ liệu KHóa học
+        private List<KhoaHoc> GetCoursesList()
         {
             List<KhoaHoc> dsKH = new List<KhoaHoc>();
 
@@ -90,20 +99,19 @@ namespace web2.Areas.Student.Controllers
             using (SqlConnection conn = new SqlConnection(connStr))
             {
                 conn.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT Ma_Khoa_Hoc, Ten_Khoa_Hoc, Mo_Ta, Hoc_Phi,Nguon_anh FROM KhoaHoc", conn))
+                using (SqlCommand cmd = new SqlCommand("SELECT Ma_khoa_hoc,Ten_khoa_hoc,Mo_ta,  Hoc_phi,  Nguon_anh  FROM KhoaHoc", conn))
                 {
                     using (SqlDataReader rd = cmd.ExecuteReader())
                     {
                         while (rd.Read())
                         {
-
                             KhoaHoc kh = new KhoaHoc
                             {
                                 Ma_khoa_hoc = rd["Ma_Khoa_Hoc"].ToString(),
                                 Ten_khoa_hoc = rd["Ten_Khoa_Hoc"].ToString(),
                                 Mo_ta = rd["Mo_Ta"].ToString(),
                                 Hoc_phi = Convert.ToDecimal(rd["Hoc_Phi"]),
-                                Nguon_anh = rd["Nguon_Anh"].ToString() 
+                                Nguon_anh = rd["Nguon_Anh"].ToString()
                             };
                             dsKH.Add(kh);
                         }
@@ -111,7 +119,13 @@ namespace web2.Areas.Student.Controllers
                 }
             }
 
-            return View(dsKH);
+            return dsKH;
+        }
+        public ActionResult StudyStudent()
+        {
+            List<KhoaHoc> dsKH = GetCoursesList(); // Lấy danh sách khóa học lên trang StudyStudent
+
+            return View("StudyStudent",dsKH);
         }
     }
 }
