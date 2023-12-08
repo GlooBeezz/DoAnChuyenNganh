@@ -1,78 +1,119 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Trang chủ";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
-    ViewBag.Active = "dashboard";
 }
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
-    <div class="fs-4 text-secondary fw-bolder">Dashboard</div>
-    <div class="text-secondary lead fw-normal" id="curr_date_time"></div>
-</div>
-<hr>
-<div class="row g-4">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+<div class="container">
+    <div class="row">
+        <div class="col-3"></div>
+        <H2 class="col-6 justify-content-center">Bảng thống kê  </H2>
+        <div class="col-3"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <canvas id="incomeChart" ></canvas>
+            <script>
+                const xValues = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
+                const yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15,20];
 
-    <div class="col-lg-3 col-md-6">
-        <a href="#" class="text-decoration-none">
-            <div class="card bg-primary bg-gradient shadow-sm custom-card">
-                <div class="card-body p-3 pb-2 px-3 d-flex flex-row justify-content-between align-items-center">
-                    <div>
-                        <h1><i class="fas fa-cart-shopping fa-2x text-white-50"></i></h1>
-                    </div>
-                    <div class="text-center">
-                        <h2 class="display-4 fw-bold text-white">1</h2>
-                        <h4 class="text-white-50">Orders</h4>
-                    </div>
+                new Chart("incomeChart", {
+                    type: "bar",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            fill: false,
+                            lineTension: 0,
+                            backgroundColor: "rgba(0,0,255,1.0)",
+                            borderColor: "rgba(0,0,255,0.1)",
+                            data: yValues
+                        }]
+                    },
+                    options: {
+                        legend: { display: false },
+                        scales: {
+                            yAxes: [{ ticks: { min: 6, max: 16 } }],
+                        }
+                    }
+                });
+            </script>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
+            <div class="card">
+                <div class="card-body d-grid">
+                    <h4 class="card-title">Xem các biểu đồ</h4>
+                    <a href="#" class="btn btn-primary btn-block">Xem</a>
                 </div>
             </div>
-        </a>
-    </div>
-
-    <div class="col-lg-3 col-md-6">
-        <a href="#" class="text-decoration-none">
-            <div class="card bg-primary bg-success shadow-sm custom-card">
-                <div class="card-body p-3 pb-2 px-3 d-flex flex-row justify-content-between align-items-center">
-                    <div>
-                        <h1><i class="fas fa-list fa-2x text-white-50"></i></h1>
-                    </div>
-                    <div class="text-center">
-                        <h2 class="display-4 fw-bold text-white">4</h2>
-                        <h4 class="text-white-50">Products</h4>
-                    </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
+            <div class="card">
+                <div class="card-body d-grid">
+                    <h4 class="card-title">Quản lý giáo viên</h4>
+                    <a href="#" class="btn btn-primary btn-block">Xem</a>
                 </div>
             </div>
-        </a>
-    </div>
-
-    <div class="col-lg-3 col-md-6">
-        <a href="#" class="text-decoration-none">
-            <div class="card bg-danger bg-gradient shadow-sm custom-card">
-                <div class="card-body p-3 pb-2 px-3 d-flex flex-row justify-content-between align-items-center">
-                    <div>
-                        <h1><i class="fas fa-users fa-2x text-white-50"></i></h1>
-                    </div>
-                    <div class="text-center">
-                        <h2 class="display-4 fw-bold text-white">5</h2>
-                        <h4 class="text-white-50">Users</h4>
-                    </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
+            <div class="card">
+                <div class="card-body d-grid">
+                    <h4 class="card-title">Quản lý học viên</h4>
+                    <a href="#" class="btn btn-primary btn-block">Xem</a>
                 </div>
             </div>
-        </a>
-    </div>
-
-    <div class="col-lg-3 col-md-6">
-        <a href="#" class="text-decoration-none">
-            <div class="card bg-dark bg-gradient shadow-sm custom-card">
-                <div class="card-body p-3 pb-2 px-3 d-flex flex-row justify-content-between align-items-center">
-                    <div>
-                        <h1><i class="fas fa-people-line fa-2x text-white-50"></i></h1>
-                    </div>
-                    <div class="text-center">
-                        <h2 class="display-4 fw-bold text-white">8</h2>
-                        <h4 class="text-white-50">Visitors</h4>
-                    </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
+            <div class="card">
+                <div class="card-body d-grid">
+                    <h4 class="card-title">Quản lý lớp học</h4>
+                    <a href="#" class="btn btn-primary btn-block">Xem</a>
                 </div>
             </div>
-        </a>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
+            <div class="card">
+                <div class="card-body d-grid">
+                    <h4 class="card-title">Quản lý Khoá học</h4>
+                    <a href="#" class="btn btn-primary btn-block">Xem</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
+            <div class="card">
+                <div class="card-body d-grid">
+                    <h4 class="card-title">Tạo tài khoản cho người dùng mới</h4>
+                    <a href="#" class="btn btn-primary btn-block">Xem</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
+            <div class="card">
+                <div class="card-body d-grid">
+                    <h4 class="card-title">Xoá tài khoản của người dùng</h4>
+                    <a href="#" class="btn btn-primary btn-block">Xem</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
+            <div class="card">
+                <div class="card-body d-grid">
+                    <h4 class="card-title">Tạo thông báo</h4>
+                    <a href="#" class="btn btn-primary btn-block">Xem</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
+            <div class="card">
+                <div class="card-body d-grid">
+                    <h4 class="card-title">Chỉnh sửa thông báo</h4>
+                    <a href="#" class="btn btn-primary btn-block">Xem</a>
+                </div>
+            </div>
+        </div>
     </div>
-
 </div>

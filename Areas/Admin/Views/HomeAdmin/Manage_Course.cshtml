@@ -1,0 +1,63 @@
+﻿@model List<web2.Models.KhoaHoc>
+@{
+    ViewBag.title("Quản lý khoá học");
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col display-5" style="text-align:center">Quản lý khoá học</div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-sm-12 col-md-6 col-xl-6">
+            <p>Nhập mã khoá:</p>
+            <form class="input-group" method="post" action="@Url.Action("Find_Course", "HomeAdmin", new { area = "Admin" })">
+                <span class="input-group-text">Mã lớp học:</span>
+                <input type="text" class="form-control" name="maLopInput" placeholder="ex: gcb0,..">
+                <button type="submit" class="btn btn-success">Tìm</button>
+            </form>
+        </div>
+    </div>
+    <div class="row d-grid gap-2 mt-4 mb-3">
+        <a>@Html.ActionLink("Thêm khoá học mới", "Add_Course", "HomeAdmin", new { area = "Admin" }, new { @class = "btn btn-success" })</a>
+    </div>
+    <hr />
+    <div class="row">
+        <h3 class="col" style="text-align:center">Bảng kết quả</h3>
+    </div>
+    <div class="row">
+        <table class="table " style="text-align:center">
+            <
+            <thead class="bg-info bg-gradient">
+                <tr>
+                    <th>Mã</th>
+                    <th>Tên khoá học</th>
+                    <th>Mô tả</th>
+                    <th>Học phí</th>
+                    <th>Nguồn ảnh</th>
+                    <th colspan="2">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Ma_khoa_hoc</td>
+                        <td>@item.Ten_khoa_hoc</td>
+                        <td>@item.Mo_ta</td>
+                        <td>@item.Hoc_phi</td>
+                        <td>@item.Nguon_anh</td>
+                        <td colspan="2" style="display:inline-flex">
+                            <a>@Html.ActionLink("Sửa", "Edit_Course_Infor", "HomeAdmin", new { area = "Admin", maKhoaHoc = @item.Ma_khoa_hoc }, new { @class = "btn btn-primary" })</a>
+                            <form id="form-delete-@item.Ma_khoa_hoc" action="@Url.Action("Delete_Course_Infor", "HomeAdmin", new { area = "Admin" })" method="post">
+                                <input type="hidden" name="maKhoaHoc" value="@item.Ma_khoa_hoc" />
+                                <button type="submit" class="btn btn-danger">Xoá</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+

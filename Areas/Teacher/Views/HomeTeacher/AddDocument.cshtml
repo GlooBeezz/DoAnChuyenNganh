@@ -1,0 +1,54 @@
+﻿@model web2.Models.TaiLieu
+@{
+    Layout = "~/Areas/Teacher/Views/Shared/_LayoutPageTeacher.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h2>Thêm Tài liệu</h2>
+        @using (Html.BeginForm("ProcessAddDocument", "HomeTeacher", FormMethod.Post))
+        {
+            <form id="add-document-form" method="post" action="@Url.Action("ProcessAddDocument", "HomeTeacher")">
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <label for="documentId">Mã tài liệu:</label>
+                    @Html.TextBoxFor(model => model.Ma_tai_lieu, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Tiêu đề:</label>
+                    @Html.TextBoxFor(model => model.Ten_tai_lieu, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Đường dẫn:</label>
+                    @Html.TextAreaFor(model => model.Duong_dan, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="form-group">
+                    <label for="uploadDate">Ngày upload:</label>
+                    @Html.TextBoxFor(model => model.Ngay_upload, new { @class = "form-control", type = "date", required = "required" })
+                </div>
+
+                <div class="form-group">
+                    <label for="teacher">Giáo viên:</label>
+                    @Html.TextBoxFor(model => model.Ma_giang_vien, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="form-group">
+                    <label for="allowedStudent">Học viên được xem:</label>
+                    @Html.TextBoxFor(model => model.Hoc_vien_duoc_xem, new { @class = "form-control" })
+                </div>
+
+                <button type="submit" class="btn btn-success">Thêm</button>
+            </form>
+        }
+    </div>
+</body>
+</html>

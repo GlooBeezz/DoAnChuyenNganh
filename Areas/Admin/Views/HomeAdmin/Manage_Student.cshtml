@@ -1,9 +1,100 @@
-﻿
+﻿@model List<web2.Models.HocVien>
 @{
-    ViewBag.Title = "Manage_Student";
+    ViewBag.Title = "Quản lý học viên";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
-    ViewBag.Active = "manage";
+    web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
+    
 }
 
-<h2>Manage_Student</h2>
+<div class="container">
+    <div class="row">
+        <div class="col display-5" style="text-align:center">Quản lý học viên</div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-sm-12 col-md-6 col-xl-6 ">
+            <p>Chọn lớp:</p>
+            <select class="form-select mt-3" id="selhv" name="sellisthv">
+                @foreach (var lop in db.LopHocs.ToList())
+                {
+                    <option value="@lop.Ma_lop">@lop.Ten_lop_hoc</option>
+                }
+            </select>
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-6">
+            <p>Nhập mã học viên:</p>
+            <form class="input-group" method="post" action="@Url.Action("Find_Student", "HomeAdmin", new { area = "Admin" })">
+                <span class="input-group-text">Mã học viên</span>
+                <input type="text" class="form-control" name="maHocVienInput" placeholder="ex: hv01,..">
+                <button type="submit" class="btn btn-success">Tìm</button>
+            </form>
+        </div>
+    </div>
+    <div class="row d-grid gap-2 mt-4 mb-3">
+        <a>@Html.ActionLink("Thêm học viên mới", "Add_Student", "HomeAdmin", new { area = "Admin" }, new { @class = "btn btn-success" })</a>
+    </div>
+    <hr />
+    <div class="row">
+        <h3 class="col" style="text-align:center">Bảng kết quả</h3>
+    </div>
+    <div class="row">
+        <table class="table " style="text-align:center">
+            <thead class="bg-info bg-gradient">
+                <tr>
+                    <th>Mã</th>
+                    <th>Họ và tên</th>
+                    <th>Ngày sinh</th>
+                    <th>Số điện thoại</th>
+                    <th>Email</th>
+                    <th>Địa chỉ</th>
+                    <th>Tài khoản</th>
+                    <th>Mật khẩu</th>
+                    <th>Phân quyền</th>
+                    <th>Lớp học tham gia</th>
+                    <th>Tình trạng học phí</th>
+                    <th colspan="2">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Ma_hoc_vien</td>
+                        <td>@item.Ho_va_ten</td>
+                        <td>@item.NgaySinhFormatted</td>
+                        <td>@item.Sdt</td>
+                        <td>@item.Email</td>
+                        <td>@item.Dia_chi</td>
+                        <td>@item.Tai_khoan</td>
+                        <td>@item.Mat_khau</td>
+                        @if (item.Phan_quyen == true)
+                        {
+                            <td>Học viên</td>
+                        }
+                        else if (item.Phan_quyen == false)
+                        {
+                            <td>Giáo viên</td>
+                        }
+                        <td>@item.Lop_hoc_tham_gia</td>
+                        @if (item.Trang_thai_hoc_phi == true)
+                        {
+                            <td>Đã đóng học phí</td>
+                        }
+                        else
+                        {
+                            <td class="text-danger">Chưa đóng học phí</td>
+                        }
+                    <td colspan="2" style="display:inline-flex">
+                        <a>@Html.ActionLink("Sửa", "Edit_Student_Infor", "HomeAdmin", new { area = "Admin", maHocVien = item.Ma_hoc_vien }, new { @class = "btn btn-primary" })</a>
+                        <form id="form-delete-@item.Ma_hoc_vien" action="@Url.Action("Delete_Student_Infor", "HomeAdmin", new { area = "Admin" })" method="post">
+                            <input type="hidden" name="maHocVien" value="@item.Ma_hoc_vien" />
+                            <button type="submit" class="btn btn-success">Xoá</button>
+                        </form>
+                    </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        
+    </div>
+</div>
 

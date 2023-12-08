@@ -1,0 +1,94 @@
+﻿@model web2.Models.GiaoVien
+@{
+    ViewBag.Title = "Chỉnh sửa thông tin giáo viên";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+    web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
+}
+<div class="row">
+    <div class="col display-5" style="text-align:center">Chỉnh sửa thông tin giáo viên</div>
+</div>
+<Hr />
+<form class="row" action="@Url.Action("Submit_Edit_Teacher", "HomeAdmin", new { area = "Admin" })" id="inputForm" method="post">
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Mã giáo viên:</label>
+        <input type="text" class="form-control" id="mahv" placeholder="Mã" name="Ma" readonly value="@Model.Ma_giao_vien">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Tên giáo viên:</label>
+        <input type="text" class="form-control" id="tenhv" placeholder="Tên" name="Ten" value="@Model.Ho_va_ten">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Cập nhật ngày sinh:</label>
+        <input type="date" class="form-control" id="ngaysinh" name="NgaySinhNew" >
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Ngày sinh cũ:</label>
+        <input type="text" class="form-control" id="ngaysinh" placeholder="Số điện thoại" name="NgaySinh" value="@Model.NgaySinhFormatted">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Sđt:</label>
+        <input type="text" class="form-control" id="sdt" placeholder="Số điện thoại" name="Sdt" value="@Model.Sdt">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Email:</label>
+        <input type="email" class="form-control" id="email" placeholder="Email" name="Email" value="@Model.Email">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Địa chỉ:</label>
+        <input type="text" class="form-control" id="diachi" placeholder="Địa chỉ" name="DiaChi" value="@Model.Dia_chi">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Tài khoản:</label>
+        <input type="text" class="form-control" id="tk" placeholder="Tài khoản" name="TaiKhoan" value="@Model.Tai_khoan">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Mật khẩu:</label>
+        <input type="text" class="form-control" id="mk" placeholder="Mật khẩu" name="MatKhau" value="@Model.Mat_khau">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label>Phân quyền:</label>
+        <select class="form-select mt-2" id="selphanquyen" name="PhanQuyen">
+            <option value="">Nhấn để chọn</option>
+            <option value="false" @(Model.Phan_quyen == false ? "selected" : "")>Giáo viên</option>
+        </select>
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label>Chỉnh sửa lớp học tham gia giảng dạy:</label>
+        <select class="form-select mt-2" id="sellopgv" name="ThemLop">
+            <option value="">Nhấn để chọn</option>
+            @foreach (var lop in db.LopHocs.ToList())
+            {
+                <option value="@lop.Ma_lop">@lop.Ten_lop_hoc</option>
+            }
+        </select>
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Lớp học hiện tại:</label>
+        <input type="text" class="form-control" id="sellopgv" placeholder="" name="Lop" value="@Model.Ma_lop_giang_day">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label>Chuyên môn:</label>
+        <select class="form-select mt-2" id="selChuyenMon" name="ChuyenMon">
+            <option value="">Nhấn để chọn</option>
+            <option value="Piano" @(Model.Chuyen_mon == "Piano" ? "selected" : "")>Piano</option>
+            <option value="Organ" @(Model.Chuyen_mon == "Organ" ? "selected" : "")>Organ</option>
+            <option value="Cajun" @(Model.Chuyen_mon == "Cajun" ? "selected" : "")>Cajun</option>
+            <option value="Guitar" @(Model.Chuyen_mon == "Guitar" ? "selected" : "")>Guitar</option>
+        </select>
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Mã Bảng Lương:</label>
+        <input type="text" class="form-control" id="BangLuong" placeholder="Mã bảng lương" name="MaBangLuong" value="@Model.Ma_bang_luong">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Lương cơ bản:</label>
+        <input type="number" class="form-control" id="LuongCoBan" placeholder="Lương cơ bản" name="LuongCoBan" value="@Model.Luong_co_ban">
+    </div>
+    <br />
+    <div class="row d-grid gap-2">
+        <input class="btn btn-success" type="submit" name="submit" value="Lưu">
+    </div>
+</form>
+
+
+

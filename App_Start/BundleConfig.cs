@@ -20,11 +20,17 @@ namespace web2
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
-
+                      "~/Scripts/bootstrap.js"
+                      ));
+            bundles.Add(new StyleBundle("~/Content/bootstrapcss").Include(
+                      "~/Content/bootstrap.css"));
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
+            bundles.Add(new StyleBundle("~/Content/adminSite").Include(
+            "~/Content/adminSite.css"));
+            bundles.Add(new ScriptBundle("~/Scripts/adminSite").Include(
+            "~/Scripts/adminSite.js"));
         }
     }
 }
