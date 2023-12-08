@@ -35,6 +35,11 @@
         <h3 class="col" style="text-align:center">Bảng kết quả</h3>
     </div>
     <div class="row">
+        <div class="alert alert-danger text-center" role="alert" style="font-size: 20px; display: none;">
+            @ViewBag.ErrorMessage
+        </div>
+    </div>
+    <div class="row">
         <table class="table " style="text-align:center">
             <thead class="bg-info bg-gradient">
                 <tr>
@@ -59,7 +64,9 @@
                         @foreach (var i in db.KhoaHocs)
                         {
                             if (i.Ma_khoa_hoc == item.Ma_khoa_hoc)
-                            {<td>@i.Ten_khoa_hoc</td>}
+                            {
+                                <td>@i.Ten_khoa_hoc</td>
+                            }
                         }
                         <td>@item.Phong_hoc</td>
                         <td>@item.So_luong_hoc_vien</td>
@@ -83,5 +90,19 @@
 
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Kiểm tra xem có thông báo lỗi không
+        var errorMessage = "@ViewBag.ErrorMessage";
+        if (errorMessage) {
 
+            $(".alert").show();
+
+            setTimeout(function () {
+                $(".alert").hide();
+            }, 5000);
+        }
+    });
+</script>
 

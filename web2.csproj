@@ -175,6 +175,7 @@
     <Compile Include="Models\DangKyHoc.cs">
       <DependentUpon>Modeladmin.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataHelper.cs" />
     <Compile Include="Models\GiaoVien.cs">
       <DependentUpon>Modeladmin.tt</DependentUpon>
     </Compile>

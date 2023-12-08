@@ -1,6 +1,6 @@
 ﻿@model List<web2.Models.KhoaHoc>
 @{
-    ViewBag.title("Quản lý khoá học");
+    ViewBag.Title = "Quản lý khoá học";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 <div class="container">
@@ -12,7 +12,7 @@
             <p>Nhập mã khoá:</p>
             <form class="input-group" method="post" action="@Url.Action("Find_Course", "HomeAdmin", new { area = "Admin" })">
                 <span class="input-group-text">Mã lớp học:</span>
-                <input type="text" class="form-control" name="maLopInput" placeholder="ex: gcb0,..">
+                <input type="text" class="form-control" name="maKhoaInput" placeholder="ex: gcb,..">
                 <button type="submit" class="btn btn-success">Tìm</button>
             </form>
         </div>
@@ -25,8 +25,13 @@
         <h3 class="col" style="text-align:center">Bảng kết quả</h3>
     </div>
     <div class="row">
+        <div class="alert alert-danger text-center" role="alert" style="font-size: 20px; display: none;">
+            @ViewBag.ErrorMessage
+        </div>
+    </div>
+    <div class="row">
         <table class="table " style="text-align:center">
-            <
+
             <thead class="bg-info bg-gradient">
                 <tr>
                     <th>Mã</th>
@@ -38,33 +43,42 @@
                 </tr>
             </thead>
             <tbody>
-                @{
-                    if(Model != null){
-                        foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@item.Ma_khoa_hoc</td>
-                                <td>@item.Ten_khoa_hoc</td>
-                                <td>@item.Mo_ta</td>
-                                <td>@item.Hoc_phi</td>
-                                <td>@item.Nguon_anh</td>
-                                <td colspan="2" style="display:inline-flex">
-                                    <a>@Html.ActionLink("Sửa", "Edit_Course_Infor", "HomeAdmin", new { area = "Admin", maKhoaHoc = @item.Ma_khoa_hoc }, new { @class = "btn btn-primary" })</a>
-                                    <form id="form-delete-@item.Ma_khoa_hoc" action="@Url.Action("Delete_Course_Infor", "HomeAdmin", new { area = "Admin" })" method="post">
-                                        <input type="hidden" name="maKhoaHoc" value="@item.Ma_khoa_hoc" />
-                                        <button type="submit" class="btn btn-danger">Xoá</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        }
-                    }else{
-                        <h1>eeeee</h1>
-                    }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Ma_khoa_hoc</td>
+                        <td>@item.Ten_khoa_hoc</td>
+                        <td>@item.Mo_ta</td>
+                        <td>@item.Hoc_phi</td>
+                        <td>@item.Nguon_anh</td>
+                        <td colspan="2" style="display:inline-flex">
+                            <a>@Html.ActionLink("Sửa", "Edit_Course_Infor", "HomeAdmin", new { area = "Admin", maKhoaHoc = @item.Ma_khoa_hoc }, new { @class = "btn btn-primary" })</a>
+                            <form id="form-delete-@item.Ma_khoa_hoc" action="@Url.Action("Delete_Course_Infor", "HomeAdmin", new { area = "Admin" })" method="post">
+                                <input type="hidden" name="maKhoaHoc" value="@item.Ma_khoa_hoc" />
+                                <button type="submit" class="btn btn-danger">Xoá</button>
+                            </form>
+                        </td>
+                    </tr>
                 }
-
             </tbody>
         </table>
 
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Kiểm tra xem có thông báo lỗi không
+        var errorMessage = "@ViewBag.ErrorMessage";
+        if (errorMessage) {
+            
+            $(".alert").show();
+
+            setTimeout(function () {
+                $(".alert").hide();
+            }, 5000);
+        }
+    });
+</script>
+
 
