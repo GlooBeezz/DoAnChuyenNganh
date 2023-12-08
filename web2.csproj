@@ -294,6 +294,9 @@
     <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Teacher.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Teacher_Infor.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Add_Class.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Class_Infor.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Course.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Course_Infor.cshtml" />
     <None Include="Models\.editorconfig" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

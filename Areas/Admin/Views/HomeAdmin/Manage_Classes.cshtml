@@ -9,6 +9,15 @@
         <div class="col display-5" style="text-align:center">Quản lý lớp học</div>
     </div>
     <div class="row pt-5">
+        <div class="col-sm-12 col-md-6 col-xl-6 ">
+            <p>Chọn lớp:</p>
+            <select class="form-select mt-3" id="selkhoahoc" name="selkhoahoc">
+                @foreach (var khoa in db.KhoaHocs.ToList())
+                {
+                    <option value="@khoa.Ma_khoa_hoc">@khoa.Ten_khoa_hoc</option>
+                }
+            </select>
+        </div>
         <div class="col-sm-12 col-md-6 col-xl-6">
             <p>Nhập mã lớp:</p>
             <form class="input-group" method="post" action="@Url.Action("Find_Class", "HomeAdmin", new { area = "Admin" })">
@@ -61,10 +70,10 @@
                         <td>@item.Ngay_ket_thuc_formatted</td>
                         <td>@item.So_tiet_hoc</td>
                         <td colspan="2" style="display:inline-flex">
-                            <a>@Html.ActionLink("Sửa", "Edit_Class_Infor", "HomeAdmin", new { area = "Admin", maLop = item.Ma_lop }, new { @class = "btn btn-primary" })</a>
+                            <a>@Html.ActionLink("Sửa", "Edit_Class_Infor", "HomeAdmin", new { area = "Admin", maLop = @item.Ma_lop }, new { @class = "btn btn-primary" })</a>
                             <form id="form-delete-@item.Ma_lop" action="@Url.Action("Delete_Class_Infor", "HomeAdmin", new { area = "Admin" })" method="post">
-                                <input type="hidden" name="maGiaoVien" value="@item.Ma_lop" />
-                                <button type="submit" class="btn btn-success">Xoá</button>
+                                <input type="hidden" name="maLop" value="@item.Ma_lop" />
+                                <button type="submit" class="btn btn-danger">Xoá</button>
                             </form>
                         </td>
                     </tr>

@@ -1,6 +1,5 @@
 ﻿@model web2.Models.HocVien
 @{
-
     ViewBag.title = "Chỉnh sửa thông tin học viên";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
     web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
@@ -10,7 +9,7 @@
     <div class="col display-5" style="text-align:center">Chỉnh sửa học viên</div>
 </div>
 <Hr />
-<form class="row" action="@Url.Action("Submit_Edit_Teacher_Infor", "HomeAdmin", new { area = "Admin" })" method="post" id="inputForm">
+<form class="row" action="@Url.Action("Submit_Edit_Student_Infor", "HomeAdmin", new { area = "Admin" })" method="post" id="inputForm">
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Mã học viên:</label>
         <input type="text" class="form-control" id="mahv" placeholder="Mã" name="Ma" value="@Model.Ma_hoc_vien" readonly>
@@ -55,7 +54,7 @@
         </select>
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label>Thêm lớp học:</label>
+        <label>Thay đổi lớp học:</label>
         <select class="form-select mt-2" id="sellophv" name="ThemLop">
             <option value="">Nhấn để chọn</option>
             @foreach (var lop in db.LopHocs.ToList())

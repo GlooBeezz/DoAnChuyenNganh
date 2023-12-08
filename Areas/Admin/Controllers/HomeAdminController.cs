@@ -258,7 +258,7 @@ namespace web2.Areas.Admin.Controllers
                     {
                         conn.Open();
                     }
-                    string sql = "DELETE FROM HocVien WHERE Ma_hoc_vien = @Ma_hoc_vien";
+                    string sql = "DELETE FROM HocVien WHERE Ma_hoc_vien = @Ma_hoc_vien DELETE FROM NguoiDung WHERE Ma=@Ma_hoc_vien";
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@Ma_hoc_vien", maHocVien);
@@ -497,7 +497,7 @@ namespace web2.Areas.Admin.Controllers
                         conn.Open();
                     }
 
-                    string sql = "DELETE FROM GiaoVien WHERE Ma_giao_vien = @Ma_giao_vien";
+                    string sql = "DELETE FROM GiaoVien WHERE Ma_giao_vien = @Ma_giao_vien DELETE FROM NguoiDung WHERE Ma=@Ma_giao_vien";
 
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
@@ -648,9 +648,434 @@ namespace web2.Areas.Admin.Controllers
                 TempData["ErrorMessage"] = "Đã xảy ra lỗi khi xóa lớp: " + ex.Message;
             }
 
-            return RedirectToAction("Manage_Teacher");
+            return RedirectToAction("Manage_Classes");
+        }
+        public ActionResult Add_Class()
+        {
+            return View();
+        }
+        public ActionResult Submit_Add_Class(string Ma, string Ten,string MoTa, string Phong, string MaTKB, DateTime NgayBD, DateTime NgayKT, int SoTiet, string KhoaHoc, int? SoLuongHocVien)
+        {
+            SoLuongHocVien = 0;
+            String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+            SqlConnection conn = new SqlConnection(connStr);
+            conn.Open();
+            SqlCommand insertCmd = new SqlCommand(" INSERT INTO LopHoc (Ma_lop, Ma_khoa_hoc, Phong_hoc, So_luong_hoc_vien, Ten_lop_hoc, Mo_ta, Ma_thoi_gian_bieu, Ngay_bat_dau, Ngay_ket_thuc, So_tiet_hoc)\r\n        VALUES (@Ma_lop, @Ma_khoa_hoc, @Phong_hoc, @So_luong_hoc_vien, @Ten_lop_hoc, @Mo_ta, @Ma_thoi_gian_bieu, @Ngay_bat_dau, @Ngay_ket_thuc, @So_tiet_hoc)", conn);
+            insertCmd.Parameters.AddWithValue("@Ma_lop", Ma);
+            insertCmd.Parameters.AddWithValue("@Ma_khoa_hoc", KhoaHoc);
+            insertCmd.Parameters.AddWithValue("@Phong_hoc", Phong);
+            insertCmd.Parameters.AddWithValue("@So_luong_hoc_vien", SoLuongHocVien);
+            insertCmd.Parameters.AddWithValue("Ten_lop_hoc", Ten);
+            insertCmd.Parameters.AddWithValue("@Mo_ta", MoTa);
+            insertCmd.Parameters.AddWithValue("@Ma_thoi_gian_bieu", MaTKB);
+            insertCmd.Parameters.AddWithValue("@Ngay_bat_dau", NgayBD);
+            insertCmd.Parameters.AddWithValue("@Ngay_ket_thuc", NgayKT);
+            insertCmd.Parameters.AddWithValue("@So_tiet_hoc", SoTiet);
+            // Thực hiện câu lệnh INSERT
+            int rowsAffected = insertCmd.ExecuteNonQuery();
+
+            // Kiểm tra xem có bao nhiêu dòng đã được thêm
+            if (rowsAffected > 0)
+            {
+                // Insert thành công
+                TempData["SuccessMessage"] = "Thêm lớp thành công";
+            }
+            else
+            {
+                // Insert không thành công
+                TempData["ErrorMessage"] = "Thêm lớp không thành công";
+            }
+            conn.Close();
+            return RedirectToAction("Manage_Classes");
+        }
+        public ActionResult Edit_Class_Infor(string maLop)
+        {
+            try
+            {
+                string query = "SELECT LopHoc.Ma_lop, LopHoc.Ma_khoa_hoc, LopHoc.Phong_hoc, LopHoc.So_luong_hoc_vien, LopHoc.Ten_lop_hoc, LopHoc.Mo_ta, LopHoc.Ma_thoi_gian_bieu, LopHoc.Ngay_bat_dau, LopHoc.Ngay_ket_thuc, LopHoc.So_tiet_hoc FROM LopHoc WHERE Ma_lop = @Ma_lop";
+                SqlParameter parameter = new SqlParameter("@Ma_lop", maLop);
+                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+                DataAccess dataAccess = new DataAccess(connStr);
+                DataTable dataTable = dataAccess.ExecuteQuery(query, new SqlParameter[] { parameter });
+
+                if (dataTable.Rows.Count > 0)
+                {
+                    DataRow row = dataTable.Rows[0];
+                    LopHoc lopHoc = new LopHoc
+                    {
+                        Ma_lop = row["Ma_lop"].ToString(),
+                        Ma_khoa_hoc = row["Ma_khoa_hoc"].ToString(),
+                        Phong_hoc = row["Phong_hoc"].ToString(),
+                        So_luong_hoc_vien = Convert.ToInt32(row["So_luong_hoc_vien"]),
+                        Ten_lop_hoc = row["Ten_lop_hoc"].ToString(),
+                        Mo_ta = row["Mo_ta"].ToString(),
+                        Ma_thoi_gian_bieu = row["Ma_thoi_gian_bieu"].ToString(),
+                        Ngay_bat_dau = (DateTime)row["Ngay_bat_dau"],
+                        Ngay_ket_thuc = (DateTime)row["Ngay_ket_thuc"],
+                        So_tiet_hoc = Convert.ToInt32(row["So_tiet_hoc"])
+                        
+                    };
+                    return View("Edit_Class_Infor", lopHoc);
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Không tìm thấy lớp học";
+                    return RedirectToAction("Manage_Classes");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
+                return RedirectToAction("Manage_Classes");
+            }
+        }
+        [HttpPost]
+        public ActionResult Submit_Edit_Class_Infor(string Ma, string Ten, string Phong, string MoTa, string MaTKB, DateTime NgayBD, DateTime? NgayBDNew, DateTime NgayKT, DateTime? NgayKTNew, int SoTiet, string KhoaHoc, string KhoaHocNew)
+        {
+            try
+            {
+                string updateLopHocQuery = "UPDATE LopHoc SET Ma_khoa_hoc = @Ma_khoa_hoc, Phong_hoc = @Phong_hoc, Ten_lop_hoc = @Ten_lop_hoc, Mo_ta = @Mo_ta, Ma_thoi_gian_bieu = @Ma_thoi_gian_bieu, Ngay_bat_dau = @Ngay_bat_dau, Ngay_ket_thuc = @Ngay_ket_thuc, So_tiet_hoc = @So_tiet_hoc WHERE Ma_lop = @Ma_lop";
+                System.Diagnostics.Debug.WriteLine("B1");
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@Ma_lop", Ma),
+                    new SqlParameter("@Ma_khoa_hoc", KhoaHocNew != null ? KhoaHocNew : KhoaHoc),
+                    new SqlParameter("@Phong_hoc", Phong),
+                    new SqlParameter("@Ten_lop_hoc", Ten),
+                    new SqlParameter("@Mo_ta", MoTa),
+                    new SqlParameter("@Ma_thoi_gian_bieu", MaTKB),
+                    new SqlParameter("@Ngay_bat_dau", NgayBDNew != null ? NgayBDNew : NgayBD),
+                    new SqlParameter("@Ngay_ket_thuc", NgayKTNew != null ? NgayKTNew : NgayKT),
+                    //new SqlParameter("@Ngay_bat_dau", NgayBDNew != null ? NgayBDNew : DateTime.ParseExact(NgayBD, "dd/MM/yyyy", CultureInfo.InvariantCulture)),
+                    //new SqlParameter("@Ngay_ket_thuc", NgayKTNew != null ? NgayKTNew : DateTime.ParseExact(NgayKT, "dd/MM/yyyy", CultureInfo.InvariantCulture)),
+                    new SqlParameter("@So_tiet_hoc", SoTiet)
+                };
+                System.Diagnostics.Debug.WriteLine("B2");
+                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+                DataAccess dataAccess = new DataAccess(connStr);
+                System.Diagnostics.Debug.WriteLine("B3");
+                // Thực hiện UPDATE cho bảng LopHoc
+                int rowsAffected = dataAccess.ExecuteNonQuery(updateLopHocQuery, parameters);
+                System.Diagnostics.Debug.WriteLine("B4");
+                if (rowsAffected > 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("B4.1");
+                    TempData["SuccessMessage"] = "Cập nhật thông tin lớp học thành công";
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("B4.2");
+                    TempData["ErrorMessage"] = "Cập nhật thông tin lớp học không thành công";
+                }
+                System.Diagnostics.Debug.WriteLine("B5");
+                return RedirectToAction("Manage_Classes");
+            }
+            catch (SqlException sqlEx)
+            {
+                System.Diagnostics.Debug.WriteLine("SQL Exception: " + sqlEx.Message);
+                foreach (SqlError error in sqlEx.Errors)
+                {
+                    System.Diagnostics.Debug.WriteLine("Error " + error.Number + ": " + error.Message);
+                }
+
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + sqlEx.Message;
+                return RedirectToAction("Manage_Classes");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("out");
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
+                return RedirectToAction("Manage_Classes");
+            }
+        }
+        public ActionResult Find_Class(string maLopInput)
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("B1");
+                System.Diagnostics.Debug.WriteLine(maLopInput);
+                var dsLopHoc = new List<LopHoc>();
+                string query = "SELECT LopHoc.Ma_lop, LopHoc.Ma_khoa_hoc, LopHoc.Phong_hoc, LopHoc.So_luong_hoc_vien, LopHoc.Ten_lop_hoc, LopHoc.Mo_ta, LopHoc.Ma_thoi_gian_bieu, LopHoc.Ngay_bat_dau, LopHoc.Ngay_ket_thuc, LopHoc.So_tiet_hoc FROM LopHoc WHERE Ma_lop = @Ma_lop";
+                SqlParameter parameter = new SqlParameter("@Ma_lop", maLopInput);
+                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+                DataAccess dataAccess = new DataAccess(connStr);
+                DataTable dataTable = dataAccess.ExecuteQuery(query, new SqlParameter[] { parameter });
+                System.Diagnostics.Debug.WriteLine("B2");
+                if (dataTable.Rows.Count > 0)
+                {
+                    DataRow row = dataTable.Rows[0];
+                    System.Diagnostics.Debug.WriteLine("B2.1");
+                    LopHoc lopHoc = new LopHoc
+                    {
+                        Ma_lop = row["Ma_lop"].ToString(),
+                        Ma_khoa_hoc = row["Ma_khoa_hoc"].ToString(),
+                        Phong_hoc = row["Phong_hoc"].ToString(),
+                        So_luong_hoc_vien = (int)row["So_luong_hoc_vien"],
+                        Ten_lop_hoc = row["Ten_lop_hoc"].ToString(),
+                        Mo_ta = row["Mo_ta"].ToString(),
+                        Ma_thoi_gian_bieu = row["Ma_thoi_gian_bieu"].ToString(),
+                        Ngay_bat_dau = (DateTime)row["Ngay_bat_dau"],
+                        Ngay_ket_thuc = (DateTime)row["Ngay_ket_thuc"],
+                        So_tiet_hoc = (int)row["So_tiet_hoc"]
+                    };
+                    dsLopHoc.Add(lopHoc);
+                    System.Diagnostics.Debug.WriteLine("B2.2");
+                    return View("Manage_Classes", dsLopHoc);
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("B3");
+                    TempData["ErrorMessage"] = "Không tìm thấy lớp học";
+                    return RedirectToAction("Manage_Classes");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("B4");
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
+                return RedirectToAction("Manage_Classes");
+            }
         }
 
+        //Khoá học
+
+        public ActionResult Manage_Course()
+        {
+            System.Diagnostics.Debug.WriteLine("B1");
+            var dsKhoaHoc = new List<KhoaHoc>();
+            SqlConnection conn = null;
+
+            try
+            {
+                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+                conn = new SqlConnection(connStr);
+                conn.Open();
+                System.Diagnostics.Debug.WriteLine("B2");
+                SqlCommand Cmd = new SqlCommand("SELECT * FROM   KhoaHoc ", conn);
+                SqlDataReader dr = Cmd.ExecuteReader();
+                System.Diagnostics.Debug.WriteLine("B3");
+
+                while (dr.Read())
+                {
+                    System.Diagnostics.Debug.WriteLine("B4");
+                    KhoaHoc khoaHoc = new KhoaHoc
+                    {
+                        Ma_khoa_hoc = dr["Ma_khoa_hoc"].ToString(),
+                        Ten_khoa_hoc = dr["Ten_khoa_hoc"].ToString(),
+                        Mo_ta = dr["Mo_ta"].ToString(),
+                        Hoc_phi = Convert.ToDecimal(dr["Hoc_phi"]),
+                        Nguon_anh = dr["Nguon_anh"].ToString()
+                    };
+                    //System.Diagnostics.Debug.WriteLine($"Ma_khoa_hoc: {khoaHoc.Ma_khoa_hoc}, Ten_khoa_hoc: {khoaHoc.Ten_khoa_hoc}, Mo_ta: {khoaHoc.Mo_ta}, Hoc_phi: {khoaHoc.Hoc_phi}, Nguon_anh: {khoaHoc.Nguon_anh}");
+                    dsKhoaHoc.Add(khoaHoc);
+                }
+                System.Diagnostics.Debug.WriteLine("B5");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Exception: " + ex.Message);
+            }
+            finally
+            {
+                if (conn != null && conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+            return View(dsKhoaHoc);
+        }
+
+
+        [HttpPost]
+        public ActionResult Delete_Course_Infor(string maKhoaHoc)
+        {
+            maKhoaHoc = maKhoaHoc.Trim();
+            try
+            {
+                if (string.IsNullOrEmpty(maKhoaHoc))
+                {
+                    TempData["ErrorMessage"] = "Mã khóa học không hợp lệ";
+                    return RedirectToAction("Manage_Teacher");
+                }
+
+                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+
+                using (SqlConnection conn = new SqlConnection(connStr))
+                {
+                    if (conn.State == ConnectionState.Closed)
+                    {
+                        conn.Open();
+                    }
+
+                    string sql = "DELETE FROM KhoaHoc WHERE Ma_khoa_hoc = @Ma_khoa_hoc";
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Ma_khoa_hoc", maKhoaHoc);
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            TempData["SuccessMessage"] = "Xóa khóa học thành công";
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = "Không tìm thấy khóa học để xóa";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi khi xóa khóa học: " + ex.Message;
+            }
+
+            return RedirectToAction("Manage_Classes");
+        }
+
+        public ActionResult Add_Course()
+        {
+            return View();
+        }
+
+        public ActionResult Submit_Add_Class(string Ma, string Ten, string MoTa, decimal HocPhi, string NguonAnh)
+        {
+            String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+            SqlConnection conn = new SqlConnection(connStr);
+            conn.Open();
+            SqlCommand insertCmd = new SqlCommand("INSERT INTO KhoaHoc (Ma_khoa_hoc, Ten_khoa_hoc, Mo_ta, Hoc_phi, Nguon_anh)\r\nVALUES (@Ma_khoa_hoc, @Ten_khoa_hoc, @Mo_ta, @Hoc_phi, @Nguon_anh)", conn);
+            insertCmd.Parameters.AddWithValue("@Ma_khoa_hoc", Ma);
+            insertCmd.Parameters.AddWithValue("@Ten_khoa_hoc", Ten);
+            insertCmd.Parameters.AddWithValue("@Mo_ta", MoTa);
+            insertCmd.Parameters.AddWithValue("@Hoc_phi", HocPhi);
+            insertCmd.Parameters.AddWithValue("@Nguon_anh", NguonAnh);
+            int rowsAffected = insertCmd.ExecuteNonQuery();
+
+            if (rowsAffected > 0)
+            {
+                TempData["SuccessMessage"] = "Thêm khóa học thành công";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Thêm khóa học không thành công";
+            }
+            conn.Close();
+            return RedirectToAction("Manage_Classes");
+        }
+
+        public ActionResult Edit_Course_Infor(string maKhoaHoc)
+        {
+            try
+            {
+                string query = "SELECT KhoaHoc.Ma_khoa_hoc, KhoaHoc.Ten_khoa_hoc, KhoaHoc.Mo_ta, KhoaHoc.Hoc_phi, KhoaHoc.Nguon_anh FROM KhoaHoc WHERE Ma_khoa_hoc = @Ma_khoa_hoc";
+                SqlParameter parameter = new SqlParameter("@Ma_khoa_hoc", maKhoaHoc);
+                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+                DataAccess dataAccess = new DataAccess(connStr);
+                DataTable dataTable = dataAccess.ExecuteQuery(query, new SqlParameter[] { parameter });
+
+                if (dataTable.Rows.Count > 0)
+                {
+                    DataRow row = dataTable.Rows[0];
+                    KhoaHoc khoaHoc = new KhoaHoc
+                    {
+                        Ma_khoa_hoc = row["Ma_khoa_hoc"].ToString(),
+                        Ten_khoa_hoc = row["Ten_khoa_hoc"].ToString(),
+                        Mo_ta = row["Mo_ta"].ToString(),
+                        Hoc_phi = Convert.ToDecimal(row["Hoc_phi"]),
+                        Nguon_anh = row["Nguon_anh"].ToString()
+                    };
+                    return View("Edit_Class_Infor", khoaHoc);
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Không tìm thấy khóa học";
+                    return RedirectToAction("Manage_Classes");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
+                return RedirectToAction("Manage_Classes");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Submit_Edit_Course_Infor(string Ma, string Ten, string MoTa, decimal HocPhi, string NguonAnh)
+        {
+            try
+            {
+                string updateKhoaHocQuery = "UPDATE KhoaHoc SET Ten_khoa_hoc = @Ten_khoa_hoc, Mo_ta = @Mo_ta, Hoc_phi = @Hoc_phi, Nguon_anh = @Nguon_anh WHERE Ma_khoa_hoc = @Ma_khoa_hoc";
+                SqlParameter[] parameters =
+                {
+            new SqlParameter("@Ma_khoa_hoc", Ma),
+            new SqlParameter("@Ten_khoa_hoc", Ten),
+            new SqlParameter("@Mo_ta", MoTa),
+            new SqlParameter("@Hoc_phi", HocPhi),
+            new SqlParameter("@Nguon_anh", NguonAnh)
+        };
+                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+                DataAccess dataAccess = new DataAccess(connStr);
+                int rowsAffected = dataAccess.ExecuteNonQuery(updateKhoaHocQuery, parameters);
+
+                if (rowsAffected > 0)
+                {
+                    TempData["SuccessMessage"] = "Cập nhật thông tin khóa học thành công";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Cập nhật thông tin khóa học không thành công";
+                }
+                return RedirectToAction("Manage_Classes");
+            }
+            catch (SqlException sqlEx)
+            {
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + sqlEx.Message;
+                return RedirectToAction("Manage_Classes");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
+                return RedirectToAction("Manage_Classes");
+            }
+        }
+
+        public ActionResult Find_Course(string maKhoaHocInput)
+        {
+            try
+            {
+                var dsKhoaHoc = new List<KhoaHoc>();
+                string query = "SELECT KhoaHoc.Ma_khoa_hoc, KhoaHoc.Ten_khoa_hoc, KhoaHoc.Mo_ta, KhoaHoc.Hoc_phi, KhoaHoc.Nguon_anh FROM KhoaHoc WHERE Ma_khoa_hoc = @Ma_khoa_hoc";
+                SqlParameter parameter = new SqlParameter("@Ma_khoa_hoc", maKhoaHocInput);
+                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+                DataAccess dataAccess = new DataAccess(connStr);
+                DataTable dataTable = dataAccess.ExecuteQuery(query, new SqlParameter[] { parameter });
+
+                if (dataTable.Rows.Count > 0)
+                {
+                    DataRow row = dataTable.Rows[0];
+                    KhoaHoc khoaHoc = new KhoaHoc
+                    {
+                        Ma_khoa_hoc = row["Ma_khoa_hoc"].ToString(),
+                        Ten_khoa_hoc = row["Ten_khoa_hoc"].ToString(),
+                        Mo_ta = row["Mo_ta"].ToString(),
+                        Hoc_phi = Convert.ToDecimal(row["Hoc_phi"]),
+                        Nguon_anh = row["Nguon_anh"].ToString()
+                    };
+                    dsKhoaHoc.Add(khoaHoc);
+                    return View("Manage_Classes", dsKhoaHoc);
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Không tìm thấy khóa học";
+                    return RedirectToAction("Manage_Classes");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
+                return RedirectToAction("Manage_Classes");
+            }
+        }
 
     }
 
