@@ -8,6 +8,14 @@
     <div class="col display-5" style="text-align:center">Thêm học viên</div>
 </div>
 <Hr />
+<div class="row">
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="alert alert-danger text-center" role="alert" style="font-size:24px; display:none">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+</div>
 <form class="row" action="@Url.Action("Submit_Add_Student", "HomeAdmin", new { area = "Admin" })" id="inputForm">
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Mã học viên:</label>
@@ -96,6 +104,14 @@
                 }
             });
         });
+        var errorMessage = "@ViewBag.ErrorMessage";
+        if (errorMessage) {
+            $(".alert").show();
+
+            setTimeout(function () {
+                $(".alert").hide();
+            }, 5000);
+        }
     });
 </script>
 
