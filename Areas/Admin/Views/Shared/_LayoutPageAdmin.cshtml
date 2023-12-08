@@ -38,16 +38,16 @@
                         </a>
                         <ul id="pages" class="sidebar-dropdown list-unstyled collapse bg-white" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link text-black">Học viên</a>
+                                <a href="@Url.Action("Manage_Student", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Học viên</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link text-black">Giáo viên</a>
+                                <a href="@Url.Action("Manage_Teacher", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Giáo viên</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link text-black">Lớp học</a>
+                                <a href="@Url.Action("Manage_Classes", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Lớp học</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link text-black">Khoá học</a>
+                                <a href="@Url.Action("Manage_Course", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Khoá học</a>
                             </li>
                         </ul>
                     </li>

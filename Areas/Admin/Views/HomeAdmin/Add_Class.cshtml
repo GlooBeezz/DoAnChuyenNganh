@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Thêm lớp học";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+    web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
 }
 <div class="row">
     <div class="col display-5" style="text-align:center">Thêm lớp học</div>
@@ -21,57 +22,36 @@
         <input type="text" class="form-control" id="mota" placeholder="Mô tả" name="MoTa">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Email:</label>
-        <input type="text" class="form-control" id="email" placeholder="Email" name="Email">
+        <label for="" class="form-label">Phòng học:</label>
+        <input type="text" class="form-control" id="phong" placeholder="Phòng học" name="Phong">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Địa chỉ:</label>
-        <input type="text" class="form-control" id="diachi" placeholder="Địa chỉ" name="DiaChi">
+        <label for="" class="form-label">Mã thời khoá biểu:</label>
+        <input type="text" class="form-control" id="matkb" placeholder="Mã thời khoá biểu" name="MaTKB">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Tài khoản:</label>
-        <input type="text" class="form-control" id="tk" placeholder="Tài khoản" name="TaiKhoan">
+        <label for="" class="form-label">Ngày bắt đầu:</label>
+        <input type="date" class="form-control" id="ngaybd" name="NgayBD">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Mật khẩu:</label>
-        <input type="text" class="form-control" id="mk" placeholder="Mật khẩu" name="MatKhau">
+        <label for="" class="form-label">Ngày kết thúc:</label>
+        <input type="date" class="form-control" id="ngaykt" name="NgayKT">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label>Phân quyền:</label>
-        <select class="form-select mt-2" id="selphanquyen" name="PhanQuyen">
+        <label for="" class="form-label">Số tiết:</label>
+        <input type="number" class="form-control" id="sotiet" placeholder="Số tiết học" name="SoTiet">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label>Khoá học:</label>
+        <select class="form-select mt-2" id="selkhoa" name="KhoaHoc">
             <option value="">Nhấn để chọn</option>
-            <option value="false">Giáo viên</option>
-        </select>
-    </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label>Lớp học tham gia giảng dạy:</label>
-        <select class="form-select mt-2" id="sellopgv" name="Lop">
-            <option value="">Nhấn để chọn</option>
-            @foreach (var lop in db.LopHocs.ToList())
+            @foreach (var khoa in db.KhoaHocs.ToList())
             {
-                <option value="@lop.Ma_lop">@lop.Ten_lop_hoc</option>
+                <option value="@khoa.Ma_khoa_hoc">@khoa.Ten_khoa_hoc</option>
             }
         </select>
     </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label>Chuyên môn:</label>
-        <select class="form-select mt-2" id="selChuyenMon" name="ChuyenMon">
-            <option value="">Nhấn để chọn</option>
-            <option value="Piano">Piano</option>
-            <option value="Organ">Organ</option>
-            <option value="Cajun">Cajun</option>
-            <option value="Guitar">Guitar</option>
-        </select>
-    </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Mã Bảng Lương:</label>
-        <input type="text" class="form-control" id="BangLuong" placeholder="Mã bảng lương" name="MaBangLuong">
-    </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Lương cơ bản:</label>
-        <input type="number" class="form-control" id="LuongCoBan" placeholder="Lương cơ bản" name="LuongCoBan">
-    </div>
-    <br />
+    <hr />
     <div class="row d-grid gap-2">
         <input class="btn btn-success" type="submit" name="submit" value="Lưu">
     </div>
