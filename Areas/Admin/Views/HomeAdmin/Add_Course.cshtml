@@ -1,8 +1,96 @@
-﻿
-@{
-    ViewBag.Title = "Add_Course";
+﻿@{
+    ViewBag.Title = "Thêm khoá học";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+    web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
+
 }
 
-<h2>Add_Course</h2>
+<div class="row">
+    <div class="col display-5" style="text-align:center">Thêm khoá học</div>
+</div>
+<hr />
+<div class="row">
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="alert alert-danger text-center" role="alert" style="font-size:24px; display:none">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+</div>
+<form class="row" action="@Url.Action("Submit_Add_Course", "HomeAdmin", new { area = "Admin" })" id="inputForm">
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="ma" class="form-label">Mã khoá học:</label>
+        <input type="text" class="form-control" id="ma" placeholder="Mã" name="Ma" value="@Html.Raw(ViewData["Ma"])">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="ten" class="form-label">Tên khoá học:</label>
+        <input type="text" class="form-control" id="ten" placeholder="Tên" name="Ten" value="@Html.Raw(ViewData["Ten"])">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="mota" class="form-label">Mô tả khoá học:</label>
+        <input type="text" class="form-control" id="mota" placeholder="Mô tả" name="MoTa" value="@Html.Raw(ViewData["MoTa"])">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="hocphi" class="form-label">Học phí:</label>
+        <input type="number" class="form-control" id="hocphi" placeholder="VND" name="HocPhi" value="@Html.Raw(ViewData["HocPhi"])">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3 ">
+        <label for="nguon_anh" class="form-label">Chọn Ảnh:</label>
+        <input type="file" id="nguon_anh" name="NguonAnh" accept="image/*" class="form-control" value="@Html.Raw(ViewData["NguonAnh"])">
+    </div>
+    <hr />
+    <div class="row d-grid gap-2">
+        <input class="btn btn-success" type="submit" name="submit" value="Lưu">
+    </div>
+</form>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var form = document.getElementById('inputForm');
+        form.addEventListener('submit', function (event) {
+            var checkInputs = document.getElementById('inputForm').querySelectorAll('input');
+            var checkSelects = document.getElementById('inputForm').querySelectorAll('select');
+
+            checkInputs.forEach(function (input) {
+                if (input.value.trim() === "") {
+                    event.preventDefault();
+                    input.classList.add('is-invalid');
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+            checkSelects.forEach(function (select) {
+                if (select.value.trim() === "") {
+                    event.preventDefault();
+                    select.classList.add('is-invalid');
+                } else {
+                    select.classList.remove('is-invalid');
+                }
+            });
+        });
+        var errorMessage = "@ViewBag.ErrorMessage";
+        if (errorMessage) {
+            $(".alert").show();
+
+            setTimeout(function () {
+                $(".alert").hide();
+            }, 5000);
+        }
+    });
+    document.getElementById('nguon_anh').addEventListener('change', function (event) {
+        var fileInput = event.target;
+
+        if (fileInput.files.length > 0) {
+            var selectedFile = fileInput.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var imageData = e.target.result;
+                console.log(imageData); // Dữ liệu ảnh dưới dạng chuỗi base64
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
+    });
+</script>
