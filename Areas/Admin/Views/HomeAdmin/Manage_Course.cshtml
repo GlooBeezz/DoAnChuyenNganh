@@ -44,8 +44,8 @@
             </thead>
             <tbody>
                 @{
-                    if (Model != null)
-                    {
+                    if(Model != null){
+
                         foreach (var item in Model)
                         {
                             <tr>
@@ -63,8 +63,13 @@
                                 </td>
                             </tr>
                         }
+
+                    }else{
+                        <h1>eeeee</h1>
+
                     }
                 }
+
             </tbody>
         </table>
 

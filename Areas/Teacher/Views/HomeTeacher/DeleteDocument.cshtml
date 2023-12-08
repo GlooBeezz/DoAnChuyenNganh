@@ -1,5 +1,30 @@
-﻿@{
+﻿@model web2.Models.TaiLieu
+@{
     Layout = "~/Areas/Teacher/Views/Shared/_LayoutPageTeacher.cshtml";
 }
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Thêm các thiết lập cần thiết cho trang xóa tài liệu -->
+</head>
+<body>
+    <h2>Xóa Tài liệu</h2>
 
+    @using (Html.BeginForm("ProcessDeleteDocument", "HomeTeacher", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.Ma_tai_lieu) <!-- Add this line -->
+
+        <div class="form-group">
+            <label for="Ma_tai_lieu">Mã tài liệu:</label>
+            @Html.DisplayFor(model => model.Ma_tai_lieu)
+        </div>
+
+        <p>Bạn có chắc chắn muốn xóa tài liệu này?</p>
+
+        <button type="submit" class="btn btn-danger">Xóa</button>
+    }
+</body>
+</html>
