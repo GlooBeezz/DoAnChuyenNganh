@@ -144,16 +144,12 @@
     <Compile Include="Areas\Admin\Data\DanhSachHocViencs.cs" />
     <Compile Include="Areas\Admin\Data\DataAccess.cs" />
     <Compile Include="Areas\Admin\Data\HocVienManage.cs" />
- 
     <Compile Include="Areas\Admin\Data\hocVienManage.cs" />
-    <Compile Include="Areas\Student\Data\DanhSachKhoaHoc.cs" />
-    <Compile Include="Areas\Student\Data\KhoaHocManage.cs" />
     <Compile Include="Areas\Student\Controllers\HomeStudentController.cs" />
     <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Areas\Teacher\Controllers\HomeTeacherController.cs" />
     <Compile Include="Areas\Teacher\TeacherAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminshowController.cs" />
-
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -272,11 +268,8 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutPageAdmin.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Student.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Teacher.cshtml" />
     <Content Include="Areas\Student\Views\web.config" />
     <Content Include="Areas\Teacher\Views\web.config" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Classes.cshtml" />
     <EntityDeploy Include="Models\Modeladmin.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Modeladmin.Designer.cs</LastGenOutput>
@@ -284,24 +277,26 @@
     <Content Include="Models\Modeladmin.edmx.diagram">
       <DependentUpon>Modeladmin.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Student.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Classes.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Teacher.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Course.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Teacher_Infor.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Student_Infor.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Class.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Class_Infor.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Course.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Student.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Teacher.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Course_Infor.cshtml" />
     <Content Include="Areas\Teacher\Views\Shared\_LayoutPageTeacher.cshtml" />
     <Content Include="Areas\Teacher\Views\HomeTeacher\Index.cshtml" />
     <Content Include="Areas\Teacher\Views\HomeTeacher\Manage_Classes.cshtml" />
     <Content Include="Areas\Teacher\Views\HomeTeacher\Manage_Document.cshtml" />
     <Content Include="Areas\Teacher\Views\HomeTeacher\Manage_Schedule.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Student_Infor.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Student.cshtml" />
     <Content Include="Areas\Teacher\Views\HomeTeacher\AddDocument.cshtml" />
     <Content Include="Areas\Teacher\Views\HomeTeacher\EditDocument.cshtml" />
     <Content Include="Areas\Teacher\Views\HomeTeacher\DeleteDocument.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Teacher.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Teacher.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Teacher_Infor.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Class.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Class_Infor.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Course.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Course_Infor.cshtml" />
     <None Include="Models\.editorconfig" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -343,9 +338,6 @@
     <None Include="Views\Home\style\.editorconfig" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Models\" />
     <Folder Include="App_Data\App_LocalResources\" />
     <Folder Include="Areas\Student\Data\" />
     <Folder Include="Areas\Student\Views\HomeStudent\" />
