@@ -41,91 +41,147 @@ namespace web2.Areas.Student.Controllers
         {
             return View();
         }
-        public ActionResult CourseStudent(string courseId, string register = "")
+        public ActionResult CourseStudent(string courseId)
         {
-
             if (!string.IsNullOrEmpty(courseId))
             {
-                KhoaHoc khoahoc = GetCourseInformation(courseId);
+                List<KhoaHoc> khoahocs = GetCourseInformationList(courseId);
 
-                if (khoahoc == null)
+                if (khoahocs == null)
                 {
-
                     return HttpNotFound();
                 }
-                return View("CourseStudent",khoahoc);
+                return View("CourseStudent", khoahocs);
             }
-            return RedirectToAction("Error");
+            // Cần chỉ định một URL cụ thể để chuyển hướng sau khi đăng ký thành công.
+            return RedirectToAction("CourseDetail", "ControllerName", new { courseId = courseId });
         }
-        private KhoaHoc GetCourseInformation(string courseId)
+        public List<KhoaHoc> GetCourseInformationList(string courseId)
         {
-            KhoaHoc khoahoc = null;
+            List<KhoaHoc> courses = new List<KhoaHoc>();
             string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities3"].ConnectionString;
-
-            using (SqlConnection conn = new SqlConnection(connStr))
+            try
             {
-                conn.Open();
-                string query = "SELECT Ma_khoa_hoc, Ten_khoa_hoc, Mo_ta, Hoc_phi, Nguon_anh FROM KhoaHoc WHERE Ma_khoa_hoc = @CourseId";
-
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlConnection conn = new SqlConnection(connStr))
                 {
-                    cmd.Parameters.AddWithValue("@CourseId", courseId);
+                    conn.Open();
+                    string query = "SELECT Ma_khoa_hoc, Ten_khoa_hoc, Mo_ta, Hoc_phi, Nguon_anh FROM KhoaHoc WHERE Ma_khoa_hoc = @CourseId";
 
-                    using (SqlDataReader rd = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        if (rd.Read())
+                        cmd.Parameters.AddWithValue("@CourseId", courseId);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            khoahoc = new KhoaHoc
+                            while (reader.Read())
                             {
-                                Ma_khoa_hoc = rd["Ma_khoa_hoc"].ToString(),
-                                Ten_khoa_hoc = rd["Ten_khoa_hoc"].ToString(),
-                                Mo_ta = rd["Mo_ta"].ToString(),
-                                Hoc_phi = Convert.ToDecimal(rd["Hoc_phi"]),
-                                Nguon_anh = rd["Nguon_anh"].ToString()
-                            };
+                                KhoaHoc khoahoc = new KhoaHoc
+                                {
+                                    Ma_khoa_hoc = reader["Ma_khoa_hoc"].ToString(),
+                                    Ten_khoa_hoc = reader["Ten_khoa_hoc"].ToString(),
+                                    Mo_ta = reader["Mo_ta"].ToString(),
+                                    Hoc_phi = Convert.ToDecimal(reader["Hoc_phi"]),
+                                    Nguon_anh = reader["Nguon_anh"].ToString()
+                                };
+
+                                courses.Add(khoahoc);
+                            }
                         }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                // Xử lý exception tại đây, ví dụ: Log lỗi hoặc thông báo lỗi
+                Console.WriteLine(ex.Message);
+            }
 
-            return khoahoc;
+            return courses;
         }
-        //ham truy vấn dữ liệu KHóa học
+        //private KhoaHoc GetCourseInformation(string courseId)
+        //{
+        //    KhoaHoc khoahoc = null;
+        //    string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities3"].ConnectionString;
+        //    try
+        //    {
+        //        using (SqlConnection conn = new SqlConnection(connStr))
+        //        {
+        //            conn.Open();
+        //            string query = "SELECT Ma_khoa_hoc, Ten_khoa_hoc, Mo_ta, Hoc_phi, Nguon_anh FROM KhoaHoc WHERE Ma_khoa_hoc = @CourseId";
+
+        //            using (SqlCommand cmd = new SqlCommand(query, conn))
+        //            {
+        //                cmd.Parameters.AddWithValue("@CourseId", courseId);
+
+        //                using (SqlDataReader rd = cmd.ExecuteReader())
+        //                {
+        //                    if (rd.Read())
+        //                    {
+        //                        khoahoc = new KhoaHoc
+        //                        {
+        //                            Ma_khoa_hoc = rd["Ma_khoa_hoc"].ToString(),
+        //                            Ten_khoa_hoc = rd["Ten_khoa_hoc"].ToString(),
+        //                            Mo_ta = rd["Mo_ta"].ToString(),
+        //                            Hoc_phi = Convert.ToDecimal(rd["Hoc_phi"]),
+        //                            Nguon_anh = rd["Nguon_anh"].ToString()
+        //                        };
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch ( Exception ex)   
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //    }
+          
+
+        //    return khoahoc;
+        //}
+        //public ActionResult Register(string maKhoaHoc)
+        //{
+        //    // Lưu trữ khóa học vào session
+        //    Session["MaKhoaHoc"] = maKhoaHoc;
+
+        //    // Trở về trang CourseStudent
+        //    return RedirectToAction("CourseStudent");
+        //}
+        ////ham truy vấn dữ liệu KHóa học
         private List<KhoaHoc> GetCoursesList()
-        {
-            List<KhoaHoc> dsKH = new List<KhoaHoc>();
-
-            string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities3"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connStr))
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT Ma_khoa_hoc,Ten_khoa_hoc,Mo_ta,  Hoc_phi,  Nguon_anh  FROM KhoaHoc", conn))
+                List<KhoaHoc> dsKH = new List<KhoaHoc>();
+
+                string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities3"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connStr))
                 {
-                    using (SqlDataReader rd = cmd.ExecuteReader())
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SELECT Ma_khoa_hoc,Ten_khoa_hoc,Mo_ta,  Hoc_phi,  Nguon_anh  FROM KhoaHoc", conn))
                     {
-                        while (rd.Read())
+                        using (SqlDataReader rd = cmd.ExecuteReader())
                         {
-                            KhoaHoc kh = new KhoaHoc
+                            while (rd.Read())
                             {
-                                Ma_khoa_hoc = rd["Ma_Khoa_Hoc"].ToString(),
-                                Ten_khoa_hoc = rd["Ten_Khoa_Hoc"].ToString(),
-                                Mo_ta = rd["Mo_Ta"].ToString(),
-                                Hoc_phi = Convert.ToDecimal(rd["Hoc_Phi"]),
-                                Nguon_anh = rd["Nguon_Anh"].ToString()
-                            };
-                            dsKH.Add(kh);
+                                KhoaHoc kh = new KhoaHoc
+                                {
+                                    Ma_khoa_hoc = rd["Ma_Khoa_Hoc"].ToString(),
+                                    Ten_khoa_hoc = rd["Ten_Khoa_Hoc"].ToString(),
+                                    Mo_ta = rd["Mo_Ta"].ToString(),
+                                    Hoc_phi = Convert.ToDecimal(rd["Hoc_Phi"]),
+                                    Nguon_anh = rd["Nguon_Anh"].ToString()
+                                };
+                                dsKH.Add(kh);
+                            }
                         }
                     }
                 }
+
+                return dsKH;
             }
+            public ActionResult StudyStudent()
+            {
+                List<KhoaHoc> dsKH = GetCoursesList(); // Lấy danh sách khóa học lên trang StudyStudent
 
-            return dsKH;
-        }
-        public ActionResult StudyStudent()
-        {
-            List<KhoaHoc> dsKH = GetCoursesList(); // Lấy danh sách khóa học lên trang StudyStudent
-
-            return View("StudyStudent",dsKH);
-        }
+                return View("StudyStudent",dsKH);
+            }
     }
 }

@@ -1,10 +1,10 @@
-﻿    @model List<web2.Models.KhoaHoc>
-    @{
-        ViewBag.Title = "StudyStudent";
-        Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
-        ViewBag.Active = "studystudent";
-        web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
-    }
+﻿@model List<web2.Models.KhoaHoc>
+@{
+    ViewBag.Title = "StudyStudent";
+    Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+    ViewBag.Active = "studystudent";
+    web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +51,7 @@
                             <div class="card-footer d-flex justify-content-between">
                                 <div> <p class="card-text">Học Phí: @kh.Hoc_phi$</p></div>
                                 <div style="float: right;">
-                                    <a href="#" class="btn btn-outline-warning rounded-0 registerButton" data-course-id="@kh.Ma_khoa_hoc">Đăng Ký</a>
+                                    <button class="btn btn-outline-warning rounded-0 registerButton" data-course-id="@kh.Ma_khoa_hoc">Đăng Ký</button>
                                 </div>
 
                             </div>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
             }
-        <script>
+            <script>
                  var registerButtons = document.querySelectorAll('.registerButton');
                    registerButtons.forEach(function(button) {
                     button.addEventListener('click', function(event) {
@@ -76,9 +76,9 @@
                     }
                        });
                     });
-        </script>           
+            </script>
         </div>
-        </div>
+    </div>
 </body>
 </html>
 
