@@ -11,6 +11,8 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using web2.Areas.Admin.Data;
 using web2.Models;
+using System.Net;
+using System.Net.Mail;
 
 namespace web2.Areas.Admin.Controllers
 {
@@ -419,7 +421,7 @@ namespace web2.Areas.Admin.Controllers
             else
             {
                 ViewBag.ErrorMessage = "Mã đã tồn tại. Vui lòng nhập mã khác.";
-                return View("Add_Course");
+                return View("Add_Teacher");
             }
             conn.Close();
             return RedirectToAction("Manage_Teacher");
@@ -977,6 +979,51 @@ namespace web2.Areas.Admin.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult SelKhoaHoc(string maKhoaInput)
+        {
+            try
+            {
+                var dsLopHoc= new List<LopHoc>();
+                System.Diagnostics.Debug.WriteLine("B1");
+                System.Diagnostics.Debug.WriteLine(maKhoaInput);
+                string query = "SELECT LopHoc.Ma_lop, LopHoc.Ma_khoa_hoc, LopHoc.Phong_hoc, LopHoc.So_luong_hoc_vien, LopHoc.Ten_lop_hoc, LopHoc.Mo_ta, LopHoc.Ma_thoi_gian_bieu, LopHoc.Ngay_bat_dau, LopHoc.Ngay_ket_thuc, LopHoc.So_tiet_hoc FROM LopHoc WHERE Ma_khoa_hoc = @Ma_khoa_hoc";
+                SqlParameter parameter = new SqlParameter("@Ma_khoa_hoc", maKhoaInput);
+                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+                DataAccess dataAccess = new DataAccess(connStr);
+                DataTable dataTable = dataAccess.ExecuteQuery(query, new SqlParameter[] { parameter });
+                System.Diagnostics.Debug.WriteLine("B2");
+                if (dataTable.Rows.Count > 0)
+                {
+                    DataRow row = dataTable.Rows[0];
+                    System.Diagnostics.Debug.WriteLine("B2.1");
+                    LopHoc lopHoc = new LopHoc
+                    {
+                        Ma_lop = row["Ma_lop"].ToString(),
+                        Ma_khoa_hoc = row["Ma_khoa_hoc"].ToString(),
+                        Phong_hoc = row["Phong_hoc"].ToString(),
+                        So_luong_hoc_vien = (int)row["So_luong_hoc_vien"],
+                        Ten_lop_hoc = row["Ten_lop_hoc"].ToString(),
+                        Mo_ta = row["Mo_ta"].ToString(),
+                        Ma_thoi_gian_bieu = row["Ma_thoi_gian_bieu"].ToString(),
+                        Ngay_bat_dau = (DateTime)row["Ngay_bat_dau"],
+                        Ngay_ket_thuc = (DateTime)row["Ngay_ket_thuc"],
+                        So_tiet_hoc = (int)row["So_tiet_hoc"]
+                    };
+                    dsLopHoc.Add(lopHoc);
+                    System.Diagnostics.Debug.WriteLine("B2.2");
+                    return View("Manage_Classes", dsLopHoc);
+                }
+                return RedirectToAction("Manage_Classes");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("B4");
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
+                return RedirectToAction("Manage_Classes");
+            }
+        }
+
         //Khoá học
 
         public ActionResult Manage_Course()
@@ -1136,7 +1183,7 @@ namespace web2.Areas.Admin.Controllers
                         Hoc_phi = Convert.ToDecimal(row["Hoc_phi"]),
                         Nguon_anh = row["Nguon_anh"].ToString()
                     };
-                    return View("Edit_Class_Infor", khoaHoc);
+                    return View("Edit_Course_Infor", khoaHoc);
                 }
                 else
                 {
@@ -1152,7 +1199,7 @@ namespace web2.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Submit_Edit_Course_Infor(string Ma, string Ten, string MoTa, decimal HocPhi, string NguonAnh)
+        public ActionResult Submit_Edit_Course_Infor(string Ma, string Ten, string MoTa, decimal HocPhi, string NguonAnh, string NguonAnhNew)
         {
             try
             {
@@ -1163,7 +1210,7 @@ namespace web2.Areas.Admin.Controllers
                     new SqlParameter("@Ten_khoa_hoc", Ten),
                     new SqlParameter("@Mo_ta", MoTa),
                     new SqlParameter("@Hoc_phi", HocPhi),
-                    new SqlParameter("@Nguon_anh", NguonAnh)
+                    new SqlParameter("@Nguon_anh", NguonAnhNew != null?NguonAnhNew:NguonAnh)
                 };
                 String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
                 DataAccess dataAccess = new DataAccess(connStr);
@@ -1249,6 +1296,173 @@ namespace web2.Areas.Admin.Controllers
             {
                 TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
                 return RedirectToAction("Manage_Course");
+            }
+        }
+
+        //Gửi thông báo qua mail
+
+        public ActionResult Send_Notification()
+        {
+            web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
+            var model = new ThongBaoModel(); // Tạo đối tượng model để truyền vào view
+            model.KhoaHocs = db.KhoaHocs.ToList();
+            model.LopHocs = db.LopHocs.ToList();
+            return View(model);
+            
+        }
+        public ActionResult Submit_Send_Notification(ThongBaoModel model)
+        {
+            System.Diagnostics.Debug.WriteLine("********************************************************************************************************Gửi Mail*******************************************************************************************");
+            System.Diagnostics.Debug.WriteLine(model.Tieude);
+            System.Diagnostics.Debug.WriteLine(model.NguoiNhan);
+            System.Diagnostics.Debug.WriteLine(model.Noidung);
+            System.Diagnostics.Debug.WriteLine(model.NguoiNhan_GiaoVien);
+            System.Diagnostics.Debug.WriteLine(model.NguoiNhan_HocVien);
+            System.Diagnostics.Debug.WriteLine(model.maLopInput);
+            System.Diagnostics.Debug.WriteLine(model.maKhoaInput);
+            web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
+            String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+            SqlConnection conn = new SqlConnection(connStr);
+            conn.Open();
+            dbHelper = new DataHelper(connStr);
+            List<String> list = new List<String>();
+            try
+            {
+                // Thực hiện kiểm tra và xử lý dữ liệu
+                System.Diagnostics.Debug.WriteLine("B2");
+                if(model.NguoiNhan_GiaoVien == true && (model.maKhoaInput !=null || model.maLopInput!=null))
+                {
+                    System.Diagnostics.Debug.WriteLine("RDB chọn giáo viên");
+                    if (model.maKhoaInput != null )
+                    {
+                        System.Diagnostics.Debug.WriteLine("Vào hàm gửi theo khoá");
+                        string querySendTeacherInCourse = "select NguoiDung.Email from GiaoVien join LopHoc on Ma_lop=Ma_lop_giang_day join NguoiDung on Ma=Ma_giao_vien where Ma_khoa_hoc=@Ma_khoa_hoc";
+                        SqlCommand cmd = new SqlCommand(querySendTeacherInCourse, conn);
+                        cmd.Parameters.AddWithValue("@Ma_khoa_hoc", model.maKhoaInput);
+                        System.Diagnostics.Debug.WriteLine("Excute");
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        
+                        while (reader.Read())
+                        {
+                            string email = reader["Email"].ToString();
+                            list.Add(email);
+                        }
+                        foreach(string item in list)
+                        {
+                            SendEmail(item, model.Tieude, model.Noidung);
+                            System.Diagnostics.Debug.WriteLine("Gửi mail thành công cho "+item);
+                        }
+                    }
+                    else if(model.maLopInput != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Vào hàm gửi theo lớp");
+                        string querySendTeacherInClass = "select NguoiDung.Email from GiaoVien join NguoiDung on Ma=Ma_giao_vien where Ma_lop_giang_day=@Ma_lop_hoc";
+                        SqlCommand cmd = new SqlCommand(querySendTeacherInClass, conn);
+                        cmd.Parameters.AddWithValue("@Ma_lop_hoc", model.maLopInput);
+                        System.Diagnostics.Debug.WriteLine("Excute");
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            string email = reader["Email"].ToString();
+                            list.Add(email);
+                        }
+                        foreach (string item in list)
+                        {
+                            SendEmail(item, model.Tieude, model.Noidung);
+                            System.Diagnostics.Debug.WriteLine("Gửi mail thành công cho " + item);
+                        }
+                    }
+                }
+                else if (model.NguoiNhan_HocVien == true && (model.maKhoaInput != null || model.maLopInput != null))
+                {
+                    System.Diagnostics.Debug.WriteLine("RDB chọn học viên");
+                    if (model.maKhoaInput != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Vào hàm gửi theo khoá");
+                        string querySendStudentInCourse = "select NguoiDung.Email from HocVien join LopHoc on Ma_lop=Lop_hoc_tham_gia join NguoiDung on Ma=Ma_hoc_vien where Ma_khoa_hoc=@Ma_khoa_hoc";
+                        SqlCommand cmd = new SqlCommand(querySendStudentInCourse, conn);
+                        cmd.Parameters.AddWithValue("@Ma_khoa_hoc", model.maKhoaInput);
+                        System.Diagnostics.Debug.WriteLine("Excute");
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string email = reader["Email"].ToString();
+                            list.Add(email);
+                        }
+                        foreach (string item in list)
+                        {
+                            SendEmail(item, model.Tieude, model.Noidung);
+                            System.Diagnostics.Debug.WriteLine("Gửi mail thành công cho " + item);
+                        }
+                    }
+                    else if (model.maLopInput != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Vào hàm gửi theo lớp");
+                        string querySendStudentInClass = "select NguoiDung.Email from HocVien join NguoiDung on Ma=Ma_hoc_vien where Lop_hoc_tham_gia=@Lop_hoc_tham_gia";
+                        SqlCommand cmd = new SqlCommand(querySendStudentInClass, conn);
+                        cmd.Parameters.AddWithValue("@Lop_hoc_tham_gia", model.maLopInput);
+                        System.Diagnostics.Debug.WriteLine("Excute");
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            string email = reader["Email"].ToString();
+                            list.Add(email);
+                        }
+                        foreach (string item in list)
+                        {
+                            SendEmail(item, model.Tieude, model.Noidung);
+                            System.Diagnostics.Debug.WriteLine("Gửi mail thành công cho " + item);
+                        }
+                    }
+                }
+                else if (ModelState.IsValid)
+                {
+                    System.Diagnostics.Debug.WriteLine("B2.1");
+                    SendEmail(model.NguoiNhan, model.Tieude, model.Noidung);
+                    ViewBag.Message = "Gửi mail thành công!";
+                    return RedirectToAction("Send_Notification");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("B3");
+                ViewBag.ErrorMessage = "Đã xảy ra lỗi: " + ex.Message;
+            }
+            System.Diagnostics.Debug.WriteLine("B4");
+            list.Clear();
+            var model1 = new ThongBaoModel(); 
+            model1.KhoaHocs = db.KhoaHocs.ToList();
+            model1.LopHocs = db.LopHocs.ToList();
+            return View("Send_Notification", model1);
+        }
+        public void SendEmail(string toAddress, string subject, string body)
+        {
+            string smtpServer = "smtp.gmail.com";
+            int smtpPort = 587; 
+            string smtpUsername = "phothimusicofficial@gmail.com";
+            string smtpPassword = "nhph srib xees iiou";
+
+            
+            string fromAddress = "phothimusicofficial@gmail.com";
+
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress(fromAddress);
+            mailMessage.To.Add(toAddress);
+            mailMessage.Subject = subject;
+            mailMessage.Body = body;
+            mailMessage.IsBodyHtml = true; 
+            SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort);
+            smtpClient.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
+            smtpClient.EnableSsl = true;
+            try
+            {
+                smtpClient.Send(mailMessage);
+                System.Diagnostics.Debug.WriteLine("Email sent successfully.");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error sending email: {ex.Message}");
             }
         }
 
