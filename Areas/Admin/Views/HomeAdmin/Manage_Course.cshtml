@@ -53,7 +53,8 @@
                                 <td>@item.Ten_khoa_hoc</td>
                                 <td>@item.Mo_ta</td>
                                 <td>@item.Hoc_phi</td>
-                                <td>@item.Nguon_anh</td>
+                                @*<td>@item.Nguon_anh</td>*@
+                                <td> <button type="button" class="btn btn-link" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="@item.Nguon_anh">Nhấn để xem chi tiết</button></td>
                                 <td colspan="2" style="display:inline-flex">
                                     <a>@Html.ActionLink("Sửa", "Edit_Course_Infor", "HomeAdmin", new { area = "Admin", maKhoaHoc = @item.Ma_khoa_hoc }, new { @class = "btn btn-primary" })</a>
                                     <form id="form-delete-@item.Ma_khoa_hoc" action="@Url.Action("Delete_Course_Infor", "HomeAdmin", new { area = "Admin" })" method="post">
@@ -62,6 +63,7 @@
                                     </form>
                                 </td>
                             </tr>
+                            
                         }
                     }
                 }
@@ -71,6 +73,7 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     $(document).ready(function () {
         // Kiểm tra xem có thông báo lỗi không
@@ -83,6 +86,10 @@
                 $(".alert").hide();
             }, 5000);
         }
+    });
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl);
     });
 </script>
 

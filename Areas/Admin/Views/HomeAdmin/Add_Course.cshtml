@@ -34,9 +34,13 @@
         <label for="hocphi" class="form-label">Học phí:</label>
         <input type="number" class="form-control" id="hocphi" placeholder="VND" name="HocPhi" value="@Html.Raw(ViewData["HocPhi"])">
     </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3 ">
+    @*<div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3 ">
         <label for="nguon_anh" class="form-label">Chọn Ảnh:</label>
         <input type="file" id="nguon_anh" name="NguonAnh" accept="image/*" class="form-control" value="@Html.Raw(ViewData["NguonAnh"])">
+    </div>*@
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="nguon_anh" class="form-label">Nguồn ảnh:</label>
+        <input type="text" class="form-control" id="nguon_anh" name="NguonAnh" value="@Html.Raw(ViewData["NguonAnh"])">
     </div>
     <hr />
     <div class="row d-grid gap-2">

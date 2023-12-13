@@ -9,14 +9,18 @@
         <div class="col display-5" style="text-align:center">Quản lý lớp học</div>
     </div>
     <div class="row pt-5">
-        <div class="col-sm-12 col-md-6 col-xl-6 ">
-            <p>Chọn lớp:</p>
-            <select class="form-select mt-3" id="selkhoahoc" name="selkhoahoc">
-                @foreach (var khoa in db.KhoaHocs.ToList())
-                {
-                    <option value="@khoa.Ma_khoa_hoc">@khoa.Ten_khoa_hoc</option>
-                }
-            </select>
+        <div class="col-sm-12 col-md-6 col-xl-6 " style="padding:0px 12px 0px 12px">
+            <form action="@Url.Action("SelKhoaHoc", "HomeAdmin", new { area = "Admin" })" method="post" id="formSel" >
+                <label class="">Chọn khoá học:</label>
+                <select class="form-select mt-3" id="selkhoahoc" name="maKhoaInput" style="padding:6px 12px 6px 12px">
+                    <option value="">Nhấn để chọn</option>
+                    @foreach (var khoa in db.KhoaHocs.ToList())
+                    {
+                        <option value="@khoa.Ma_khoa_hoc">@khoa.Ten_khoa_hoc</option>
+                    }
+                </select>
+
+            </form>
         </div>
         <div class="col-sm-12 col-md-6 col-xl-6">
             <p>Nhập mã lớp:</p>
@@ -104,5 +108,11 @@
             }, 5000);
         }
     });
+    $(document).ready(function () {
+        $("#formSel").submit(function () {
+            console.log($("#selkhoahoc").val());
+        });
+    });
+
 </script>
 

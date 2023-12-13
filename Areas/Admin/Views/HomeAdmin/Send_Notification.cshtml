@@ -1,0 +1,93 @@
+﻿@model web2.Areas.Admin.Data.ThongBaoModel
+@{
+    ViewBag.Title = "Gửi thông báo bằng mail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+    web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
+}
+
+<div class="row">
+    <div class="col display-5" style="text-align:center">Tạo thông báo</div>
+</div>
+<hr />
+<div class="row">
+    <div class="alert alert-danger text-center" role="alert" style="font-size: 20px; display: none;">
+        @ViewBag.ErrorMessage
+    </div>
+    <div class="alert alert-success text-center" role="alert" style="font-size: 20px; display: none;">
+        @ViewBag.Message
+    </div>
+</div>
+@using (Html.BeginForm("Submit_Send_Notification", "HomeAdmin", FormMethod.Post, new { id = "inputForm", @class = "row" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-sm-10 col-md-10 col-xl-10">
+        <div class="col-sm-12 col-md-12 col-xl-12 mb-3 mt-3">
+            @Html.LabelFor(m => m.Tieude, "Tiêu đề", new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.Tieude, new { @class = "form-control", placeholder = "Tiêu đề" })
+            @Html.ValidationMessageFor(m => m.Tieude)
+        </div>
+        <div class="col-sm-12 col-md-12 col-xl-12 mb-3 mt-3">
+            @Html.LabelFor(m => m.Noidung,"Nội dung", new { @class = "form-label" })
+            @Html.TextAreaFor(m => m.Noidung, new { @class = "form-control", placeholder = "Nội dung", rows = "4" })
+            @Html.ValidationMessageFor(m => m.Noidung)
+        </div>
+        <div class="col-sm-12 col-md-12 col-xl-12 mb-3 mt-3">
+            @Html.LabelFor(m => m.NguoiNhan,"Người nhận", new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.NguoiNhan, new { @class = "form-control", placeholder = "Gửi tới?" })
+            @Html.ValidationMessageFor(m => m.NguoiNhan)
+        </div>
+    </div>
+    <div class="col-sm-2 col-md-2 col-xl-2 border">
+        <div style="text-align:center; width:100%" class="mt-1">
+            <strong>Tuỳ chỉnh người nhận</strong>
+        </div>
+        <div class="form-check-inline">
+            @Html.RadioButtonFor(m => m.NguoiNhan_GiaoVien, true, new { @class = "form-check-input", id = "rdbGiaoVien"})
+            @Html.LabelFor(m => m.NguoiNhan_GiaoVien, "Giáo viên", new { @class = "form-check-label" })
+        </div>
+        <div class="form-check-inline">
+            @Html.RadioButtonFor(m => m.NguoiNhan_HocVien, true, new { @class = "form-check-input", id = "rdbHocVien"})
+            @Html.LabelFor(m => m.NguoiNhan_HocVien, "Học viên", new { @class = "form-check-label" })
+        </div>
+        <div class="mt-1">
+            @Html.LabelFor(m => m.maKhoaInput, "Chọn khoá học:")
+            @Html.DropDownListFor(m => m.maKhoaInput, new SelectList(Model.KhoaHocs, "Ma_khoa_hoc", "Ten_khoa_hoc"), "Nhấn để chọn", new { @class = "form-select mt-3", id = "selkhoahoc" })
+            @Html.ValidationMessageFor(m => m.maKhoaInput)
+        </div>
+        <div class="mt-1">
+            @Html.LabelFor(m => m.maLopInput, "Chọn lớp học:")
+            @Html.DropDownListFor(m => m.maLopInput, new SelectList(Model.LopHocs, "Ma_lop", "Ten_lop_hoc"), "Nhấn để chọn", new { @class = "form-select mt-3", id = "selLop" })
+            @Html.ValidationMessageFor(m => m.maLopInput)
+        </div>
+
+    </div>
+    <button type="submit" class="btn btn-success mt-3">Gửi</button>
+}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var form = document.getElementById('inputForm');
+        var errorMessage = "@ViewBag.ErrorMessage";
+        if (errorMessage) {
+            $(".alert").show();
+            setTimeout(function () {
+                $(".alert").hide();
+            }, 5000);
+        }
+        var successMessage = "@ViewBag.Message";
+        if (successMessage) {
+            $(".alert").show();
+            setTimeout(function () {
+                $(".alert").hide();
+            }, 5000);
+        }
+        $('#rdbGiaoVien,#rdbHocVien').change(function () {
+            $('#rdbGiaoVien,#rdbHocVien').not(this).prop('checked', false);
+        });
+
+        $('#selkhoahoc, #selLop').change(function () {
+            $('#selkhoahoc, #selLop').not(this).val('');
+        });
+    });
+</script>

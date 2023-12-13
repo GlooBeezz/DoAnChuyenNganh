@@ -144,6 +144,7 @@
     <Compile Include="Areas\Admin\Data\DanhSachHocViencs.cs" />
     <Compile Include="Areas\Admin\Data\DataAccess.cs" />
     <Compile Include="Areas\Admin\Data\HocVienManage.cs" />
+    <Compile Include="Areas\Admin\Data\ThongBaoModel.cs" />
     <Compile Include="Areas\Student\Controllers\HomeStudentController.cs" />
     <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Areas\Teacher\Controllers\HomeTeacherController.cs" />
@@ -292,7 +293,7 @@
     <Content Include="Areas\Teacher\Views\HomeTeacher\EditDocument.cshtml" />
     <Content Include="Areas\Teacher\Views\HomeTeacher\DeleteDocument.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Add_Teacher.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Teacher.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Send_Notification.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Teacher_Infor.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Add_Class.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Class_Infor.cshtml" />
