@@ -1,5 +1,55 @@
-﻿@{
+﻿@model web2.Models.TaiLieu
+@{
     Layout = "~/Areas/Teacher/Views/Shared/_LayoutPageTeacher.cshtml";
 }
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Thêm các thiết lập cần thiết cho trang sửa tài liệu -->
+</head>
+<body>
+    <h2>Sửa Tài liệu</h2>
 
+    @using (Html.BeginForm("ProcessEditDocument", "HomeTeacher", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.Ma_tai_lieu) <!-- Add this line -->
+
+        <div class="form-group">
+            <label for="Ten_tai_lieu">Tiêu đề:</label>
+            @Html.TextBoxFor(model => model.Ten_tai_lieu, new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="form-group">
+            <label for="Duong_dan">Đường dẫn:</label>
+            @Html.TextBoxFor(model => model.Duong_dan, new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="form-group">
+            <label for="Ngay_upload">Ngày upload:</label>
+            @Html.EditorFor(model => model.Ngay_upload, new { @class = "form-control datepicker", required = "required" })
+        </div>
+
+        <div class="form-group">
+            <label for="Ma_giang_vien">Mã giáo viên:</label>
+            @Html.TextBoxFor(model => model.Ma_giang_vien, new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="form-group">
+            <label for="Hoc_vien_duoc_xem">Học viên được xem:</label>
+            @Html.TextBoxFor(model => model.Hoc_vien_duoc_xem, new { @class = "form-control", required = "required" })
+        </div>
+
+        <!-- Thêm các trường còn lại -->
+
+        <button type="submit" class="btn btn-warning">Lưu</button>
+    }
+
+    <!-- Thêm mã JavaScript cần thiết cho trang sửa tài liệu -->
+    <script>
+        // Thêm mã JavaScript cần thiết tại đây (ví dụ: datepicker)
+    </script>
+</body>
+</html>
