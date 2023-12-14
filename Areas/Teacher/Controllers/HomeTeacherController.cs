@@ -46,6 +46,7 @@ namespace web2.Areas.Teacher.Controllers
 
                 // Truyền thông tin giáo viên đến view
                 return View(randomTeacher);
+
             }
         }
         public ActionResult AddDocument()
@@ -53,34 +54,23 @@ namespace web2.Areas.Teacher.Controllers
             return View(new TaiLieu());
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ProcessAddDocument(TaiLieu newDocument)
         {
-            try
-            {
-                // Validate ModelState
                 if (!ModelState.IsValid)
                 {
-                    // Handle invalid ModelState (e.g., return to the form with validation errors)
                     return View("AddDocument", newDocument);
                 }
+                try
+                {
+                    db.TaiLieux.Add(newDocument);
+                    db.SaveChanges();
 
-                // Set default values
-                newDocument.Ma_tai_lieu = Guid.NewGuid().ToString();
-                newDocument.Ten_tai_lieu = Guid.NewGuid().ToString();
-                newDocument.Ngay_upload = DateTime.UtcNow;
-                newDocument.Duong_dan = Guid.NewGuid().ToString();
-                newDocument.Ma_giang_vien = Guid.NewGuid().ToString();
-                newDocument.Hoc_vien_duoc_xem = Guid.NewGuid().ToString();
-
-                // Add the new document to the database
-                db.TaiLieux.Add(newDocument);
-                db.SaveChanges();
-
-                return RedirectToAction("Manage_Document");
-            }
+                    return RedirectToAction("Manage_Document");
+                }
             catch (DbEntityValidationException ex)
             {
-                // Log validation errors
                 foreach (var validationErrors in ex.EntityValidationErrors)
                 {
                     foreach (var error in validationErrors.ValidationErrors)
@@ -88,17 +78,15 @@ namespace web2.Areas.Teacher.Controllers
                         Debug.WriteLine($"Property: {error.PropertyName} Error: {error.ErrorMessage}");
                     }
                 }
-
-                // Handle the exception (log, redirect, etc.)
                 return RedirectToAction("Manage_Document");
             }
             catch (Exception ex)
             {
-                // Log and handle other exceptions using Debug.WriteLine
                 Debug.WriteLine($"An error occurred while processing the document. Error: {ex.Message}");
                 return RedirectToAction("Manage_Document");
             }
         }
+
         public ActionResult EditDocument(string documentId)
         {
             try
