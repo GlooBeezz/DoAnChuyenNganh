@@ -62,5 +62,20 @@ namespace web2.Models
                 }
             }
         }
+        public bool IsMaExistsInHoaDon(string ma)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT COUNT(*) FROM HoaDon WHERE Ma_hoa_don = @Ma";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Ma", ma);
+                    int count = (int)command.ExecuteScalar();
+                    return count > 0;
+                }
+            }
+        }
+
     }
 }
