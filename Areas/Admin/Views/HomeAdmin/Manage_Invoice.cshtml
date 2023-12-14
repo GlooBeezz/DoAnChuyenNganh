@@ -1,0 +1,96 @@
+﻿@model List<web2.Models.HoaDon>
+@{
+    ViewBag.Title = "Manage_Invoice";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col display-5" style="text-align:center">Quản lý hoá đơn</div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-sm-12 col-md-6 col-xl-6">
+            <p>Nhập mã hoá đơn:</p>
+            <form class="input-group" method="post" action="@Url.Action("Find_Invoice", "HomeAdmin", new { area = "Admin" })">
+                <span class="input-group-text">Mã lớp học:</span>
+                <input type="text" class="form-control" name="maKhoaInput" placeholder="ex: gcb,..">
+                <button type="submit" class="btn btn-success">Tìm</button>
+            </form>
+        </div>
+    </div>
+    <div class="row d-grid gap-2 mt-4 mb-3">
+        <a>@Html.ActionLink("Thêm hoá đơn mới", "Add_Invoice", "HomeAdmin", new { area = "Admin" }, new { @class = "btn btn-success" })</a>
+    </div>
+    <hr />
+    <div class="row">
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="alert alert-danger text-center" role="alert" style="font-size:24px; display:none">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+    </div>
+    <div class="row">
+        <h3 class="col" style="text-align:center">Bảng kết quả</h3>
+    </div>
+    <div class="row">
+        <div class="alert alert-danger text-center" role="alert" style="font-size: 20px; display: none;">
+            @ViewBag.ErrorMessage
+        </div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <tr>
+                <th>Mã Hóa Đơn</th>
+                <th>Mã đăng ký</th>
+                <th>Ngày Tạo</th>
+                <th>Tổng Tiền</th>
+                <th>Trạng Thái Thanh Toán</th>
+                <th>Chức Năng</th>
+            </tr>
+            @foreach (var invoice in Model)
+            {
+                <tr>
+                    <td>@invoice.Ma_hoa_don</td>
+                    <td>@invoice.Ma_dang_ky</td>
+                    <td>@invoice.NgayFormatted</td>
+                    <td>@invoice.Tong_tien</td>
+                    @if (@invoice.Trang_thai_thanh_toan)
+                    {
+                        <td class="text-success">Đã thanh toán</td>
+                    }
+                    else
+                    {
+                        <td class="text-danger">Chưa thanh toán</td>
+                    }
+                    <td>
+                        @Html.ActionLink("Xoá", "Delete_Invoice", "HomeAdmin", new { area = "Admin", maHoaDon = invoice.Ma_hoa_don }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Chỉnh Sửa", "Edit_Invoice_Infor", "HomeAdmin", new { area = "Admin", maHoaDon = invoice.Ma_hoa_don }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Xuất Txt", "ExportToTxt_Invoice", "HomeAdmin", new { area = "Admin", maHoaDon = invoice.Ma_hoa_don }, new { @class = "btn btn-success" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+@*<script>
+    function exportToTxt() {
+        $.ajax({
+            url: '@Url.Action("ExportToTxt_Invoice", "YourController", new { area = "Admin" })',
+            type: 'GET',
+            data: { maHoaDon: '@invoice.Ma_hoa_don' },
+            success: function (data) {
+                var blob = new Blob([data], { type: 'text/plain' });
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'HoaDon_Info.txt';
+                link.click();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+</script>*@
+
+
