@@ -122,8 +122,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
-<<<<<<< Updated upstream
-=======
     <Compile Include="Areas\Admin\Data\hocVienManage.cs" />
     <Compile Include="Areas\Student\Data\DanhSachKhoaHoc.cs" />
     <Compile Include="Areas\Student\Data\KhoaHocManage.cs" />
@@ -133,7 +131,6 @@
     <Compile Include="Areas\Teacher\Controllers\HomeTeacherController.cs" />
     <Compile Include="Areas\Teacher\TeacherAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminshowController.cs" />
->>>>>>> Stashed changes
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -210,16 +207,13 @@
     <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< Updated upstream
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Models\" />
-=======
     <Folder Include="App_Data\App_LocalResources\" />
     <Folder Include="Areas\Teacher\Data\" />
     <Folder Include="Views\Adminshow\" />
     <Folder Include="Views\Default\" />
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
