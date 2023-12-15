@@ -96,7 +96,10 @@
                 <li class="dropdown nav-link">
                     <div class="dropdown-item d-inline-block">
                         <div role="button" id="dropdownMenuButton" data-toggle="dropdown">
-                            <span><i class="fa-regular fa-user" style="color: rgb(255 255 255 / 55%)"></i></span>
+                            <span>
+                                <img src="~/source/logo.jpg" alt="Profile Picture" class="rounded-circle" width="25" height="25">
+                                
+                            </span>
                         </div>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             @Html.ActionLink("Cài đặt tài khoản", "settingAccount", "HomeStudent", new { area = "Student" }, new { @class = "dropdown-item" })

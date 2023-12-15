@@ -9,13 +9,13 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="~/Content/Study.css" />
-    <script>
+    @*<script>
         $(document).ready(function () {
             $("#customButtonStudy").click(function () {
                 $("#actionStudyLink")[0].click();
             });
         });
-    </script>
+    </script>*@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta name="viewport" content="width=device-width" />
     <title>Trang Chủ</title>
@@ -49,7 +49,14 @@
                             <div class="col-sm-4">
                                 <div style="display: flex; align-items: center; width:300px">
                                     <button class="btn btn-outline-success btn-lg" id="customButtonStudy">Bắt đầu nào!</button>
-                                    <span style="display:none">@Html.ActionLink("Đào Tạo", "StudyStudent", "HomeStudent",new { area="Student"}, new { id = "actionStudyLink" })</span>
+                                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                    <script>
+                                              $(document).ready(function() {
+                                                $('#customButtonStudy').click(function() {
+                                                  window.location.href = '@Url.Action("StudyStudent", "HomeStudent", new { area = "Student" })';
+                                                });
+                                              }); 
+                                    </script>
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,5 @@
-﻿@model List<web2.Models.KhoaHoc>
+﻿@model List<web2.Models.LopHoc>
+
 @{
     ViewBag.Title = "CourseStudent";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
@@ -15,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="~/Content/Study.css" />
     <style>
         .card {
-            height: 610px;
+            height: auto;
         }
 
             .card img {
@@ -31,27 +32,28 @@
 <body>
     <div class="container">
         <div class="text-center my-5">
-            <p class="display-3"><strong>CHÀO MỪNG TRỞ LẠI,</strong></p>
+            <p class="display-3"><strong>QUÁ TRÌNH HỌC TẬP CỦA TÔI</strong></p>
             <hr />
         </div>
         <h4>Khóa học hiện tại:</h4><br />
         <div class="row">
-            @foreach( var kh in Model){
-
+            @foreach (var lh in Model)
+            {
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card mb-5 shadow-sm">
-                    <img src="https://img.freepik.com/premium-vector/boy-girl-playing-piano_97632-600.jpg" class="img-fluid" />
-                    <div class="card-body">
-                        <h4 class="card-title">Khóa học:@kh.Ten_khoa_hoc</h4>
-                        <div class="card-text">
-                            <p>
-                              @kh.Mo_ta
-                            </p><br />
+                    <div class="card mb-5 shadow-sm">
+                        <img src="https://img.freepik.com/premium-vector/boy-girl-playing-piano_97632-600.jpg" class="img-fluid" />
+                        <div class="card-body">
+                            <h4 class="card-title"><strong>Khóa học:</strong> @lh.Ten_lop_hoc</h4>
+                            <div class="card-text">
+                                <p>
+                                    <strong>Mô Tả:</strong> @lh.Mo_ta 
+                                </p>
+                                <p></p>
+                            </div>
+
                         </div>
-                        
                     </div>
                 </div>
-            </div>
             }
         </div>
         <div class="container">
