@@ -282,10 +282,8 @@
     <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Classes.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Teacher.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Course.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Teacher_Infor.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Student_Infor.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Add_Class.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Class_Infor.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Add_Course.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Add_Student.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Add_Teacher.cshtml" />
@@ -305,10 +303,11 @@
     <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Class_Infor.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Add_Course.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Course_Infor.cshtml" />
-    <Content Include="Areas\Teacher\Views\HomeTeacher\MyClass.cshtml" />
+
     <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Invoice.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Add_Invoice.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Invoice_Infor.cshtml" />
+    <Content Include="Areas\Teacher\Views\HomeTeacher\MyClass.cshtml" />
     <None Include="Models\.editorconfig" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

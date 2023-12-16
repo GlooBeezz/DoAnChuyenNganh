@@ -4,16 +4,16 @@
 }
 
 <section id="teacher-dashboard">
-    <h2 style="padding-top:20px">Hello, @Model.Ma_giao_vien!</h2>
-    <p>This is your dashboard. You can manage various aspects of your teaching here.</p>
+    <h2 class="mb-4">Hello, @Model.Ma_giao_vien!</h2>
+    <p class="lead">This is your dashboard. You can manage various aspects of your teaching here.</p>
 
     <div class="row">
         <div class="col-md-4 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Manage Documents</h5>
+                    <h5 class="card-title mb-3">Manage Documents</h5>
                     <p class="card-text">Upload, view, and manage documents for your classes.</p>
-                    <a href="@Url.Action("Manage_Document", "HomeTeacher")" class="btn btn-primary">Go to Documents</a>
+                    <a href="@Url.Action("Manage_Document", "HomeTeacher")" class="btn btn-primary btn-block">Go to Documents</a>
                 </div>
             </div>
         </div>
@@ -21,9 +21,9 @@
         <div class="col-md-4 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Manage Classes</h5>
+                    <h5 class="card-title mb-3">Manage Classes</h5>
                     <p class="card-text">View and manage details of your classes.</p>
-                    <a href="@Url.Action("Manage_Classes", "HomeTeacher")" class="btn btn-primary">Go to Classes</a>
+                    <a href="@Url.Action("Manage_Classes", "HomeTeacher")" class="btn btn-primary btn-block">Go to Classes</a>
                 </div>
             </div>
         </div>
@@ -31,9 +31,9 @@
         <div class="col-md-4 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Manage Schedule</h5>
+                    <h5 class="card-title mb-3">Manage Schedule</h5>
                     <p class="card-text">View and manage your teaching schedule.</p>
-                    <a href="@Url.Action("Manage_Schedule", "HomeTeacher")" class="btn btn-primary">Go to Schedule</a>
+                    <a href="@Url.Action("Manage_Schedule", "HomeTeacher")" class="btn btn-primary btn-block">Go to Schedule</a>
                 </div>
             </div>
         </div>

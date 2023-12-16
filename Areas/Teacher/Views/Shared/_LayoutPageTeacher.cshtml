@@ -39,7 +39,7 @@
 <body class="bg-light">
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a href="@Url.Action("Index", "HomeTeacher", new { area = "Teacher" })" class="navbar-brand">
                 <i class="fas fa-chalkboard-teacher"></i>
                 Quản lý giáo viên
             </a>
@@ -48,7 +48,7 @@
             </button>
             <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">
+                    <a href="@Url.Action("Index", "HomeTeacher", new { area = "Teacher" })" class="navbar-brand" href="#">
                         <i class="fas fa-chalkboard-teacher"></i>
                         Quản lý giáo viên
                     </a>
@@ -62,7 +62,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="#">Tài khoản</a>
                             <a class="dropdown-item" href="#">Chỉnh sửa thông tin</a>
-                            <a class="dropdown-item" href="#">Đăng xuất</a>
+                            <a class="dropdown-item" href="@Url.Action("Index","Home",new {area = ""})" >Đăng xuất</a>
                         </div>
                     </div>
                 </div>
