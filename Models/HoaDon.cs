@@ -25,7 +25,11 @@ namespace web2.Models
         public System.DateTime Ngay_tao { get; set; }
         public decimal Tong_tien { get; set; }
         public bool Trang_thai_thanh_toan { get; set; }
-    
+        public string NgayFormatted
+        {
+            get { return Ngay_tao.ToString("dd/MM/yyyy"); }
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyHoc> DangKyHocs { get; set; }
     }
