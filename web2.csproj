@@ -305,6 +305,7 @@
     <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Class_Infor.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Add_Course.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Course_Infor.cshtml" />
+
     <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Invoice.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Add_Invoice.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Invoice_Infor.cshtml" />
