@@ -1,0 +1,101 @@
+﻿@model List<web2.Models.LopHoc>
+@{
+    ViewBag.Title = "Manage_Schedule";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<h2>Manage_Schedule</h2>
+<div class="container">
+    <div class="row table-responsive">
+        <table class="table table-bordered border-1 border-dark " style="text-align:center">
+            <thead>
+                <tr class="table-primary table-bordered border-2 border-dark align-middle">
+                    <th scope="col">Thời Gian</th>
+                    <th scope="col">Thứ 2</th>
+                    <th scope="col">Thứ 3</th>
+                    <th scope="col">Thứ 4</th>
+                    <th scope="col">Thứ 5</th>
+                    <th scope="col">Thứ 6</th>
+                    <th scope="col">Thứ 7</th>
+                    <th scope="col">Chủ Nhật</th>
+                </tr>
+            </thead>
+            <tbody >
+                @foreach (var thoiKhoaBieu in Model)
+                {
+                    <tr >
+                        <td scope="row" class="bg-light" width="30px">@thoiKhoaBieu.Thoi_gian_bat_dau.ToString("hh\\:mm") - @thoiKhoaBieu.Thoi_gian_ket_thuc.ToString("hh\\:mm")</td>
+                        <td width="100px">
+                            @if (thoiKhoaBieu.Hoc_vao_thu == "Thứ 2")
+                            {<div class="">
+                                    <p>
+                                        @thoiKhoaBieu.Ma_lop <br />
+                                        @thoiKhoaBieu.Ten_lop_hoc <br />
+                                        @thoiKhoaBieu.Phong_hoc
+                                    </p>
+                                </div>}
+                        </td>
+                        <td width="100px">
+                            @if (thoiKhoaBieu.Hoc_vao_thu == "Thứ 3")
+                            {<div class="">
+                                    <p>
+                                        @thoiKhoaBieu.Ma_lop <br />
+                                        @thoiKhoaBieu.Ten_lop_hoc <br />
+                                        @thoiKhoaBieu.Phong_hoc
+                                    </p>
+                                </div>}
+                        </td>
+                        <td width="100px">
+                            @if (thoiKhoaBieu.Hoc_vao_thu == "Thứ 4")
+                            {<div class="">
+                                   <p> @thoiKhoaBieu.Ma_lop <br />
+                                    @thoiKhoaBieu.Ten_lop_hoc <br />
+                                    @thoiKhoaBieu.Phong_hoc</p>
+                              </div>}
+                        </td>
+                        <td width="100px">
+                            @if (thoiKhoaBieu.Hoc_vao_thu == "Thứ 5")
+                            {<div class="">
+                                    <p>
+                                        @thoiKhoaBieu.Ma_lop <br />
+                                        @thoiKhoaBieu.Ten_lop_hoc <br />
+                                        @thoiKhoaBieu.Phong_hoc
+                                    </p>
+                                </div>}
+                        </td>
+                        <td width="100px">
+                            @if (thoiKhoaBieu.Hoc_vao_thu == "Thứ 6")
+                            {<div class="">
+                                    <p>
+                                        @thoiKhoaBieu.Ma_lop <br />
+                                        @thoiKhoaBieu.Ten_lop_hoc <br />
+                                        @thoiKhoaBieu.Phong_hoc
+                                    </p>
+                                </div>}
+                        </td>
+                        <td width="100px">
+                            @if (thoiKhoaBieu.Hoc_vao_thu == "Thứ 7")
+                            {<div class="">
+                                    <p>
+                                        @thoiKhoaBieu.Ma_lop <br />
+                                        @thoiKhoaBieu.Ten_lop_hoc <br />
+                                        @thoiKhoaBieu.Phong_hoc
+                                    </p>
+                                </div>}
+                        </td>
+                        <td width="100px">
+                            @if (thoiKhoaBieu.Hoc_vao_thu == "Chủ Nhật")
+                            {<div class="">
+                                    <p>
+                                        @thoiKhoaBieu.Ma_lop <br />
+                                        @thoiKhoaBieu.Ten_lop_hoc <br />
+                                        @thoiKhoaBieu.Phong_hoc
+                                    </p>
+                                </div>}
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

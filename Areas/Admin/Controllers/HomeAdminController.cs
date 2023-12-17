@@ -1503,15 +1503,6 @@ namespace web2.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Exception: " + ex.Message);
-                HoaDon nullinvoce = new HoaDon
-                {
-                    Ma_hoa_don = "null",
-                    Ma_dang_ky = "null",
-                    Ngay_tao = new DateTime(1111, 1, 1),
-                    Tong_tien = 0.0M,
-                    Trang_thai_thanh_toan = false
-                };
-                ds.Add(nullinvoce);
                 return View(ds);
             }
         }
@@ -1725,7 +1716,6 @@ namespace web2.Areas.Admin.Controllers
             }
         }
 
-
         private HoaDon GetInvoiceInfo(string maHoaDon)
         {
             string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
@@ -1755,7 +1745,40 @@ namespace web2.Areas.Admin.Controllers
                 return null;
             }
         }
+        
+        // Thời khoá biểu
 
+        public ActionResult Manage_Schedule()
+        {
+            List<LopHoc> ds = new List<LopHoc>();
+            String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+            SqlConnection conn = new SqlConnection(connStr);
+            conn.Open();
+            try
+            {
+                SqlCommand Cmd = new SqlCommand("select Ten_lop_hoc,Hoc_vao_thu, Thoi_gian_bat_dau,Thoi_gian_ket_thuc,Phong_hoc,Ma_lop from LopHoc join ThoiGianBieu on LopHoc.Ma_thoi_gian_bieu=ThoiGianBieu.Ma_thoi_gian_bieu", conn);
+                SqlDataReader dr = Cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    LopHoc lop = new LopHoc
+                    {
+                        Ma_lop = dr["Ma_lop"].ToString(),
+                        Ten_lop_hoc = dr["Ten_lop_hoc"].ToString(),
+                        Hoc_vao_thu = dr["Hoc_vao_thu"].ToString(),
+                        Thoi_gian_bat_dau = (TimeSpan)dr["Thoi_gian_bat_dau"],
+                        Thoi_gian_ket_thuc = (TimeSpan)dr["Thoi_gian_ket_thuc"],
+                        Phong_hoc = dr["Phong_hoc"].ToString()
+                    };
+                    ds.Add(lop);
+                }
+                return View(ds);
 
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Exception: " + ex.Message);
+                return View("Index");
+            }
+        }
     }
 }

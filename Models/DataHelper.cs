@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace web2.Models
@@ -76,6 +77,27 @@ namespace web2.Models
                 }
             }
         }
-
+        public bool IsNameContainNumber(string ten)
+        {
+            if (ten.Any(char.IsDigit))
+            { return false; }
+            else { return true; }
+        }
+        public bool IsPhoneNumberIsValid(string sdt)
+        {
+            string pattern = @"^(?:\+84|0)[1-9]\d{8}$|^0[1-9]\d{8}$";
+            Regex regex = new Regex(pattern);
+            if (regex.IsMatch(sdt))
+            { return true; }
+            else { return false; }
+        }
+        public bool IsUserIdIsValid(string ma)
+        {
+            if((ma.StartsWith("hv")||ma.StartsWith("gv"))&& ma.Length <= 10)
+            {
+                return true;
+            }
+            else { return false; }
+        }
     }
 }
