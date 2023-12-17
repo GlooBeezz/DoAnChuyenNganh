@@ -762,7 +762,7 @@ namespace web2.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult Submit_Add_Class(string Ma, string Ten, string MoTa, string Phong, string MaTKB, DateTime NgayBD, DateTime NgayKT, int SoTiet, string KhoaHoc, int? SoLuongHocVien)
+        public ActionResult Submit_Add_Class(string Ma, string Ten, string MoTa, string Phong, string MaTKB, DateTime NgayBD, DateTime NgayKT, int SoTiet, string KhoaHoc, int? SoLuongHocVien,TimeSpan ThoiGianBatDau,TimeSpan ThoiGianKetThuc,string NgayHoc)
         {
             
             SoLuongHocVien = 0;
@@ -770,41 +770,52 @@ namespace web2.Areas.Admin.Controllers
             SqlConnection conn = new SqlConnection(connStr);
             conn.Open();
             dbHelper = new DataHelper(connStr);
-            if (!dbHelper.IsMaExistsInLopHoc(Ma))
-            {
-                SqlCommand insertCmd = new SqlCommand(" INSERT INTO LopHoc (Ma_lop, Ma_khoa_hoc, Phong_hoc, So_luong_hoc_vien, Ten_lop_hoc, Mo_ta, Ma_thoi_gian_bieu, Ngay_bat_dau, Ngay_ket_thuc, So_tiet_hoc)\r\n        VALUES (@Ma_lop, @Ma_khoa_hoc, @Phong_hoc, @So_luong_hoc_vien, @Ten_lop_hoc, @Mo_ta, @Ma_thoi_gian_bieu, @Ngay_bat_dau, @Ngay_ket_thuc, @So_tiet_hoc)", conn);
-                insertCmd.Parameters.AddWithValue("@Ma_lop", Ma);
-                insertCmd.Parameters.AddWithValue("@Ma_khoa_hoc", KhoaHoc);
-                insertCmd.Parameters.AddWithValue("@Phong_hoc", Phong);
-                insertCmd.Parameters.AddWithValue("@So_luong_hoc_vien", SoLuongHocVien);
-                insertCmd.Parameters.AddWithValue("Ten_lop_hoc", Ten);
-                insertCmd.Parameters.AddWithValue("@Mo_ta", MoTa);
-                insertCmd.Parameters.AddWithValue("@Ma_thoi_gian_bieu", MaTKB);
-                insertCmd.Parameters.AddWithValue("@Ngay_bat_dau", NgayBD);
-                insertCmd.Parameters.AddWithValue("@Ngay_ket_thuc", NgayKT);
-                insertCmd.Parameters.AddWithValue("@So_tiet_hoc", SoTiet);
-                // Thực hiện câu lệnh INSERT
-                int rowsAffected = insertCmd.ExecuteNonQuery();
-
-                // Kiểm tra xem có bao nhiêu dòng đã được thêm
-                if (rowsAffected > 0)
+            try {
+                if (!dbHelper.IsMaExistsInLopHoc(Ma))
                 {
-                    // Insert thành công
-                    TempData["SuccessMessage"] = "Thêm lớp thành công";
+                    SqlCommand insertCmd = new SqlCommand(" INSERT INTO LopHoc (Ma_lop, Ma_khoa_hoc, Phong_hoc, So_luong_hoc_vien, Ten_lop_hoc, Mo_ta, Ma_thoi_gian_bieu, Ngay_bat_dau, Ngay_ket_thuc, So_tiet_hoc)\r\n        VALUES (@Ma_lop, @Ma_khoa_hoc, @Phong_hoc, @So_luong_hoc_vien, @Ten_lop_hoc, @Mo_ta, @Ma_thoi_gian_bieu, @Ngay_bat_dau, @Ngay_ket_thuc, @So_tiet_hoc); Insert Into ThoiGianBieu (Ma_thoi_gian_bieu,Thoi_gian_bat_dau,Thoi_gian_ket_thuc,Hoc_vao_thu) values (@Ma_thoi_gian_bieu,@Thoi_gian_bat_dau,@Thoi_gian_ket_thuc,@Hoc_vao_thu); ", conn);
+                    insertCmd.Parameters.AddWithValue("@Ma_lop", Ma);
+                    insertCmd.Parameters.AddWithValue("@Ma_khoa_hoc", KhoaHoc);
+                    insertCmd.Parameters.AddWithValue("@Phong_hoc", Phong);
+                    insertCmd.Parameters.AddWithValue("@So_luong_hoc_vien", SoLuongHocVien);
+                    insertCmd.Parameters.AddWithValue("Ten_lop_hoc", Ten);
+                    insertCmd.Parameters.AddWithValue("@Mo_ta", MoTa);
+                    insertCmd.Parameters.AddWithValue("@Ma_thoi_gian_bieu", MaTKB);
+                    insertCmd.Parameters.AddWithValue("@Ngay_bat_dau", NgayBD);
+                    insertCmd.Parameters.AddWithValue("@Ngay_ket_thuc", NgayKT);
+                    insertCmd.Parameters.AddWithValue("@So_tiet_hoc", SoTiet);
+                    insertCmd.Parameters.AddWithValue("@Thoi_gian_bat_dau", ThoiGianBatDau);
+                    insertCmd.Parameters.AddWithValue("Thoi_gian_ket_thuc", ThoiGianKetThuc);
+                    insertCmd.Parameters.AddWithValue("Hoc_vao_thu", NgayHoc);
+                    // Thực hiện câu lệnh INSERT
+                    int rowsAffected = insertCmd.ExecuteNonQuery();
+
+                    // Kiểm tra xem có bao nhiêu dòng đã được thêm
+                    if (rowsAffected > 0)
+                    {
+                        // Insert thành công
+                        TempData["SuccessMessage"] = "Thêm lớp thành công";
+                    }
+                    else
+                    {
+                        // Insert không thành công
+                        TempData["ErrorMessage"] = "Thêm lớp không thành công";
+                    }
                 }
                 else
                 {
-                    // Insert không thành công
-                    TempData["ErrorMessage"] = "Thêm lớp không thành công";
+                    ViewBag.ErrorMessage = "Mã đã tồn tại. Vui lòng nhập mã khác.";
+                    return View("Add_Class");
                 }
+                conn.Close();
+                return RedirectToAction("Manage_Classes");
             }
-            else
-            {
-                ViewBag.ErrorMessage = "Mã đã tồn tại. Vui lòng nhập mã khác.";
-                return View("Add_Course");
+            catch(Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                ViewBag.ErrorMessage = "Gặp lỗi: "+ex;
+                return View("Add_Class");
             }
-            conn.Close();
-            return RedirectToAction("Manage_Classes");
+            
         }
 
         public ActionResult Edit_Class_Infor(string maLop)

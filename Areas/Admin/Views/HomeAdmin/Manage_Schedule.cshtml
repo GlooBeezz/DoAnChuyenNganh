@@ -4,98 +4,59 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
-<h2>Manage_Schedule</h2>
 <div class="container">
+    <div class="row">
+        <div class="col display-5" style="text-align:center">Quản lý thời khoá biểu</div>
+    </div>
+    <hr />
     <div class="row table-responsive">
+        @{
+            var weekdays = new List<string> { "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật" };
+
+            var timeSlots = new List<TimeSpan>();
+            for (int i = 7; i <= 21; i += 2)
+            {
+                timeSlots.Add(TimeSpan.FromHours(i));
+            }
+        }
+
         <table class="table table-bordered border-1 border-dark " style="text-align:center">
-            <thead>
-                <tr class="table-primary table-bordered border-2 border-dark align-middle">
-                    <th scope="col">Thời Gian</th>
-                    <th scope="col">Thứ 2</th>
-                    <th scope="col">Thứ 3</th>
-                    <th scope="col">Thứ 4</th>
-                    <th scope="col">Thứ 5</th>
-                    <th scope="col">Thứ 6</th>
-                    <th scope="col">Thứ 7</th>
-                    <th scope="col">Chủ Nhật</th>
+            <thead class="table-primary">
+                <tr>
+                    <th>Thời Gian</th>
+                    @foreach (var weekday in weekdays)
+            {
+                    <th>@weekday</th>
+            }
                 </tr>
             </thead>
-            <tbody >
-                @foreach (var thoiKhoaBieu in Model)
+            <tbody class="table-group-divider">
+                @foreach (var timeSlot in timeSlots)
                 {
-                    <tr >
-                        <td scope="row" class="bg-light" width="30px">@thoiKhoaBieu.Thoi_gian_bat_dau.ToString("hh\\:mm") - @thoiKhoaBieu.Thoi_gian_ket_thuc.ToString("hh\\:mm")</td>
-                        <td width="100px">
-                            @if (thoiKhoaBieu.Hoc_vao_thu == "Thứ 2")
-                            {<div class="">
-                                    <p>
-                                        @thoiKhoaBieu.Ma_lop <br />
-                                        @thoiKhoaBieu.Ten_lop_hoc <br />
-                                        @thoiKhoaBieu.Phong_hoc
-                                    </p>
-                                </div>}
-                        </td>
-                        <td width="100px">
-                            @if (thoiKhoaBieu.Hoc_vao_thu == "Thứ 3")
-                            {<div class="">
-                                    <p>
-                                        @thoiKhoaBieu.Ma_lop <br />
-                                        @thoiKhoaBieu.Ten_lop_hoc <br />
-                                        @thoiKhoaBieu.Phong_hoc
-                                    </p>
-                                </div>}
-                        </td>
-                        <td width="100px">
-                            @if (thoiKhoaBieu.Hoc_vao_thu == "Thứ 4")
-                            {<div class="">
-                                   <p> @thoiKhoaBieu.Ma_lop <br />
-                                    @thoiKhoaBieu.Ten_lop_hoc <br />
-                                    @thoiKhoaBieu.Phong_hoc</p>
-                              </div>}
-                        </td>
-                        <td width="100px">
-                            @if (thoiKhoaBieu.Hoc_vao_thu == "Thứ 5")
-                            {<div class="">
-                                    <p>
-                                        @thoiKhoaBieu.Ma_lop <br />
-                                        @thoiKhoaBieu.Ten_lop_hoc <br />
-                                        @thoiKhoaBieu.Phong_hoc
-                                    </p>
-                                </div>}
-                        </td>
-                        <td width="100px">
-                            @if (thoiKhoaBieu.Hoc_vao_thu == "Thứ 6")
-                            {<div class="">
-                                    <p>
-                                        @thoiKhoaBieu.Ma_lop <br />
-                                        @thoiKhoaBieu.Ten_lop_hoc <br />
-                                        @thoiKhoaBieu.Phong_hoc
-                                    </p>
-                                </div>}
-                        </td>
-                        <td width="100px">
-                            @if (thoiKhoaBieu.Hoc_vao_thu == "Thứ 7")
-                            {<div class="">
-                                    <p>
-                                        @thoiKhoaBieu.Ma_lop <br />
-                                        @thoiKhoaBieu.Ten_lop_hoc <br />
-                                        @thoiKhoaBieu.Phong_hoc
-                                    </p>
-                                </div>}
-                        </td>
-                        <td width="100px">
-                            @if (thoiKhoaBieu.Hoc_vao_thu == "Chủ Nhật")
-                            {<div class="">
-                                    <p>
-                                        @thoiKhoaBieu.Ma_lop <br />
-                                        @thoiKhoaBieu.Ten_lop_hoc <br />
-                                        @thoiKhoaBieu.Phong_hoc
-                                    </p>
-                                </div>}
-                        </td>
-                    </tr>
+                <tr>
+                    <td scope="row" class="bg-light" width="30px">@timeSlot.ToString("hh\\:mm") - @((timeSlot + TimeSpan.FromHours(2)).ToString("hh\\:mm"))</td>
+                    @foreach (var weekday in weekdays)
+                        {
+                    <td width="100px">
+                        @foreach (var thoiKhoaBieu in Model)
+                            {
+                                if (thoiKhoaBieu.Hoc_vao_thu == weekday && thoiKhoaBieu.Thoi_gian_bat_dau <= timeSlot && thoiKhoaBieu.Thoi_gian_ket_thuc >= timeSlot + TimeSpan.FromHours(2))
+                                {
+                        <div>
+                            <p>
+                                Mã lớp: @thoiKhoaBieu.Ma_lop <br />
+                                Tên lớp: @thoiKhoaBieu.Ten_lop_hoc <br />
+                                Phòng học: @thoiKhoaBieu.Phong_hoc
+                            </p>
+                        </div>
+                                }
+                            }
+                    </td>
+                        }
+                </tr>
                 }
             </tbody>
         </table>
+
     </div>
 </div>

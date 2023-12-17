@@ -38,7 +38,7 @@ namespace web2.Models
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT COUNT(*) FROM LopHoc WHERE Ma_lop_hoc = @Ma";
+                string query = "SELECT COUNT(*) FROM LopHoc WHERE Ma_lop = @Ma";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Ma", ma);
