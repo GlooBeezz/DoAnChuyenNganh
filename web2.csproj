@@ -140,20 +140,16 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\Admin\Data\DanhSachGiaoVien.cs" />
+    <Compile Include="Areas\Admin\Data\DanhSachNguoiDung.cs" />
     <Compile Include="Areas\Admin\Data\GiaoVienManage.cs" />
     <Compile Include="Areas\Admin\Data\DanhSachHocViencs.cs" />
     <Compile Include="Areas\Admin\Data\DataAccess.cs" />
     <Compile Include="Areas\Admin\Data\HocVienManage.cs" />
- 
     <Compile Include="Areas\Admin\Data\hocVienManage.cs" />
-    <Compile Include="Areas\Student\Data\DanhSachKhoaHoc.cs" />
-    <Compile Include="Areas\Student\Data\KhoaHocManage.cs" />
-    <Compile Include="Areas\Student\Controllers\HomeStudentController.cs" />
-    <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Data\NguoiDungManage.cs" />
     <Compile Include="Areas\Teacher\Controllers\HomeTeacherController.cs" />
     <Compile Include="Areas\Teacher\TeacherAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminshowController.cs" />
-
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -225,7 +221,6 @@
       <DependentUpon>Modeladmin.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\Adminshow\HomController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Scripts\chart.js" />
@@ -274,7 +269,6 @@
     <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Student.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Teacher.cshtml" />
-    <Content Include="Areas\Student\Views\web.config" />
     <Content Include="Areas\Teacher\Views\web.config" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Classes.cshtml" />
     <EntityDeploy Include="Models\Modeladmin.edmx">
@@ -315,10 +309,30 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\popper.js" />
+    <Content Include="source\1180w-463h_010920-riviera-art-gallery-780x440.jpg" />
+    <Content Include="source\back1.jpg" />
+    <Content Include="source\Frame 1.png" />
+    <Content Include="source\guitar.png" />
+    <Content Include="source\guitar2.png" />
+    <Content Include="source\icon-1.jpg" />
+    <Content Include="source\ICON-2.jpg" />
+    <Content Include="source\ICON-3.jpg" />
+    <Content Include="source\ICON-4.jpg" />
+    <Content Include="source\index_sec1.png" />
+    <Content Include="source\loginlogo.png" />
+    <Content Include="source\logo.jpg" />
+    <Content Include="source\maxresdefault.jpg" />
+    <Content Include="source\organ.png" />
+    <Content Include="source\organ1.png" />
+    <Content Include="source\organcb.png" />
+    <Content Include="source\person.png" />
     <Content Include="source\person1.png" />
+    <Content Include="source\piano.png" />
+    <Content Include="source\piano1.png" />
+    <Content Include="source\pianocb.png" />
     <Content Include="source\section5a.png" />
+    <Content Include="source\Starry-Night-canvas-Vincent-van-Gogh-New-1889.png" />
     <Content Include="Views\Home\style\Index.js" />
-    <Content Include="Views\Home\style\_layout.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -341,15 +355,10 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <None Include="Views\Home\style\.editorconfig" />
+    <Content Include="Views\Home\Test_Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Models\" />
     <Folder Include="App_Data\App_LocalResources\" />
-    <Folder Include="Areas\Student\Data\" />
-    <Folder Include="Areas\Student\Views\HomeStudent\" />
-    <Folder Include="Areas\Student\Views\Shared\" />
     <Folder Include="Areas\Teacher\Data\" />
     <Folder Include="Views\Default\" />
   </ItemGroup>

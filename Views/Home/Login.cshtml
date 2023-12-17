@@ -2,18 +2,40 @@
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Active = "login";
+
 }
+
 <!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="~/Content/Login.css" />
 </head>
+
+
+<script>
+
+    function checkCredentials() {
+        var username = document.getElementById('user').value;
+        var password = document.getElementById('pass').value;
+
+        if (username === 'admin' && password === '123') {
+            window.location.href = "@Url.Action("Index", "HomeAdmin")";
+        } else {
+            // Nếu sai tài khoản hoặc mật khẩu, có thể hiển thị thông báo hoặc xử lý khác
+            alert('Invalid username or password');
+        }
+    }
+
+
+</script>
+
+
 <Body>
     <div class="container d-flex justify-content-center align-items-center">
         <div class="row border rounded-5 p-3 bg-white box-area shadow">
-            <div class="col-md-6 d-flex rounded-4 justify-content-center align-items-center flex-column left-box " style="background:#68c4ba" >
+            <div class="col-md-6 d-flex rounded-4 justify-content-center align-items-center flex-column left-box " style="background:#68c4ba">
                 <div class="feature-image mb-3">
-                    <img src="~/source/loginlogo.png" class="img-fluid" style="width:250px;padding-top:30px;"/>
+                    <img src="~/source/loginlogo.png" class="img-fluid" style="width:250px;padding-top:30px;" />
                 </div>
                 <P class="text-white fs-4">Tận Tâm - Chuyên Nghiệp - Uy Tín</P>
             </div>
@@ -23,21 +45,36 @@
                         <h2>Xin chào!</h2>
                         <P>Chào mừng quay trở lại.</P>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="text" value="" class="form-control form-control-lg bg-light fs-6 " placeholder="Tài Khoản" />
-                    </div>
-                    <div class="input-group mb-1">
-                        <input type="password" value="" class="form-control form-control-lg bg-light fs-6 " placeholder="Mật Khẩu" />
-                    </div>
-                    <div class="input-group mb-5">
-                        <div class="form-check">
-                            <input type="checkbox" name="name" value="" class="form-check-input" id="rememberMeCheck"/>
-                            <label for="rememberMeCheck" class="form-check-label text-secondary"><small>Ghi nhớ tôi!</small></label>
+
+
+
+
+                    <form action="@Url.Action("Check_Dangnhap", "Home")">
+                        <div class="input-group mb-3">
+                            <input type="text" value="" id="user" class="form-control form-control-lg bg-light fs-6 " placeholder="Tài Khoản" />
                         </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <button class="btn btn-lg btn-primary w-100 fs-6">Đăng Nhập</button>
-                    </div>
+                        <div class="input-group mb-1">
+                            <input type="password" value="" id="pass" class="form-control form-control-lg bg-light fs-6 " placeholder="Mật Khẩu" />
+                        </div>
+
+
+
+                        <div class="input-group mb-5">
+                            <div class="form-check">
+                                <input type="checkbox" name="name" value="" class="form-check-input" id="rememberMeCheck" />
+                                <label for="rememberMeCheck" class="form-check-label text-secondary"><small>Ghi nhớ tôi!</small></label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <button class="btn btn-lg btn-primary w-100 fs-6" type="submit" onclick="checkCredentials()">Đăng Nhập</button>
+                        </div>
+                    </form>
+
+
+
+
+
+
                 </div>
             </div>
         </div>

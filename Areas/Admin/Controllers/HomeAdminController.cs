@@ -18,9 +18,9 @@ namespace web2.Areas.Admin.Controllers
         public ActionResult Manage_Student()
         {
             // Lấy danh sách học viên
-            var dsHocVien= new DanhSachHocViencs().listHocVien;
+            var dsHocVien = new DanhSachHocViencs().listHocVien;
             String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
-            SqlConnection conn=new SqlConnection(connStr);
+            SqlConnection conn = new SqlConnection(connStr);
             conn.Open();
             SqlCommand Cmd = new SqlCommand("SELECT HocVien.Ma_hoc_vien, NguoiDung.Ho_va_ten, NguoiDung.Ngay_sinh, NguoiDung.Sdt, NguoiDung.Email, NguoiDung.Dia_chi, NguoiDung.Tai_khoan, NguoiDung.Mat_khau, NguoiDung.Phan_quyen,\r\n       HocVien.Lop_hoc_tham_gia, HocVien.Trang_thai_hoc_phi\r\nFROM HocVien\r\nJOIN NguoiDung ON HocVien.Ma_hoc_vien = NguoiDung.Ma;", conn);
             SqlDataReader dr = Cmd.ExecuteReader();
@@ -86,7 +86,7 @@ namespace web2.Areas.Admin.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Submit_Edit_Student_Infor(string Ma, string Ten, DateTime NgaySinh,DateTime? NgaySinhNew, string Sdt, string Email, string DiaChi, string TaiKhoan, string MatKhau, string PhanQuyen, string Lop, string ThemLop, string HocPhi)
+        public ActionResult Submit_Edit_Student_Infor(string Ma, string Ten, DateTime NgaySinh, DateTime? NgaySinhNew, string Sdt, string Email, string DiaChi, string TaiKhoan, string MatKhau, string PhanQuyen, string Lop, string ThemLop, string HocPhi)
         {
             try
             {
@@ -289,7 +289,8 @@ namespace web2.Areas.Admin.Controllers
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
-                GiaoVien gv = new GiaoVien {
+                GiaoVien gv = new GiaoVien
+                {
                     Ma_giao_vien = dr["Ma_giao_vien"].ToString(),
                     Ho_va_ten = dr["Ho_va_ten"].ToString(),
                     Ngay_sinh = (DateTime)dr["Ngay_sinh"],
@@ -302,8 +303,8 @@ namespace web2.Areas.Admin.Controllers
                     Chuyen_mon = dr["Chuyen_mon"].ToString(),
                     Luong_co_ban = Convert.ToDecimal(dr["Luong_co_ban"]),
                     Ma_lop_giang_day = dr["Ma_lop_giang_day"].ToString(),
-                    Ma_tai_lieu_tai_len= dr["Ma_tai_lieu_tai_len"].ToString(),
-                    Ma_bang_luong= dr["Ma_bang_luong"].ToString(),
+                    Ma_tai_lieu_tai_len = dr["Ma_tai_lieu_tai_len"].ToString(),
+                    Ma_bang_luong = dr["Ma_bang_luong"].ToString(),
                 };
                 dsGv.Add(gv);
             }
@@ -339,7 +340,7 @@ namespace web2.Areas.Admin.Controllers
             insertCmd.Parameters.AddWithValue("@Ma_tai_lieu_tai_len", MaTaiLieuTaiLen);
             insertCmd.Parameters.AddWithValue("@Luong_co_ban", LuongCoBan);
             insertCmd.Parameters.AddWithValue("@Chuyen_mon", ChuyenMon);
-            System.Diagnostics.Debug.WriteLine(Ma,MaBangLuong,Lop,MaTaiLieuTaiLen,ChuyenMon,LuongCoBan);
+            System.Diagnostics.Debug.WriteLine(Ma, MaBangLuong, Lop, MaTaiLieuTaiLen, ChuyenMon, LuongCoBan);
             // Thực hiện câu lệnh INSERT
             int rowsAffected = insertCmd.ExecuteNonQuery();
             if (rowsAffected > 0)
@@ -386,7 +387,7 @@ namespace web2.Areas.Admin.Controllers
                         Ma_bang_luong = row["Ma_bang_luong"].ToString(),
                         Ma_lop_giang_day = row["Ma_lop_giang_day"].ToString(),
                         Ma_tai_lieu_tai_len = row["Ma_tai_lieu_tai_len"].ToString()
-                        
+
                     };
                     System.Diagnostics.Debug.WriteLine("B2.2");
                     //foreach (var property in typeof(GiaoVien).GetProperties())
@@ -574,14 +575,15 @@ namespace web2.Areas.Admin.Controllers
 
         public ActionResult Manage_Classes()
         {
-            var dsLopHoc= new List<LopHoc>();
+            var dsLopHoc = new List<LopHoc>();
             String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
             SqlConnection conn = new SqlConnection(connStr);
             conn.Open();
             SqlCommand Cmd = new SqlCommand("SELECT\r\n    L.Ma_lop,\r\n    L.Ma_khoa_hoc,\r\n    L.Phong_hoc,\r\n    COUNT(H.Lop_hoc_tham_gia) AS So_luong_hoc_vien,\r\n    L.Ten_lop_hoc,\r\n    L.Mo_ta,\r\n    L.Ma_thoi_gian_bieu,\r\n    L.Ngay_bat_dau,\r\n    L.Ngay_ket_thuc,\r\n    L.So_tiet_hoc\r\nFROM\r\n    LopHoc L\r\nLEFT JOIN\r\n    HocVien H ON L.Ma_lop = H.Lop_hoc_tham_gia\r\nGROUP BY\r\n    L.Ma_lop,\r\n    L.Ma_khoa_hoc,\r\n    L.Phong_hoc,\r\n    L.Ten_lop_hoc,\r\n    L.Mo_ta,\r\n    L.Ma_thoi_gian_bieu,\r\n    L.Ngay_bat_dau,\r\n    L.Ngay_ket_thuc,\r\n    L.So_tiet_hoc;", conn);
             SqlDataReader dr = Cmd.ExecuteReader();
-            while (dr.Read()) {
-                LopHoc lop=new LopHoc
+            while (dr.Read())
+            {
+                LopHoc lop = new LopHoc
                 {
                     Ma_lop = dr["Ma_lop"].ToString(),
                     Ma_khoa_hoc = dr["Ma_khoa_hoc"].ToString(),
@@ -648,7 +650,7 @@ namespace web2.Areas.Admin.Controllers
         {
             return View();
         }
-        public ActionResult Submit_Add_Class(string Ma, string Ten,string MoTa, string Phong, string MaTKB, DateTime NgayBD, DateTime NgayKT, int SoTiet, string KhoaHoc, int? SoLuongHocVien)
+        public ActionResult Submit_Add_Class(string Ma, string Ten, string MoTa, string Phong, string MaTKB, DateTime NgayBD, DateTime NgayKT, int SoTiet, string KhoaHoc, int? SoLuongHocVien)
         {
             SoLuongHocVien = 0;
             String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
@@ -707,7 +709,7 @@ namespace web2.Areas.Admin.Controllers
                         Ngay_bat_dau = (DateTime)row["Ngay_bat_dau"],
                         Ngay_ket_thuc = (DateTime)row["Ngay_ket_thuc"],
                         So_tiet_hoc = Convert.ToInt32(row["So_tiet_hoc"])
-                        
+
                     };
                     return View("Edit_Class_Infor", lopHoc);
                 }
