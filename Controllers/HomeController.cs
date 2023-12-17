@@ -26,24 +26,24 @@ namespace web2.Controllers
             SqlCommand Cmd = new SqlCommand("SELECT NguoiDung.Ho_va_ten, " +
                 " NguoiDung.Tai_khoan, " +
                 "NguoiDung.Mat_khau, " +
-                "NguoiDung.Phan_quyen;", conn);
+                "NguoiDung.Phan_quyen from NguoiDung;", conn);
             SqlDataReader dr = Cmd.ExecuteReader();
             while (dr.Read())
             {
-                HocVien hv = new HocVien
+                NguoiDung nguoiDung = new NguoiDung
                 {
                     Ho_va_ten = dr["Ho_va_ten"].ToString(), 
                     Tai_khoan = dr["Tai_khoan"].ToString(),
                     Mat_khau = dr["Mat_khau"].ToString(),
                     Phan_quyen = (Boolean)dr["Phan_quyen"],
                   
-                };
-                dsNguoiDung.Add(hv);
+                };//????? cái câu truy vấn bị sai
+                dsNguoiDung.Add(nguoiDung);
             }
             return View(dsNguoiDung);
 
         }
-        public ActionResult Check_Dangnhap(String user, String pass)
+        public ActionResult Check_Dangnhap(String user, String pass)// gọi đúng theo cái name bên .cshtml
         {
             var dsnguoidung = new DanhSachNguoiDung().listNguoiDung;
 

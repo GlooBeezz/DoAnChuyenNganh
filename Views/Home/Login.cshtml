@@ -48,13 +48,13 @@
 
 
 
-
+                    //Mấy cái thẻ này nó lấy giá trị thong qua name á nên phải có cái name id để thao tác vs javascript thôi vs lại name bên đây đặt alf gì thì bên controller nhớ gọi cho đúng nha nó ms nhận
                     <form action="@Url.Action("Check_Dangnhap", "Home")">
                         <div class="input-group mb-3">
-                            <input type="text" value="" id="user" class="form-control form-control-lg bg-light fs-6 " placeholder="Tài Khoản" />
+                            <input type="text" value="" id="user" class="form-control form-control-lg bg-light fs-6 " placeholder="Tài Khoản" name="user"/>
                         </div>
                         <div class="input-group mb-1">
-                            <input type="password" value="" id="pass" class="form-control form-control-lg bg-light fs-6 " placeholder="Mật Khẩu" />
+                            <input type="password" value="" id="pass" class="form-control form-control-lg bg-light fs-6 " placeholder="Mật Khẩu" name="pass"/>
                         </div>
 
 
