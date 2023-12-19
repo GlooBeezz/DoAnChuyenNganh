@@ -21,9 +21,23 @@ namespace web2.Areas.Admin.Controllers
     {
         private DataHelper dbHelper;
 
+        //Index
+
         public ActionResult Index()
         {
-            return View();
+            String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+            DataAccess dataAccess = new DataAccess(connStr);
+
+            int studentCount = dataAccess.CountStudents();
+            int teacherCount = dataAccess.CountTeachers();
+            int courseCount = dataAccess.CountCourses();
+            int classCount = dataAccess.CountClasses();
+            ChartView chartView = new ChartView();
+            chartView.NumberOfStudents = studentCount;
+            chartView.NumberOfTeachers = teacherCount;
+            chartView.NumberOfCourses = courseCount;
+            chartView.NumberOfClasses = classCount;
+            return View(chartView);
         }
 
         // Học viên
@@ -430,7 +444,6 @@ namespace web2.Areas.Admin.Controllers
             conn.Close();
             return RedirectToAction("Manage_Teacher");
         }
-
         public ActionResult Edit_Teacher_Infor(string maGiaoVien)
         {
             try
@@ -465,11 +478,6 @@ namespace web2.Areas.Admin.Controllers
 
                     };
                     System.Diagnostics.Debug.WriteLine("B2.2");
-                    //foreach (var property in typeof(GiaoVien).GetProperties())
-                    //{
-                    //    var value = property.GetValue(giaoVien);
-                    //    System.Diagnostics.Debug.WriteLine($"{property.Name}: {value}");
-                    //}
                     System.Diagnostics.Debug.WriteLine(giaoVien);
                     return View("Edit_Teacher_Infor", giaoVien);
                 }
@@ -489,7 +497,7 @@ namespace web2.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Submit_Edit_Teacher(string Ma, string Ten, DateTime? NgaySinhNew, DateTime NgaySinh, string Sdt, string Email, string DiaChi, string TaiKhoan, string MatKhau, string PhanQuyen, string ThemLop, string Lop, string ChuyenMon, string LuongCoBan, string MaBangLuong, string MaTaiLieuTaiLen)
+        public ActionResult Submit_Edit_Teacher(string Ma, string Ten, DateTime NgaySinh, string Sdt, string Email, string DiaChi, string TaiKhoan, string MatKhau, string PhanQuyen, string Lop, string ChuyenMon, string LuongCoBan, string MaBangLuong, string MaTaiLieuTaiLen)
         {
             try
             {
@@ -501,7 +509,7 @@ namespace web2.Areas.Admin.Controllers
                 {
                     new SqlParameter("@Ma_giao_vien", Ma),
                     new SqlParameter("@Ho_va_ten", Ten),
-                    new SqlParameter("@Ngay_sinh", NgaySinhNew != null ? NgaySinhNew : NgaySinh),
+                    new SqlParameter("@Ngay_sinh", NgaySinh),
                     new SqlParameter("@Sdt", Sdt),
                     new SqlParameter("@Email", Email),
                     new SqlParameter("@Dia_chi", DiaChi),
@@ -519,7 +527,7 @@ namespace web2.Areas.Admin.Controllers
                     new SqlParameter("@Ma_giao_vien", Ma),
                     new SqlParameter("@Chuyen_mon", ChuyenMon),
                     new SqlParameter("@Luong_co_ban", LuongCoBan),
-                    new SqlParameter("@Ma_lop_giang_day", ThemLop != null ? ThemLop : Lop),
+                    new SqlParameter("@Ma_lop_giang_day", Lop),
                     new SqlParameter("@Ma_bang_luong", MaBangLuong),
                     new SqlParameter("@Ma_tai_lieu_tai_len", MaTaiLieuTaiLen)
                 };
@@ -543,6 +551,7 @@ namespace web2.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Out");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
                 TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
                 return RedirectToAction("Manage_Teacher");
             }
@@ -822,7 +831,7 @@ namespace web2.Areas.Admin.Controllers
         {
             try
             {
-                string query = "SELECT LopHoc.Ma_lop, LopHoc.Ma_khoa_hoc, LopHoc.Phong_hoc, LopHoc.So_luong_hoc_vien, LopHoc.Ten_lop_hoc, LopHoc.Mo_ta, LopHoc.Ma_thoi_gian_bieu, LopHoc.Ngay_bat_dau, LopHoc.Ngay_ket_thuc, LopHoc.So_tiet_hoc FROM LopHoc WHERE Ma_lop = @Ma_lop";
+                string query = "SELECT LopHoc.Ma_lop, LopHoc.Ma_khoa_hoc, LopHoc.Phong_hoc, LopHoc.So_luong_hoc_vien, LopHoc.Ten_lop_hoc, LopHoc.Mo_ta, LopHoc.Ma_thoi_gian_bieu, LopHoc.Ngay_bat_dau, LopHoc.Ngay_ket_thuc, LopHoc.So_tiet_hoc,ThoiGianBieu.Thoi_gian_bat_dau, ThoiGianBieu.Thoi_gian_ket_thuc, ThoiGianBieu.Hoc_vao_thu FROM LopHoc join ThoiGianBieu on LopHoc.Ma_thoi_gian_bieu=ThoiGianBieu.Ma_thoi_gian_bieu WHERE Ma_lop = @Ma_lop";
                 SqlParameter parameter = new SqlParameter("@Ma_lop", maLop);
                 String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
                 DataAccess dataAccess = new DataAccess(connStr);
@@ -842,8 +851,10 @@ namespace web2.Areas.Admin.Controllers
                         Ma_thoi_gian_bieu = row["Ma_thoi_gian_bieu"].ToString(),
                         Ngay_bat_dau = (DateTime)row["Ngay_bat_dau"],
                         Ngay_ket_thuc = (DateTime)row["Ngay_ket_thuc"],
-                        So_tiet_hoc = Convert.ToInt32(row["So_tiet_hoc"])
-
+                        So_tiet_hoc = Convert.ToInt32(row["So_tiet_hoc"]),
+                        Thoi_gian_bat_dau = (TimeSpan)row["Thoi_gian_bat_dau"],
+                        Thoi_gian_ket_thuc = (TimeSpan)row["Thoi_gian_ket_thuc"],
+                        Hoc_vao_thu = row["Hoc_vao_thu"].ToString()
                     };
                     return View("Edit_Class_Infor", lopHoc);
                 }
@@ -855,28 +866,32 @@ namespace web2.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
                 TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
                 return RedirectToAction("Manage_Classes");
             }
         }
 
         [HttpPost]
-        public ActionResult Submit_Edit_Class_Infor(string Ma, string Ten, string Phong, string MoTa, string MaTKB, DateTime NgayBD, DateTime? NgayBDNew, DateTime NgayKT, DateTime? NgayKTNew, int SoTiet, string KhoaHoc, string KhoaHocNew)
+        public ActionResult Submit_Edit_Class_Infor(string Ma, string Ten, string Phong, string MoTa, string MaTKB, DateTime NgayBD,  DateTime NgayKT, int SoTiet, string KhoaHoc, TimeSpan ThoiGianBatDau, TimeSpan ThoiGianKetThuc, string NgayHoc)
         {
             try
             {
-                string updateLopHocQuery = "UPDATE LopHoc SET Ma_khoa_hoc = @Ma_khoa_hoc, Phong_hoc = @Phong_hoc, Ten_lop_hoc = @Ten_lop_hoc, Mo_ta = @Mo_ta, Ma_thoi_gian_bieu = @Ma_thoi_gian_bieu, Ngay_bat_dau = @Ngay_bat_dau, Ngay_ket_thuc = @Ngay_ket_thuc, So_tiet_hoc = @So_tiet_hoc WHERE Ma_lop = @Ma_lop";
+                string updateLopHocQuery = "UPDATE LopHoc SET Ma_khoa_hoc = @Ma_khoa_hoc, Phong_hoc = @Phong_hoc, Ten_lop_hoc = @Ten_lop_hoc, Mo_ta = @Mo_ta, Ma_thoi_gian_bieu = @Ma_thoi_gian_bieu, Ngay_bat_dau = @Ngay_bat_dau, Ngay_ket_thuc = @Ngay_ket_thuc, So_tiet_hoc = @So_tiet_hoc WHERE Ma_lop = @Ma_lop; update  ThoiGianBieu set  Thoi_gian_bat_dau=@Thoi_gian_bat_dau, Thoi_gian_ket_thuc=@Thoi_gian_ket_thuc,Hoc_vao_thu=@Hoc_vao_thu where Ma_thoi_gian_bieu=@Ma_thoi_gian_bieu;";
                 System.Diagnostics.Debug.WriteLine("B1");
                 SqlParameter[] parameters =
                 {
                     new SqlParameter("@Ma_lop", Ma),
-                    new SqlParameter("@Ma_khoa_hoc", KhoaHocNew != null ? KhoaHocNew : KhoaHoc),
+                    new SqlParameter("@Ma_khoa_hoc", KhoaHoc),
                     new SqlParameter("@Phong_hoc", Phong),
                     new SqlParameter("@Ten_lop_hoc", Ten),
                     new SqlParameter("@Mo_ta", MoTa),
                     new SqlParameter("@Ma_thoi_gian_bieu", MaTKB),
-                    new SqlParameter("@Ngay_bat_dau", NgayBDNew != null ? NgayBDNew : NgayBD),
-                    new SqlParameter("@Ngay_ket_thuc", NgayKTNew != null ? NgayKTNew : NgayKT),
+                    new SqlParameter("@Ngay_bat_dau",  NgayBD),
+                    new SqlParameter("@Ngay_ket_thuc",  NgayKT),
+                    new SqlParameter("@Thoi_gian_bat_dau", ThoiGianBatDau),
+                    new SqlParameter("@Thoi_gian_ket_thuc", ThoiGianKetThuc),
+                    new SqlParameter("@Hoc_vao_thu", NgayHoc),
                     //new SqlParameter("@Ngay_bat_dau", NgayBDNew != null ? NgayBDNew : DateTime.ParseExact(NgayBD, "dd/MM/yyyy", CultureInfo.InvariantCulture)),
                     //new SqlParameter("@Ngay_ket_thuc", NgayKTNew != null ? NgayKTNew : DateTime.ParseExact(NgayKT, "dd/MM/yyyy", CultureInfo.InvariantCulture)),
                     new SqlParameter("@So_tiet_hoc", SoTiet)

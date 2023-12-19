@@ -18,12 +18,8 @@
         <input type="text" class="form-control" id="tenhv" placeholder="Tên" name="Ten" value="@Model.Ho_va_ten">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Cập nhật ngày sinh:</label>
-        <input type="date" class="form-control" id="ngaysinh" name="NgaySinhNew" >
-    </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Ngày sinh cũ:</label>
-        <input type="text" class="form-control" id="ngaysinh" placeholder="Số điện thoại" name="NgaySinh" value="@Model.NgaySinhFormatted">
+        <label for="" class="form-label">Ngày sinh:</label>
+        <input type="date" class="form-control" id="ngaysinh" name="NgaySinh" value="@Model.Ngay_sinh.ToString("yyyy-MM-dd")">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Sđt:</label>
@@ -54,17 +50,13 @@
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label>Chỉnh sửa lớp học tham gia giảng dạy:</label>
-        <select class="form-select mt-2" id="sellopgv" name="ThemLop">
+        <select class="form-select mt-2" id="sellopgv" name="Lop">
             <option value="">Nhấn để chọn</option>
             @foreach (var lop in db.LopHocs.ToList())
             {
-                <option value="@lop.Ma_lop">@lop.Ten_lop_hoc</option>
+                <option value="@lop.Ma_lop" @(lop.Ma_lop == Model.Ma_lop_giang_day ? "selected" : "")>@lop.Ten_lop_hoc</option>
             }
         </select>
-    </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Lớp học hiện tại:</label>
-        <input type="text" class="form-control" id="sellopgv" placeholder="" name="Lop" value="@Model.Ma_lop_giang_day">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label>Chuyên môn:</label>
@@ -83,6 +75,10 @@
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Lương cơ bản:</label>
         <input type="number" class="form-control" id="LuongCoBan" placeholder="Lương cơ bản" name="LuongCoBan" value="@Model.Luong_co_ban">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Mã tài liệu tải lên:</label>
+        <input type="text" class="form-control" id="MaTaiLieuTaiLen" placeholder="Mã tài liệu" name="MaTaiLieuTaiLen" value="@Model.Ma_tai_lieu_tai_len">
     </div>
     <br />
     <div class="row d-grid gap-2">

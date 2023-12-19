@@ -28,42 +28,51 @@
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Mã thời khoá biểu:</label>
-        <input type="text" class="form-control" id="matkb" placeholder="Mã thời khoá biểu" name="MaTKB" value="@Model.Ma_thoi_gian_bieu">
+        <input type="text" class="form-control" id="matkb" placeholder="Mã thời khoá biểu" name="MaTKB" value="@Model.Ma_thoi_gian_bieu" readonly>
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Ngày bắt đầu:</label>
         <input type="date" class="form-control" id="ngaybd" name="NgayBD" value="@Model.Ngay_bat_dau_formatted">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Cập nhật ngày bắt đầu:</label>
-        <input type="date" class="form-control" id="ngaybd" name="NgayBDNew">
-    </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Ngày kết thúc:</label>
         <input type="date" class="form-control" id="ngaykt" name="NgayKT" value="@Model.Ngay_ket_thuc_formatted">
-    </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Ngày kết thúc:</label>
-        <input type="date" class="form-control" id="ngaykt" name="NgayKTNew">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Số tiết:</label>
         <input type="number" class="form-control" id="sotiet" placeholder="Số tiết học" name="SoTiet" value="@Model.So_tiet_hoc">
     </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+@*    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Khoá học hiện tại:</label>
         <input type="text" class="form-control" id="selkhoa" name="KhoaHoc" value="@Model.Ma_khoa_hoc">
+    </div>*@
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label>Khoá học:</label>
+        <select class="form-select mt-2" id="selkhoa" name="KhoaHoc">
+            <option value="">Nhấn để chọn</option>
+            @foreach (var khoa in db.KhoaHocs.ToList())
+            {
+                <option value="@khoa.Ma_khoa_hoc" @(khoa.Ma_khoa_hoc == Model.Ma_khoa_hoc ? "selected" : "")>@khoa.Ten_khoa_hoc</option>
+            }
+        </select>
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-            <label>Khoá học:</label>
-            <select class="form-select mt-2" id="selkhoa" name="KhoaHocNew">
-                <option value="">Nhấn để chọn</option>
-                @foreach (var khoa in db.KhoaHocs.ToList())
-                {
-                    <option value="@khoa.Ma_khoa_hoc">@khoa.Ten_khoa_hoc</option>
-                }
-            </select>
-        </div>
+        <label for="" class="form-label">Thời gian bắt đầu:</label>
+        <input type="time" class="form-control" id="thoiGianBatDau" name="ThoiGianBatDau" value="@Model.Thoi_gian_bat_dau">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="" class="form-label">Thời gian kết thúc:</label>
+        <input type="time" class="form-control" id="thoiGianKetThuc" name="ThoiGianKetThuc" value="@Model.Thoi_gian_ket_thuc">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label>Ngày học:</label>
+        <select class="form-select mt-2" id="selngay" name="NgayHoc">
+            @foreach (var option in new List<string> { "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật" })
+            {
+                <option value="@option" @(option == Model.Hoc_vao_thu ? "selected" : "")>@option</option>
+            }
+        </select>
+    </div>
     <hr />
     <div class="row d-grid gap-2">
         <input class="btn btn-success" type="submit" name="submit" value="Lưu">

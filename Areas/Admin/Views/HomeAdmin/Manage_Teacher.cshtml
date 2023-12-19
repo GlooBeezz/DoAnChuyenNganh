@@ -10,15 +10,6 @@
         <div class="col display-5" style="text-align:center">Quản lý giáo viên</div>
     </div>
     <div class="row pt-5">
-        <div class="col-sm-12 col-md-6 col-xl-6 ">
-            <p>Chọn lớp:</p>
-            <select class="form-select mt-3" id="selhv" name="sellistlophoc">
-                @foreach (var lop in db.LopHocs.ToList())
-                {
-                    <option value="@lop.Ma_lop">@lop.Ten_lop_hoc</option>
-                }
-            </select>
-        </div>
         <div class="col-sm-12 col-md-6 col-xl-6">
             <p>Nhập mã giáo viên:</p>
             <form class="input-group" method="post" action="@Url.Action("Find_Teacher", "HomeAdmin", new { area = "Admin" })">
@@ -41,7 +32,7 @@
         </div>
     </div>
     <div class="row">
-        <table class="table " style="text-align:center">
+        <table class="table table-responsive" style="text-align:center">
             <thead class="bg-info bg-gradient">
                 <tr>
                     <th>Mã</th>
@@ -86,7 +77,7 @@
                             <a>@Html.ActionLink("Sửa", "Edit_Teacher_Infor", "HomeAdmin", new { area = "Admin", maGiaoVien = item.Ma_giao_vien }, new { @class = "btn btn-primary" })</a>
                             <form id="form-delete-@item.Ma_giao_vien" action="@Url.Action("Delete_Teacher_Infor", "HomeAdmin", new { area = "Admin" })" method="post">
                                 <input type="hidden" name="maGiaoVien" value="@item.Ma_giao_vien" />
-                                <button type="submit" class="btn btn-success">Xoá</button>
+                                <button type="submit" class="btn btn-danger">Xoá</button>
                             </form>
                         </td>
                     </tr>

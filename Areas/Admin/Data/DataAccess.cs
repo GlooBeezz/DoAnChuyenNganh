@@ -54,5 +54,47 @@ namespace web2.Areas.Admin.Data
                 }
             }
         }
+
+        public int CountStudents()
+        {
+            string query = "SELECT COUNT(*) FROM HocVien";
+            return ExecuteScalar(query);
+        }
+
+        public int CountTeachers()
+        {
+            string query = "SELECT COUNT(*) FROM GiaoVien";
+            return ExecuteScalar(query);
+        }
+
+        public int CountCourses()
+        {
+            string query = "SELECT COUNT(*) FROM KhoaHoc";
+            return ExecuteScalar(query);
+        }
+
+        public int CountClasses()
+        {
+            string query = "SELECT COUNT(*) FROM LopHoc";
+            return ExecuteScalar(query);
+        }
+
+        private int ExecuteScalar(string query, SqlParameter[] parameters = null)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    if (parameters != null)
+                    {
+                        command.Parameters.AddRange(parameters);
+                    }
+
+                    // ExecuteScalar trả về giá trị đầu tiên từ kết quả truy vấn
+                    return (int)command.ExecuteScalar();
+                }
+            }
+        }
     }
 }
