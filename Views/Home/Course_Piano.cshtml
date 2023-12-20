@@ -1,9 +1,83 @@
-﻿
+﻿@model List<web2.Areas.Admin.Data.dsLophoc>
+
 @{
     ViewBag.Title = "Course_Piano";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Active = "course";
 }
 
-<h2>Course_Piano</h2>
+<style>
+</style>
 
+
+<body>
+    
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                
+                    <div class="col-5" >
+                        <img src="~/source/organ1.png" />
+                    </div>
+
+                    <div class="col-7">
+                        <div class="row"style="">
+                            <p style="text-align:center;font-size:30px;">Piano </p>
+                            <p><span style="">Khóa học piano</span><br> 
+                            là hành trình âm nhạc đầy phấn khích, 
+                            nơi mà những nốt nhạc trở nên sống động dưới đôi bàn tay tài năng của học viên. 
+                            Với sự hướng dẫn kỹ lưỡng từ giáo viên chuyên nghiệp,
+                            học viên không chỉ học cách chơi đàn một cách chính xác mà còn khám phá sự sáng tạo qua việc thực hành và biểu diễn.
+                            Từ các bài hát cổ điển đến những sáng tác hiện đại,
+                            khóa học piano mở ra một thế giới âm nhạc đa dạng,
+                            nơi mà niềm đam mê và tài năng âm nhạc của bạn có thể phát triển và lớn mạnh. </p>
+                            </div>
+
+                        </div>
+
+                    
+                </div>
+            </div>
+                <div class="col-12">
+                    <div class="row">
+
+                        <table class="table " style="text-align:center">
+                            <thead class="bg-info bg-gradient">
+                                <tr>
+                                    <th>Ngày băt đầu</th>
+                                    <th>Ngày kết thúc</th>
+                                    <th>Tên Lớp</th>
+                                    <th>Học phí</th>
+                                    <th>time_start</th>
+                                    <th>time_end</th>
+                                    <th>học vao thứ</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.Ngay_bat_dau</td>
+                    <td>@item.Ngay_ket_thuc</td>
+                    <td>@item.Ten_Lop_hoc</td>
+                    <td>@item.Hoc_phi</td>
+                    <td>@item.Thoi_gian_bat_dau</td>
+                    <td>@item.Thoi_gian_ket_thuc</td>
+                    <td>@item.Hoc_vao_thu</td>
+                </tr>
+            }
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+        </div>
+    
+
+
+
+</body>

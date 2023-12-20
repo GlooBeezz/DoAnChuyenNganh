@@ -12,22 +12,7 @@
 </head>
 
 
-<script>
 
-    function checkCredentials() {
-        var username = document.getElementById('user').value;
-        var password = document.getElementById('pass').value;
-
-        if (username === 'admin' && password === '123') {
-            window.location.href = "@Url.Action("Index", "HomeAdmin")";
-        } else {
-            // Nếu sai tài khoản hoặc mật khẩu, có thể hiển thị thông báo hoặc xử lý khác
-            alert('Invalid username or password');
-        }
-    }
-
-
-</script>
 
 
 <Body>
@@ -48,8 +33,13 @@
 
 
 
-                    //Mấy cái thẻ này nó lấy giá trị thong qua name á nên phải có cái name id để thao tác vs javascript thôi vs lại name bên đây đặt alf gì thì bên controller nhớ gọi cho đúng nha nó ms nhận
-                    <form action="@Url.Action("Check_Dangnhap", "Home")">
+
+                    
+                    
+
+
+                    <form action="@Url.Action("Check_Dangnhap", "Home")" method="post">
+
                         <div class="input-group mb-3">
                             <input type="text" value="" id="user" class="form-control form-control-lg bg-light fs-6 " placeholder="Tài Khoản" name="user"/>
                         </div>
