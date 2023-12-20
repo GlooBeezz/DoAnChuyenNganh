@@ -33,33 +33,33 @@
             <p class="display-3"><strong>CÁC KHOÁ HỌC</strong></p>
             <hr />
         </div>
-        <div class="row">
-            @foreach (var kh in Model)
-            {
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="card mb-5 shadow-sm">
-                        <img src="https://img.freepik.com/premium-vector/boy-girl-playing-piano_97632-600.jpg" class="img-fluid" />
-                        <div class="card-body">
-                            <div class="card-title">
-                                <h2>@kh.Ten_khoa_hoc</h2>
-                            </div>
-                            <div class="card-text">
-                                <p>
-                                    @kh.Mo_ta
-                                </p>
-                            </div>
-                            <div class="card-footer d-flex justify-content-between">
-                                <div> <p class="card-text">Học Phí: <strong style="color:brown">@kh.Hoc_phi$</strong> </p></div> 
-                                <div style="float: right;">
-                                    <button class="btn btn-outline-warning rounded-0 registerButton" data-course-id="@kh.Ma_khoa_hoc">Đăng Ký</button>
+       
+            <div class="row">
+                @foreach (var kh in Model)
+                {
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card mb-5 shadow-sm">
+                            <img src="https://img.freepik.com/premium-vector/boy-girl-playing-piano_97632-600.jpg" class="img-fluid" />
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <h2>@kh.Ten_khoa_hoc</h2>
                                 </div>
+                                <div class="card-text">
+                                    <p>
+                                        @kh.Mo_ta
+                                    </p>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between">
+                                    <div> <p class="card-text">Học Phí: <strong style="color:brown">@kh.Hoc_phi$</strong> </p></div>
+                                    <div style="float: right;">
+                                        <button class="btn btn-outline-warning rounded-0 registerButton" data-course-id="@kh.Ma_khoa_hoc">Đăng Ký</button>
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
-
+                }
 
             <script>
                  var registerButtons = document.querySelectorAll('.registerButton');

@@ -28,7 +28,7 @@
                         <span class="input-group-text">
                             <i class="fa-solid fa-user" style="color: #1093a7;"></i> <!-- Sử dụng icon person từ Bootstrap Icons color:16 ;147 ;167 -->
                         </span>
-                        <input type="text" class="form-control" id="user" maxlength="50" placeholder="Nhập tên của bạn ở đây, ví dụ: Nguyễn Văn A, Trần Thị B">
+                        <input type="text" class="form-control" id="user" maxlength="50"  placeholder="Nhập tên của bạn ở đây, ví dụ: Nguyễn Văn A, Trần Thị B">
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-12 mt-3">
@@ -36,7 +36,7 @@
                         <span class="input-group-text">
                             <i class="fa-solid fa-phone" style="color: #1093a7;"></i>
                         </span>
-                        <input type="tel" class="form-control" id="phone" maxlength="11" placeholder="Nhập số điện thoại của bạn ở đây">
+                        <input type="tel" class="form-control" id="phone" maxlength="11" pattern="[0-9]{10,11}" placeholder="Nhập số điện thoại của bạn ở đây">
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                     <span class="input-group-text">
                         <i class="fa-solid fa-comment" style="color: #1093a7;"></i>
                     </span>
-                    <textarea class="form-control" id="message" placeholder="Nội dung liên hệ của bạn"></textarea>
+                    <textarea class="form-control" id="message" maxlength="1000" placeholder="Nội dung liên hệ của bạn"></textarea>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Gửi Đi</button>

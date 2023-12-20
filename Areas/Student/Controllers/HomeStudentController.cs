@@ -35,10 +35,53 @@ namespace web2.Areas.Student.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult settingAccount()
         {
-            return View();
+            var username = User.Identity.Name;
+            using (var db = new quanLyTrungTamDayDanEntities())
+            {
+                var nguoiDung = db.NguoiDungs.Find(username);
+
+                // Truyền thông tin người dùng vào trang SettingAccount
+                return View(nguoiDung);
+            }
         }
+        [HttpPost]
+        public ActionResult settingAccount(string Ma, string Ho_va_ten, string Email, string Dia_chi, string Sdt, DateTime Ngay_sinh)
+        {   
+            try
+            {
+                using (var db = new quanLyTrungTamDayDanEntities())
+                {
+                    var nguoiDung = db.NguoiDungs.Find(Ma);
+
+                    if (nguoiDung != null)
+                    {
+
+                        nguoiDung.Ho_va_ten = Ho_va_ten;
+                        nguoiDung.Ngay_sinh = Ngay_sinh;
+                        nguoiDung.Sdt = Sdt;
+                        nguoiDung.Email = Email;
+                        nguoiDung.Dia_chi = Dia_chi;
+                        db.SaveChanges();
+                        TempData["SuccessMessage"] = "Cập nhật thông tin người dùng thành công";
+                        return RedirectToAction("sttingAccount");
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Không tìm thấy người dùng";
+                        return RedirectToAction("settingAccount");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
+                return RedirectToAction("settingAccount");
+            }
+        }
+
         public ActionResult ScheduleStudent(String courseId)
         {
             /*if (!String.IsNullOrEmpty(courseId))
@@ -61,7 +104,6 @@ namespace web2.Areas.Student.Controllers
         }
         public ActionResult CourseStudent(string courseId)
         {
-
             List<LopHoc> danhLopHoc = new List<LopHoc>(); // Khai báo danh sách
             if (!string.IsNullOrEmpty(courseId))
             {
@@ -70,7 +112,6 @@ namespace web2.Areas.Student.Controllers
                 {
                     return HttpNotFound();
                 }
-
                 try
                 {
                     LopHoc lopHoc = GetCourseInformation1(courseId);
@@ -80,7 +121,6 @@ namespace web2.Areas.Student.Controllers
                         Ten_lop_hoc = khoahocs.Ten_khoa_hoc,
                         Mo_ta = khoahocs.Mo_ta,
                     };
-
                     danhLopHoc.Add(lopHoc);
 
                 }
@@ -88,22 +128,44 @@ namespace web2.Areas.Student.Controllers
                 {
                     Console.WriteLine(ex.Message);
                 }
-
-
             }
             return View("CourseStudent", danhLopHoc);
         }
+/*        [HttpPost]
+        public ActionResult Register(string courseId)
+        {
+            var lopHoc = db.LopHocs.SingleOrDefault(lh => lh.Ma_khoa_hoc == courseId);
+            if (lopHoc == null)
+            {
+                return RedirectToAction("StudyStudent");
+            }
+            string maHocVien = User.Identity.Name;
+            DangKyHoc dangKyHoc = new DangKyHoc
+            {
+                Ma_hoc_vien = maHocVien,
+                Ma_lop = courseId,
+                Ngay_dang_ky = DateTime.Now
+            };
+            db.DangKyHocs.Add(dangKyHoc);
+            db.SaveChanges();
+            var hocVien = db.HocViens.SingleOrDefault(hv => hv.Ma_hoc_vien == maHocVien);
 
+            // Cập nhật Lop_hoc_tham_gia của học viên
+            hocVien.Lop_hoc_tham_gia = courseId;
+            db.SaveChanges();
+            return RedirectToAction("CourseStudent", new { courseId = courseId });
+        }*/
         public void SaveCourseStudent(LopHoc lh)
         {
             try
             {
                 using (var db = new quanLyTrungTamDayDanEntities())
                 {
+
                     lh.KhoaHoc = db.KhoaHocs.SingleOrDefault(kh => kh.Ma_khoa_hoc == lh.Ma_khoa_hoc);
                     db.LopHocs.Add(lh);
                     db.SaveChanges();
-                } 
+                }
             }
             catch (Exception ex)
             {
@@ -148,8 +210,6 @@ namespace web2.Areas.Student.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
-
-
             return khoahoc;
         }
         private LopHoc GetCourseInformation1(string courseId)
@@ -239,7 +299,7 @@ namespace web2.Areas.Student.Controllers
         public ActionResult StudyStudent()
         {
             List<KhoaHoc> dsKH = GetCoursesList(); // Lấy danh sách khóa học lên trang StudyStudent
-
+            var registeredCourses = dsKH.Where(khoachoc => db.DangKyHocs.Any(dangKyHoc => dangKyHoc.LopHoc.Ma_khoa_hoc == khoachoc.Ma_khoa_hoc && dangKyHoc.Ma_hoc_vien == User.Identity.Name));
             return View("StudyStudent", dsKH);
         }
     }

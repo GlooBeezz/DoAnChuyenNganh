@@ -216,6 +216,7 @@
     <Folder Include="Models\" />
 =======
     <Folder Include="App_Data\App_LocalResources\" />
+    <Folder Include="Areas\Student\Views\Search\" />
     <Folder Include="Areas\Teacher\Data\" />
     <Folder Include="Views\Adminshow\" />
     <Folder Include="Views\Default\" />

@@ -1,8 +1,9 @@
-﻿
+﻿@model  web2.Models.NguoiDung
 @{
     ViewBag.Title = "settingAccount";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
     ViewBag.Active = "settingaccount";
+    web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
 }
 
 <!DOCTYPE html>
@@ -29,30 +30,54 @@
                         <h3 class="text-center">Hồ sơ của tôi</h3>
                     </div>
                     <div class="card-body">
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <strong>Họ Và Tên:</strong> <input type="text" class="form-control" value="Lê Thành Đạt">
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Email:</strong> <input type="email" class="form-control" value="abc@Gmail.com" />
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Địa Chỉ:</strong> <input type="text" class="form-control" value="180 Cao lỗ" />
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Số điện thoại:</strong> <input type="number" class="form-control" value="0987654321">
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Ngày sinh:</strong> <input type="date" class="form-control" value="">
-                            </li>
-                        </ul>
+                        <form method="post" action="@Url.Action("settingAccount", "HomeStudent", new { area = "Student" })" method="post" id="inputForm">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <strong>Họ Và Tên:</strong> <input type="text" class="form-control" name="Ho_ten" value="@Model.Ho_va_ten">
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Email:</strong> <input type="email" class="form-control" name="email" value="@Model.Email" />
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Địa Chỉ:</strong> <input type="text" class="form-control" name="diachi" value="@Model.Dia_chi" />
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Số điện thoại:</strong> <input type="number" class="form-control" maxlength="11" pattern="[0-9]{10,11}" name="sdt" value="@Model.Sdt">
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Ngày sinh:</strong> <input type="date" class="form-control" name="ngáyinh" value="@Model.Ngay_sinh">
+                                </li>
+                            </ul>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary" asp-action="SettingAccount">Chỉnh Sửa</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="card-footer">
-                        <button type="button" class="btn btn-primary">Chỉnh Sửa</button> 
-                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#inputForm').submit(function (event) {
+                var isValid = true;
+                // Kiểm tra các trường dữ liệu, nếu trống thì đánh dấu là không hợp lệ
+                $('#inputForm input[type="text"]').each(function () {
+                    if ($.trim($(this).val()) === '') {
+                        isValid = false;
+                        $(this).addClass('is-invalid');
+                    } else {
+                        $(this).removeClass('is-invalid');
+                    }
+                });
+
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
