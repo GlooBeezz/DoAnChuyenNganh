@@ -1,11 +1,9 @@
-﻿@model List<web2.Models.LopHoc>
+﻿@model web2.Models.LopHoc
 @{
     ViewBag.Title = "ScheduleStudent";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
     ViewBag.Active = "schedulestudent";
     web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
-
-
 }
 
 <!DOCTYPE html>
@@ -18,22 +16,28 @@
 <body>
     <div class="container">
         <h1>Thời khóa biểu</h1>
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Thứ</th>
-                    <th>Thứ 2</th>
-                    <th>Thứ 3</th>
-                    <th>Thứ 4</th>
-                    <th>Thứ 5</th>
-                    <th>Thứ 6</th>
-                    <th>Thứ 7</th>
-
+                    <th>Từ</th>
+                    <th>Đến</th>
+                    <th>Môn học</th>
+                    <th>Giảng viên</th>
                 </tr>
             </thead>
-            <tbody>
-               
-            </tbody>
+            @*<tbody>
+                @foreach (va tkb in Model.ThoiGianBieu)
+                {
+                    <tr>
+                        <td>@tkb.Hoc_vao_thu</td>
+                        <td>@tkb.Thoi_gian_bat_dau</td>
+                        <td>@tkb.Thoi_gian_ket_thuc</td>
+                        <td>@tkb.Ten_mon_hoc</td>
+                        <td>@tkb.Ten_giao_vien</td>
+                    </tr>
+                }
+            </tbody>*@
         </table>
     </div>
 </body>

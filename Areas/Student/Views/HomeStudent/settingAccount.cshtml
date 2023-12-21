@@ -3,7 +3,7 @@
     ViewBag.Title = "settingAccount";
     Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
     ViewBag.Active = "settingaccount";
-    web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
+   
 }
 
 <!DOCTYPE html>
@@ -30,35 +30,42 @@
                         <h3 class="text-center">Hồ sơ của tôi</h3>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="@Url.Action("settingAccount", "HomeStudent", new { area = "Student" })" method="post" id="inputForm">
+                        @using (Html.BeginForm("settingAccount", "HomeStudent", new { area = "Student" }))
+                        {
+                            @Html.AntiForgeryToken()
                             <ul class="list-group">
                                 <li class="list-group-item">
-                                    <strong>Họ Và Tên:</strong> <input type="text" class="form-control" name="Ho_ten" value="@Model.Ho_va_ten">
+                                    <strong>Họ Và Tên:</strong>
+                                    @Html.TextBoxFor(m => m.Ho_va_ten, new { @class = "form-control" })
                                 </li>
                                 <li class="list-group-item">
-                                    <strong>Email:</strong> <input type="email" class="form-control" name="email" value="@Model.Email" />
+                                    <strong>Email:</strong>
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                                 </li>
                                 <li class="list-group-item">
-                                    <strong>Địa Chỉ:</strong> <input type="text" class="form-control" name="diachi" value="@Model.Dia_chi" />
+                                    <strong>Địa Chỉ:</strong>
+                                    @Html.TextBoxFor(m => m.Dia_chi, new { @class = "form-control" })
                                 </li>
                                 <li class="list-group-item">
-                                    <strong>Số điện thoại:</strong> <input type="number" class="form-control" maxlength="11" pattern="[0-9]{10,11}" name="sdt" value="@Model.Sdt">
+                                    <strong>Số điện thoại:</strong>
+                                    @Html.TextBoxFor(m => m.Sdt, new { @class = "form-control" })
                                 </li>
                                 <li class="list-group-item">
-                                    <strong>Ngày sinh:</strong> <input type="date" class="form-control" name="ngáyinh" value="@Model.Ngay_sinh">
+                                    <strong>Ngày sinh:</strong>
+                                    @Html.TextBoxFor(m => m.Ngay_sinh, new { @class = "form-control" })
                                 </li>
                             </ul>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary" asp-action="SettingAccount">Chỉnh Sửa</button>
+                                <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
                             </div>
-                        </form>
+                        }
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#inputForm').submit(function (event) {
@@ -78,6 +85,6 @@
                 }
             });
         });
-    </script>
+    </script>*@
 </body>
 </html>
