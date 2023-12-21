@@ -19,7 +19,7 @@ namespace web2.Areas.Admin.Controllers
 {
     public class HomeAdminController : Controller
     {
-        private DataHelper dbHelper;
+        public DataHelper dbHelper;
 
         //Index
 
@@ -68,6 +68,8 @@ namespace web2.Areas.Admin.Controllers
                 };
                 dsHocVien.Add(hv);
             }
+            var errorMessage = TempData["ErrorMessage"]?.ToString();
+            ViewBag.ErrorMessage = errorMessage;
             return View(dsHocVien);
         }
 
@@ -118,6 +120,10 @@ namespace web2.Areas.Admin.Controllers
         {
             try
             {
+                if(!dbHelper.IsNameContainNumber(Ten)&&!dbHelper.IsPhoneNumberIsValid(Sdt)&& !dbHelper.IsBirthDateBeforeToday(NgaySinh))
+                {
+                    return RedirectToAction("Manage_Student");
+                }
                 string updateNguoiDungQuery = "UPDATE NguoiDung SET Ho_va_ten = @Ho_va_ten, Ngay_sinh = @Ngay_sinh, Sdt = @Sdt, Email = @Email, Dia_chi = @Dia_chi, Tai_khoan = @Tai_khoan, Mat_khau = @Mat_khau, Phan_quyen = @Phan_quyen WHERE Ma = @Ma_hoc_vien";
                 string updateHocVienQuery = "UPDATE HocVien SET Lop_hoc_tham_gia = @Lop_hoc_tham_gia, Trang_thai_hoc_phi = @Trang_thai_hoc_phi WHERE Ma_hoc_vien = @Ma_hoc_vien";
 
@@ -264,7 +270,7 @@ namespace web2.Areas.Admin.Controllers
             SqlConnection conn = new SqlConnection(connStr);
             conn.Open();
             dbHelper = new DataHelper(connStr);
-            if (!dbHelper.IsMaExistsInNguoiDung(Ma))
+            if (!dbHelper.IsMaExistsInNguoiDung(Ma)&&dbHelper.IsUserIdIsValid(Ma)&&dbHelper.IsNameContainNumber(Ten)&&dbHelper.IsPhoneNumberIsValid(Sdt)&&dbHelper.IsBirthDateBeforeToday(NgaySinh))
             {
                 SqlCommand insertCmd = new SqlCommand("INSERT INTO NguoiDung (Ma, Ho_va_ten, Ngay_sinh, Sdt, Email, Dia_chi, Tai_khoan, Mat_khau, Phan_quyen) " +
                                            "VALUES (@Ma, @Ho_va_ten, @Ngay_sinh, @Sdt, @Email, @Dia_chi, @Tai_khoan, @Mat_khau, @Phan_quyen); " +
@@ -384,6 +390,8 @@ namespace web2.Areas.Admin.Controllers
                 };
                 dsGv.Add(gv);
             }
+            var errorMessage = TempData["ErrorMessage"]?.ToString();
+            ViewBag.ErrorMessage = errorMessage;
             return View(dsGv);
         }
 
@@ -402,7 +410,7 @@ namespace web2.Areas.Admin.Controllers
             SqlConnection conn = new SqlConnection(connStr);
             conn.Open();
             dbHelper = new DataHelper(connStr);
-            if (!dbHelper.IsMaExistsInNguoiDung(Ma))
+            if (!dbHelper.IsMaExistsInNguoiDung(Ma) && dbHelper.IsUserIdIsValid(Ma) && dbHelper.IsNameContainNumber(Ten) && dbHelper.IsPhoneNumberIsValid(Sdt)&&dbHelper.IsBirthDateBeforeToday(NgaySinh))
             {
                 SqlCommand insertCmd = new SqlCommand("INSERT INTO NguoiDung (Ma, Ho_va_ten, Ngay_sinh, Sdt, Email, Dia_chi, Tai_khoan, Mat_khau, Phan_quyen)\r\nVALUES (@Ma, @Ho_va_ten, @Ngay_sinh, @Sdt, @Email, @Dia_chi, @Tai_khoan, @Mat_khau, @Phan_quyen);\r\n\r\nINSERT INTO GiaoVien (Ma_giao_vien, Ma_bang_luong, Ma_lop_giang_day, Ma_tai_lieu_tai_len, Luong_co_ban, Chuyen_mon)\r\nVALUES (@Ma_giao_vien, @Ma_bang_luong, @Ma_lop_giang_day, @Ma_tai_lieu_tai_len, @Luong_co_ban,@Chuyen_mon);", conn);
                 insertCmd.Parameters.AddWithValue("@Ma", Ma);
@@ -501,12 +509,14 @@ namespace web2.Areas.Admin.Controllers
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("B1");
-
-                // Update thông tin trong bảng NguoiDung
-                string updateNguoiDungQuery = "UPDATE NguoiDung SET Ho_va_ten = @Ho_va_ten, Ngay_sinh = @Ngay_sinh, Sdt = @Sdt, Email = @Email, Dia_chi = @Dia_chi, Tai_khoan = @Tai_khoan, Mat_khau = @Mat_khau, Phan_quyen = @Phan_quyen WHERE Ma = @Ma_giao_vien";
-                SqlParameter[] parametersNguoiDung =
+                if (dbHelper.IsNameContainNumber(Ten) && dbHelper.IsPhoneNumberIsValid(Sdt) && dbHelper.IsBirthDateBeforeToday(NgaySinh))
                 {
+                    System.Diagnostics.Debug.WriteLine("B1");
+
+                    // Update thông tin trong bảng NguoiDung
+                    string updateNguoiDungQuery = "UPDATE NguoiDung SET Ho_va_ten = @Ho_va_ten, Ngay_sinh = @Ngay_sinh, Sdt = @Sdt, Email = @Email, Dia_chi = @Dia_chi, Tai_khoan = @Tai_khoan, Mat_khau = @Mat_khau, Phan_quyen = @Phan_quyen WHERE Ma = @Ma_giao_vien";
+                    SqlParameter[] parametersNguoiDung =
+                    {
                     new SqlParameter("@Ma_giao_vien", Ma),
                     new SqlParameter("@Ho_va_ten", Ten),
                     new SqlParameter("@Ngay_sinh", NgaySinh),
@@ -516,37 +526,37 @@ namespace web2.Areas.Admin.Controllers
                     new SqlParameter("@Tai_khoan", TaiKhoan),
                     new SqlParameter("@Mat_khau", MatKhau),
                     new SqlParameter("@Phan_quyen", PhanQuyen)
-                };
-                DataAccess dataAccessNguoiDung = new DataAccess(System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString);
-                int rowsAffectedNguoiDung = dataAccessNguoiDung.ExecuteNonQuery(updateNguoiDungQuery, parametersNguoiDung);
+                    };
+                    DataAccess dataAccessNguoiDung = new DataAccess(System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString);
+                    int rowsAffectedNguoiDung = dataAccessNguoiDung.ExecuteNonQuery(updateNguoiDungQuery, parametersNguoiDung);
 
-                // Update thông tin trong bảng GiaoVien
-                string updateGiaoVienQuery = "UPDATE GiaoVien SET Chuyen_mon = @Chuyen_mon, Luong_co_ban = @Luong_co_ban, Ma_lop_giang_day = @Ma_lop_giang_day, Ma_bang_luong = @Ma_bang_luong, Ma_tai_lieu_tai_len = @Ma_tai_lieu_tai_len WHERE Ma_giao_vien = @Ma_giao_vien";
-                SqlParameter[] parametersGiaoVien =
-                {
+                    // Update thông tin trong bảng GiaoVien
+                    string updateGiaoVienQuery = "UPDATE GiaoVien SET Chuyen_mon = @Chuyen_mon, Luong_co_ban = @Luong_co_ban, Ma_lop_giang_day = @Ma_lop_giang_day, Ma_bang_luong = @Ma_bang_luong, Ma_tai_lieu_tai_len = @Ma_tai_lieu_tai_len WHERE Ma_giao_vien = @Ma_giao_vien";
+                    SqlParameter[] parametersGiaoVien =
+                    {
                     new SqlParameter("@Ma_giao_vien", Ma),
                     new SqlParameter("@Chuyen_mon", ChuyenMon),
                     new SqlParameter("@Luong_co_ban", LuongCoBan),
                     new SqlParameter("@Ma_lop_giang_day", Lop),
                     new SqlParameter("@Ma_bang_luong", MaBangLuong),
                     new SqlParameter("@Ma_tai_lieu_tai_len", MaTaiLieuTaiLen)
-                };
-                DataAccess dataAccessGiaoVien = new DataAccess(System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString);
-                int rowsAffectedGiaoVien = dataAccessGiaoVien.ExecuteNonQuery(updateGiaoVienQuery, parametersGiaoVien);
-
-                System.Diagnostics.Debug.WriteLine("B2");
-                if (rowsAffectedNguoiDung > 0 && rowsAffectedGiaoVien > 0)
-                {
-                    System.Diagnostics.Debug.WriteLine("B6.1");
-                    TempData["SuccessMessage"] = "Cập nhật thông tin giáo viên thành công";
+                    };
+                    DataAccess dataAccessGiaoVien = new DataAccess(System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString);
+                    int rowsAffectedGiaoVien = dataAccessGiaoVien.ExecuteNonQuery(updateGiaoVienQuery, parametersGiaoVien);
+                    System.Diagnostics.Debug.WriteLine("B2");
+                    if (rowsAffectedNguoiDung > 0 && rowsAffectedGiaoVien > 0)
+                    {
+                        System.Diagnostics.Debug.WriteLine("B6.1");
+                        TempData["SuccessMessage"] = "Cập nhật thông tin giáo viên thành công";
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine("B6.2");
+                        TempData["ErrorMessage"] = "Cập nhật thông tin giáo viên không thành công";
+                    }
+                    System.Diagnostics.Debug.WriteLine("B7");
+                    return RedirectToAction("Manage_Teacher");
                 }
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine("B6.2");
-                    TempData["ErrorMessage"] = "Cập nhật thông tin giáo viên không thành công";
-                }
-                System.Diagnostics.Debug.WriteLine("B7");
-                return RedirectToAction("Manage_Teacher");
             }
             catch (Exception ex)
             {
@@ -555,6 +565,7 @@ namespace web2.Areas.Admin.Controllers
                 TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
                 return RedirectToAction("Manage_Teacher");
             }
+            return RedirectToAction("Manage_Teacher");
         }
 
         [HttpPost]
@@ -716,23 +727,25 @@ namespace web2.Areas.Admin.Controllers
                 };
                 dsLopHoc.Add(lop);
             }
+            var errorMessage = TempData["ErrorMessage"]?.ToString();
+            ViewBag.ErrorMessage = errorMessage;
             return View(dsLopHoc);
         }
 
         [HttpPost]
         public ActionResult Delete_Class_Infor(string maLop)
         {
+            String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+            dbHelper = new DataHelper(connStr);
             maLop = maLop.Trim();
             try
             {
-                if (string.IsNullOrEmpty(maLop))
+                if (string.IsNullOrEmpty(maLop) || dbHelper.KiemTraLopHocTonTai(maLop))
                 {
                     TempData["ErrorMessage"] = "Mã lớp không hợp lệ";
+                    TempData.Peek("ErrorMessage");
                     return RedirectToAction("Manage_Classes");
                 }
-
-                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
-
                 using (SqlConnection conn = new SqlConnection(connStr))
                 {
                     if (conn.State == ConnectionState.Closed)
@@ -780,7 +793,7 @@ namespace web2.Areas.Admin.Controllers
             conn.Open();
             dbHelper = new DataHelper(connStr);
             try {
-                if (!dbHelper.IsMaExistsInLopHoc(Ma))
+                if (!dbHelper.IsMaExistsInLopHoc(Ma)&&NgayBD<NgayKT&&ThoiGianBatDau<ThoiGianKetThuc)
                 {
                     SqlCommand insertCmd = new SqlCommand(" INSERT INTO LopHoc (Ma_lop, Ma_khoa_hoc, Phong_hoc, So_luong_hoc_vien, Ten_lop_hoc, Mo_ta, Ma_thoi_gian_bieu, Ngay_bat_dau, Ngay_ket_thuc, So_tiet_hoc)\r\n        VALUES (@Ma_lop, @Ma_khoa_hoc, @Phong_hoc, @So_luong_hoc_vien, @Ten_lop_hoc, @Mo_ta, @Ma_thoi_gian_bieu, @Ngay_bat_dau, @Ngay_ket_thuc, @So_tiet_hoc); Insert Into ThoiGianBieu (Ma_thoi_gian_bieu,Thoi_gian_bat_dau,Thoi_gian_ket_thuc,Hoc_vao_thu) values (@Ma_thoi_gian_bieu,@Thoi_gian_bat_dau,@Thoi_gian_ket_thuc,@Hoc_vao_thu); ", conn);
                     insertCmd.Parameters.AddWithValue("@Ma_lop", Ma);
@@ -877,6 +890,8 @@ namespace web2.Areas.Admin.Controllers
         {
             try
             {
+                if(NgayBD>NgayKT&&ThoiGianBatDau>ThoiGianKetThuc)
+                    return RedirectToAction("Manage_Classes");
                 string updateLopHocQuery = "UPDATE LopHoc SET Ma_khoa_hoc = @Ma_khoa_hoc, Phong_hoc = @Phong_hoc, Ten_lop_hoc = @Ten_lop_hoc, Mo_ta = @Mo_ta, Ma_thoi_gian_bieu = @Ma_thoi_gian_bieu, Ngay_bat_dau = @Ngay_bat_dau, Ngay_ket_thuc = @Ngay_ket_thuc, So_tiet_hoc = @So_tiet_hoc WHERE Ma_lop = @Ma_lop; update  ThoiGianBieu set  Thoi_gian_bat_dau=@Thoi_gian_bat_dau, Thoi_gian_ket_thuc=@Thoi_gian_ket_thuc,Hoc_vao_thu=@Hoc_vao_thu where Ma_thoi_gian_bieu=@Ma_thoi_gian_bieu;";
                 System.Diagnostics.Debug.WriteLine("B1");
                 SqlParameter[] parameters =
@@ -1100,23 +1115,31 @@ namespace web2.Areas.Admin.Controllers
                     conn.Close();
                 }
             }
+            var errorMessage = TempData["ErrorMessage"]?.ToString();
+            ViewBag.ErrorMessage = errorMessage;
             return View(dsKhoaHoc);
         }
 
         [HttpPost]
         public ActionResult Delete_Course_Infor(string maKhoaHoc)
         {
+            String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
             maKhoaHoc = maKhoaHoc.Trim();
+            dbHelper=new DataHelper(connStr);
             try
             {
-                if (string.IsNullOrEmpty(maKhoaHoc))
+                if (string.IsNullOrEmpty(maKhoaHoc) )
                 {
                     TempData["ErrorMessage"] = "Mã khóa học không hợp lệ";
                     return RedirectToAction("Manage_Course");
                 }
-
-                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
-
+                if (dbHelper.CheckKhoaHocCoLopCon(maKhoaHoc))
+                {
+                    {
+                        TempData["ErrorMessage"] = "Khoá học vẫn còn lớp bên trong";
+                        return RedirectToAction("Manage_Course");
+                    }
+                }
                 using (SqlConnection conn = new SqlConnection(connStr))
                 {
                     if (conn.State == ConnectionState.Closed)
@@ -1134,10 +1157,12 @@ namespace web2.Areas.Admin.Controllers
                         if (rowsAffected > 0)
                         {
                             TempData["SuccessMessage"] = "Xóa khóa học thành công";
+                            return RedirectToAction("Manage_Course");
                         }
                         else
                         {
                             TempData["ErrorMessage"] = "Không tìm thấy khóa học để xóa";
+                            return RedirectToAction("Manage_Course");
                         }
                     }
                 }
@@ -1145,6 +1170,7 @@ namespace web2.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = "Đã xảy ra lỗi khi xóa khóa học: " + ex.Message;
+                return RedirectToAction("Manage_Course");
             }
 
             return RedirectToAction("Manage_Course");
@@ -1532,51 +1558,74 @@ namespace web2.Areas.Admin.Controllers
                 return View(ds);
             }
         }
-        public ActionResult Add_Invoice(HoaDon hoaDon)
+        public ActionResult Add_Invoice(DangKyHoc hoaDon)
         {
-            
             String connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
             DataAccess dataAccess = new DataAccess(connectionString);
 
             try
             {
                 dbHelper = new DataHelper(connectionString);
-
-                if (!dbHelper.IsMaExistsInHoaDon(hoaDon.Ma_hoa_don))
-                {
-                    string query = "INSERT INTO HoaDon (Ma_hoa_don, Ma_dang_ky, Ngay_tao, Tong_tien, Trang_thai_thanh_toan) " +
-                                   "VALUES (@Ma_hoa_don, @Ma_dang_ky, @Ngay_tao, @Tong_tien, @Trang_thai_thanh_toan)";
-                    SqlParameter[] parameters =
+                System.Diagnostics.Debug.WriteLine(hoaDon.Ma_hoa_don);
+                /*if (!dbHelper.IsMaExistsInHoaDon(hoaDon.Ma_hoa_don))
+                {*/
+                    // Thêm hóa đơn
+                    string hoaDonQuery = "INSERT INTO HoaDon (Ma_hoa_don, Ma_dang_ky, Ngay_tao, Tong_tien, Trang_thai_thanh_toan) " +
+                                        "VALUES (@Ma_hoa_don_hoa_don, @Ma_dang_ky_hoa_don, @Ngay_tao_hoa_don, @Tong_tien_hoa_don, @Trang_thai_thanh_toan_hoa_don)";
+                    System.Diagnostics.Debug.WriteLine("B1");
+                    SqlParameter[] hoaDonParameters =
                     {
-                new SqlParameter("@Ma_hoa_don", hoaDon.Ma_hoa_don),
-                new SqlParameter("@Ma_dang_ky", hoaDon.Ma_dang_ky),
-                new SqlParameter("@Ngay_tao", hoaDon.Ngay_tao),
-                new SqlParameter("@Tong_tien", hoaDon.Tong_tien),
-                new SqlParameter("@Trang_thai_thanh_toan", hoaDon.Trang_thai_thanh_toan)
-            };
+                        new SqlParameter("@Ma_hoa_don_hoa_don", hoaDon.Ma_hoa_don),
+                        new SqlParameter("@Ma_dang_ky_hoa_don", hoaDon.Ma_dang_ky),
+                        new SqlParameter("@Ngay_tao_hoa_don", hoaDon.Ngay_tao),
+                        new SqlParameter("@Tong_tien_hoa_don", hoaDon.Tong_tien),
+                        new SqlParameter("@Trang_thai_thanh_toan_hoa_don", hoaDon.Trang_thai_thanh_toan)
+                    };
+                    int rowsAffectedHoaDon = dataAccess.ExecuteNonQuery(hoaDonQuery, hoaDonParameters);
+                    System.Diagnostics.Debug.WriteLine("B2");
 
-                    int rowsAffected = dataAccess.ExecuteNonQuery(query, parameters);
+                // Thêm đăng ký học
+                string dangKyHocQuery = "INSERT INTO DangKyHoc (Ma_dang_ky, Ma_hoc_vien, Ma_lop, Ma_hoa_don, Ngay_dang_ky) " +
+                    "VALUES (@Ma_dang_ky, @Ma_hoc_vien, @Ma_lop, @Ma_hoa_don, @Ngay_dang_ky)";
+                    SqlParameter[] dangKyHocParameters =
+                    {
+                        new SqlParameter("@Ma_dang_ky", hoaDon.Ma_dang_ky),
+                        new SqlParameter("@Ma_hoc_vien", hoaDon.Ma_hoc_vien),
+                        new SqlParameter("@Ma_lop", hoaDon.Ma_lop),
+                        new SqlParameter("@Ma_hoa_don", hoaDon.Ma_hoa_don),
+                        new SqlParameter("@Ngay_dang_ky", hoaDon.Ngay_tao)
+                    };
 
-                    if (rowsAffected > 0)
+
+                int rowsAffectedDangKyHoc = dataAccess.ExecuteNonQuery(dangKyHocQuery, dangKyHocParameters);
+                    System.Diagnostics.Debug.WriteLine("B3");
+                    if (rowsAffectedHoaDon > 0 && rowsAffectedDangKyHoc > 0)
                     {
                         return RedirectToAction("Manage_Invoice");
                     }
                     else
                     {
-                        ViewBag.ErrorMessage = "Đã xảy ra lỗi khi thêm hóa đơn.";
+                        ViewBag.ErrorMessage = "Đã xảy ra lỗi khi thêm hóa đơn hoặc đăng ký học.";
                         return View();
                     }
-                }
+                /*}
                 else
                 {
+                    System.Diagnostics.Debug.WriteLine("B4");
                     System.Diagnostics.Debug.WriteLine("trùng mã");
                     ViewBag.ErrorMessage = "Mã hóa đơn đã tồn tại.";
                     return View();
-                }
+                }*/
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                // Log thông điệp lỗi và mã lỗi chi tiết
+                System.Diagnostics.Debug.WriteLine($"SQL Error {ex.Number}: {ex.Message}");
+                throw;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("trùng mã.");
+                System.Diagnostics.Debug.WriteLine("trùng mã do: ");
                 ViewBag.ErrorMessage = "Đã xảy ra lỗi khi thêm hóa đơn: " + ex.Message;
                 return View();
             }
@@ -1667,7 +1716,7 @@ namespace web2.Areas.Admin.Controllers
                 if (dbHelper.IsMaExistsInHoaDon(maHoaDon))
                 {
                     System.Diagnostics.Debug.WriteLine("B3");
-                    string deleteQuery = "DELETE FROM HoaDon WHERE Ma_hoa_don = @Ma_hoa_don";
+                    string deleteQuery = "DELETE FROM HoaDon WHERE Ma_hoa_don = @Ma_hoa_don"+ "DELETE FROM DangKyHoc WHERE Ma_hoa_don = @Ma_hoa_don";
                     SqlParameter parameter = new SqlParameter("@Ma_hoa_don", maHoaDon);
 
                     int rowsAffected = dataAccess.ExecuteNonQuery(deleteQuery, new SqlParameter[] { parameter });
@@ -1703,31 +1752,32 @@ namespace web2.Areas.Admin.Controllers
         public ActionResult ExportToTxt_Invoice(string maHoaDon)
         {
             HoaDon invoice = GetInvoiceInfo(maHoaDon);
-            string status = "";
-            if (invoice.Trang_thai_thanh_toan)
-            {
-                status += "Đã đóng tiền";
-            }
-            else
-            {
-                status += "Chưa đóng tiền";
-            }
+
             if (invoice != null)
             {
-                string formattedTongTien = invoice.Tong_tien.ToString("N0") + " VND";
-                string formattedNgayTao = invoice.Ngay_tao.ToString("dd/MM/yyyy HH:mm:ss");
-
-                string content = $"Mã hoá đơn: {invoice.Ma_hoa_don}\r\n" +
+                string status = invoice.Trang_thai_thanh_toan ? "Đã đóng tiền" : "Chưa đóng tiền";
+                string formattedTongTien = invoice.Tong_tien.ToString() + " VND";
+                string formattedNgayTao = invoice.Ngay_tao.ToString("dd/MM/yyyy");
+                decimal totalAmount = Convert.ToDecimal(invoice.Tong_tien) + invoice.Hoc_phi;
+                string content = $"Mã hóa đơn: {invoice.Ma_hoa_don}\r\n" +
                                  $"Mã đăng ký: {invoice.Ma_dang_ky}\r\n" +
+                                 $"Mã lớp: {invoice.Ma_lop}\r\n" +
+                                 $"Mã học viên: {invoice.Ma_hoc_vien}\r\n" +
+                                 $"Tên học viên: {invoice.Ho_va_ten}\r\n" +
+                                 $"Ngày sinh: {invoice.Ngay_sinh.ToString("dd/MM/yyyy")}\r\n" +
+                                 $"Số điện thoại: {invoice.Sdt}\r\n" +
+                                 $"Email: {invoice.Email}\r\n" +
+                                 $"Địa chỉ: {invoice.Dia_chi}\r\n" +
                                  $"Ngày tạo: {formattedNgayTao}\r\n" +
-                                 $"Tổng tiền: {formattedTongTien}\r\n" +
+                                 $"Học phí: {invoice.Hoc_phi} VND\r\n"+ 
+                                 $"Tổng tiền: {totalAmount} VND\r\n" +
                                  $"Trạng thái thanh toán: {status}\r\n";
 
                 byte[] contentBytes = Encoding.UTF8.GetBytes(content);
 
                 Response.Clear();
                 Response.ContentType = "text/plain";
-                Response.AddHeader("Content-Disposition", "attachment;filename=HoaDon_"+invoice.Ma_hoa_don.Trim()+"_Info.txt");
+                Response.AddHeader("Content-Disposition", $"attachment;filename=HoaDon_{invoice.Ma_hoa_don.Trim()}_Info.txt");
 
                 Response.BinaryWrite(contentBytes);
                 Response.Flush();
@@ -1747,7 +1797,15 @@ namespace web2.Areas.Admin.Controllers
             string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
             DataAccess dataAccess = new DataAccess(connStr);
 
-            string query = "SELECT * FROM HoaDon WHERE Ma_hoa_don = @Ma_hoa_don";
+            string query = "SELECT HoaDon.*, DangKyHoc.Ma_dang_ky, DangKyHoc.Ma_lop, HocVien.Ma_hoc_vien, NguoiDung.Ho_va_ten, NguoiDung.Ngay_sinh, NguoiDung.Sdt, NguoiDung.Email, NguoiDung.Dia_chi, KhoaHoc.Hoc_phi " +
+                           "FROM HoaDon " +
+                           "JOIN DangKyHoc ON HoaDon.Ma_dang_ky = DangKyHoc.Ma_dang_ky " +
+                           "JOIN HocVien ON DangKyHoc.Ma_hoc_vien = HocVien.Ma_hoc_vien " +
+                           "JOIN NguoiDung ON HocVien.Ma_hoc_vien = NguoiDung.Ma " +
+                           "JOIN LopHoc ON DangKyHoc.Ma_lop = LopHoc.Ma_lop " +
+                           "JOIN KhoaHoc ON LopHoc.Ma_khoa_hoc = KhoaHoc.Ma_khoa_hoc " +
+                           "WHERE HoaDon.Ma_hoa_don = @Ma_hoa_don";
+
             SqlParameter parameter = new SqlParameter("@Ma_hoa_don", maHoaDon);
 
             DataTable dataTable = dataAccess.ExecuteQuery(query, new SqlParameter[] { parameter });
@@ -1755,23 +1813,32 @@ namespace web2.Areas.Admin.Controllers
             if (dataTable.Rows.Count > 0)
             {
                 DataRow row = dataTable.Rows[0];
-                HoaDon invoice = new HoaDon
+                HoaDon invoiceInfo = new HoaDon
                 {
+                    Ma_hoc_vien = row["Ma_hoc_vien"].ToString(),
                     Ma_hoa_don = row["Ma_hoa_don"].ToString(),
+                    Ho_va_ten = row["Ho_va_ten"].ToString(),
+                    Ngay_sinh = (DateTime)row["Ngay_sinh"],
+                    Sdt = row["Sdt"].ToString(),
+                    Email = row["Email"].ToString(),
+                    Dia_chi = row["Dia_chi"].ToString(),
                     Ma_dang_ky = row["Ma_dang_ky"].ToString(),
+                    Ma_lop = row["Ma_lop"].ToString(), // Include Ma_lop
                     Ngay_tao = (DateTime)row["Ngay_tao"],
-                    Tong_tien = (decimal)row["Tong_tien"],
-                    Trang_thai_thanh_toan = Convert.ToBoolean(row["Trang_thai_thanh_toan"])
+                    Trang_thai_thanh_toan = Convert.ToBoolean(row["Trang_thai_thanh_toan"]),
+                    Hoc_phi = Convert.ToDecimal(row["Hoc_phi"]) // Include Hoc_phi
                 };
 
-                return invoice;
+                return invoiceInfo;
             }
             else
             {
                 return null;
             }
         }
-        
+
+
+
         // Thời khoá biểu
 
         public ActionResult Manage_Schedule()

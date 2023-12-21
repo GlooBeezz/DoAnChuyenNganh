@@ -12,7 +12,7 @@ namespace web2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class HoaDon
+    public partial class HoaDon:HocVien
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public HoaDon()
@@ -29,6 +29,8 @@ namespace web2.Models
         {
             get { return Ngay_tao.ToString("dd/MM/yyyy"); }
         }
+        public string Ma_lop { get; set; } // Add this line
+        public decimal Hoc_phi { get; set; } // Add this line
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyHoc> DangKyHocs { get; set; }

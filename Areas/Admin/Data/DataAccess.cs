@@ -79,7 +79,7 @@ namespace web2.Areas.Admin.Data
             return ExecuteScalar(query);
         }
 
-        private int ExecuteScalar(string query, SqlParameter[] parameters = null)
+        public int ExecuteScalar(string query, SqlParameter[] parameters = null)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

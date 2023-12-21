@@ -1,4 +1,4 @@
-﻿@model web2.Models.HoaDon
+﻿@model web2.Models.DangKyHoc
 @{
     ViewBag.Title = "Add_Invoce";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
@@ -31,12 +31,12 @@
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="col-sm-12 col-md-6 col-xl-6 mb-3 mt-3">
-            @Html.LabelFor(model => model.Ma_hoa_don,"Mã hoá đơn", htmlAttributes: new { @class = "control-label " })
+            @Html.LabelFor(model => model.Ma_hoa_don, "Mã hoá đơn", htmlAttributes: new { @class = "control-label " })
             @Html.EditorFor(model => model.Ma_hoa_don, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Ma_hoa_don, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-12 col-md-6 col-xl-6 mb-3 mt-3">
-            @Html.LabelFor(model => model.Ma_dang_ky,"Mã đăng ký", htmlAttributes: new { @class = "control-label " })
+            @Html.LabelFor(model => model.Ma_dang_ky, "Mã đăng ký", htmlAttributes: new { @class = "control-label " })
             @Html.EditorFor(model => model.Ma_dang_ky, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Ma_dang_ky, "", new { @class = "text-danger" })
         </div>
@@ -46,12 +46,22 @@
             @Html.ValidationMessageFor(model => model.Ngay_tao, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-12 col-md-6 col-xl-6 mb-3 mt-3">
-            @Html.LabelFor(model => model.Tong_tien,"Tổng tiền", htmlAttributes: new { @class = "control-label " })
+            @Html.LabelFor(model => model.Ma_hoc_vien, "Mã học viên", htmlAttributes: new { @class = "control-label " })
+            @Html.EditorFor(model => model.Ma_hoc_vien, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+            @Html.ValidationMessageFor(model => model.Ma_hoc_vien, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-6 mb-3 mt-3">
+            @Html.LabelFor(model => model.Ma_lop, "Mã lớp", htmlAttributes: new { @class = "control-label " })
+            @Html.EditorFor(model => model.Ma_lop, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+            @Html.ValidationMessageFor(model => model.Ma_lop, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-6 mb-3 mt-3">
+            @Html.LabelFor(model => model.Tong_tien, "Tổng tiền", htmlAttributes: new { @class = "control-label " })
             @Html.EditorFor(model => model.Tong_tien, new { htmlAttributes = new { @class = "form-control", type = "number" } })
             @Html.ValidationMessageFor(model => model.Tong_tien, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-12 col-md-6 col-xl-6 mb-3 mt-3 border-1">
-            @Html.LabelFor(model => model.Trang_thai_thanh_toan,"Trạng thái thanh toán", htmlAttributes: new { @class = "control-label" })
+            @Html.LabelFor(model => model.Trang_thai_thanh_toan, "Trạng thái thanh toán", htmlAttributes: new { @class = "control-label" })
             @Html.EditorFor(model => model.Trang_thai_thanh_toan, new { htmlAttributes = new { @class = "form-check-input" } })
             @Html.ValidationMessageFor(model => model.Trang_thai_thanh_toan, "", new { @class = "text-danger" })
         </div>

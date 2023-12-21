@@ -4,6 +4,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using web2.Areas.Admin.Data;
+using static System.Web.Razor.Parser.SyntaxConstants;
 
 namespace web2.Models
 {
@@ -22,7 +24,7 @@ namespace web2.Models
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT COUNT(*) FROM NguoiDung WHERE Ma = @Ma";
+                string query = "SELECT COUNT(Ma) FROM NguoiDung WHERE Ma = @Ma";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Ma", ma);
@@ -38,7 +40,7 @@ namespace web2.Models
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT COUNT(*) FROM LopHoc WHERE Ma_lop = @Ma";
+                string query = "SELECT COUNT(Ma_lop) FROM LopHoc WHERE Ma_lop = @Ma";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Ma", ma);
@@ -54,7 +56,7 @@ namespace web2.Models
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT COUNT(*) FROM KhoaHoc WHERE Ma_khoa_hoc = @Ma";
+                string query = "SELECT COUNT(Ma_khoa_hoc) FROM KhoaHoc WHERE Ma_khoa_hoc = @Ma";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Ma", ma);
@@ -68,9 +70,10 @@ namespace web2.Models
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT COUNT(*) FROM HoaDon WHERE Ma_hoa_don = @Ma";
+                string query = "SELECT COUNT(Ma_hoa_don) FROM HoaDon WHERE Ma_hoa_don = @Ma";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
+                    // Đảm bảo giá trị cho tham số @Ma
                     command.Parameters.AddWithValue("@Ma", ma);
                     int count = (int)command.ExecuteScalar();
                     return count > 0;
@@ -99,5 +102,83 @@ namespace web2.Models
             }
             else { return false; }
         }
+        public bool IsBirthDateBeforeToday(DateTime birthDate)
+        {
+            DateTime currentDate = DateTime.Now.Date;
+            if (birthDate.Date < currentDate)
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
+                
+        }
+        public bool KiemTraLopHocTonTai(string maLop)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = @"
+                SELECT
+                    COUNT(*) AS TotalCount
+                FROM
+                    LopHoc
+                LEFT JOIN
+                    GiaoVien ON LopHoc.Ma_lop = GiaoVien.Ma_lop_giang_day
+                LEFT JOIN
+                    DangKyHoc ON LopHoc.Ma_lop = DangKyHoc.Ma_lop
+                LEFT JOIN
+                    HocVien ON DangKyHoc.Ma_hoc_vien = HocVien.Ma_hoc_vien
+                WHERE
+                    LopHoc.Ma_lop = @Ma_lop
+                    AND (GiaoVien.Ma_giao_vien IS NOT NULL OR HocVien.Ma_hoc_vien IS NOT NULL);";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Ma_lop", maLop);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            int totalCount = Convert.ToInt32(reader["TotalCount"]);
+                            return totalCount > 0;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+        public bool CheckKhoaHocCoLopCon(string maKhoaHoc)
+        {
+            try
+            {
+                string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+                DataAccess dataAccess = new DataAccess(connStr);
+
+                string query = "IF EXISTS ( " +
+                               "    SELECT 1 " +
+                               "    FROM LopHoc " +
+                               "    WHERE Ma_khoa_hoc = @Ma_khoa_hoc AND Ngay_ket_thuc IS NULL " +
+                               ") " +
+                               "    SELECT 1 " +
+                               "ELSE " +
+                               "    SELECT 0;";
+
+                SqlParameter parameter = new SqlParameter("@Ma_khoa_hoc", maKhoaHoc);
+
+                int result = Convert.ToInt32(dataAccess.ExecuteScalar(query, new SqlParameter[] { parameter }));
+                return result == 1;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Lỗi xử lý truy vấn: {ex.Message}");
+                return false;
+            }
+        }
+
     }
 }
