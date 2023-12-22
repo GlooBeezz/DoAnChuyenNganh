@@ -1,0 +1,41 @@
+﻿@model web2.Models.GiaoVien
+@{
+    Layout = "~/Areas/Teacher/Views/Shared/_LayoutPageTeacher.cshtml";
+}
+
+<section id="teacher-dashboard">
+    <h2 class="mb-4">Xin chào giáo viên @Model.Ma_giao_vien</h2>
+    <p class="lead">Chào mừng bạn tới trang của bạn</p>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Quản lý tài liệu</h5>
+                    <p class="card-text">Tất cả tài liệu của khóa học   </p>
+                    <a href="@Url.Action("Manage_Document", "HomeTeacher")" class="btn btn-primary btn-block">Xem chi tiết tài liệu</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Quản lý lớp học</h5>
+                    <p class="card-text">Tất cả các lớp học</p>
+                    <a href="@Url.Action("Manage_Classes", "HomeTeacher")" class="btn btn-primary btn-block">Xem chi tiết khóa học</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Thời khóa biểu</h5>
+                    <p class="card-text">Tất cả thời khóa biểu.</p>
+                    <a href="@Url.Action("Manage_Schedule", "HomeTeacher")" class="btn btn-primary btn-block">Xem chi tiết thời khóa biểu</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

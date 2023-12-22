@@ -1,0 +1,49 @@
+﻿@model web2.Models.KhoaHoc
+@{
+    ViewBag.Title = "Edit_Course_Infor";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col display-5" style="text-align:center">Chỉnh sửa khoá học</div>
+</div>
+<hr />
+<div class="row">
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="alert alert-danger text-center" role="alert" style="font-size:24px; display:none">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+</div>
+<form class="row" action="@Url.Action("Submit_Add_Course", "HomeAdmin", new { area = "Admin" })" id="inputForm">
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="ma" class="form-label">Mã khoá học:</label>
+        <input type="text" class="form-control" id="ma" placeholder="Mã" name="Ma" value="@Model.Ma_khoa_hoc" readonly>
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="ten" class="form-label">Tên khoá học:</label>
+        <input type="text" class="form-control" id="ten" placeholder="Tên" name="Ten" value="@Model.Ten_khoa_hoc">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="mota" class="form-label">Mô tả khoá học:</label>
+        <input type="text" class="form-control" id="mota" placeholder="Mô tả" name="MoTa" value="@Model.Mo_ta">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
+        <label for="hocphi" class="form-label">Học phí:</label>
+        <input type="number" class="form-control" id="hocphi" placeholder="VND" name="HocPhi" value="@Model.Hoc_phi">
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3 ">
+        <label for="nguon_anh" class="form-label">Chọn ảnh mới:</label>
+        <input type="text" id="nguon_anh" name="NguonAnhNew" class="form-control" >
+    </div>
+    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3 ">
+        <img src="@Model.Nguon_anh" alt="Ảnh hiện tại" class="img-thumbnail"/>
+    </div>
+    <hr />
+    <div class="row d-grid gap-2">
+        <input class="btn btn-success" type="submit" name="submit" value="Lưu">
+    </div>
+    <p>@Model.Nguon_anh</p>
+</form>
+

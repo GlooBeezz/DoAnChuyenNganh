@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1b417b096b3a465f8b6f6218f9b62476" Name="Diagram1">
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.BaiTap" Width="1.5" PointX="10.5" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.BaiTapDaNop" Width="1.5" PointX="3" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.BangDiem" Width="1.5" PointX="5.25" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.BangLuong" Width="1.5" PointX="7.5" PointY="26.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.ChiTiet_BangDiem" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.ChiTiet_TaiLieu" Width="1.5" PointX="8.25" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.DangKyHoc" Width="1.5" PointX="6" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.GiaoVien" Width="1.5" PointX="5.25" PointY="26.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.HoaDon" Width="1.5" PointX="3.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.HocVien" Width="1.5" PointX="0.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.KhoaHoc" Width="1.5" PointX="0.75" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.LopHoc" Width="1.5" PointX="3" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.NguoiDung" Width="1.5" PointX="6" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.SoTietDay" Width="1.5" PointX="10.5" PointY="27.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.TaiLieu" Width="1.5" PointX="6" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="quanLyTrungTamDayDanModel.ThoiGianBieu" Width="1.5" PointX="0.75" PointY="22.125" IsExpanded="true" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_BaiTap_GiaoVien" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_BaiTap_LopHoc" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_BaiTapDaNop_BaiTap" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_BaiTapDaNop_HocVien" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_BangDiem_LopHoc" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_ChiTiet_BangDiem_BangDiem" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_BangLuong_GiaoVien" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_ChiTiet_BangDiem_HocVien" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_ChiTiet_TaiLieu_LopHoc" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_ChiTiet_TaiLieu_TaiLieu" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_DangKyHoc_HoaDon" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_DangKyHoc_HocVien" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_DangKyHoc_LopHoc" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_GiaoVien_LopHoc" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_NguoiDung_GiaoVien" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_SoTietDay_GiaoVien" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_TaiLieu_GiaoVien" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_NguoiDung_HocVien" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_TaiLieu_HocVien" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_LopHoc_KhoaHoc" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_LopHoc_ThoiGianBieu" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.FK_SoTietDay_LopHoc" ManuallyRouted="false" />
+        <AssociationConnector Association="quanLyTrungTamDayDanModel.DanhSachHocVien" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

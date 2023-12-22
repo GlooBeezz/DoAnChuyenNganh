@@ -1,0 +1,118 @@
+﻿@model List<web2.Models.LopHoc>
+@{
+    ViewBag.Title = "Quản lý lớp học";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+    web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
+}
+<div class="container">
+    <div class="row">
+        <div class="col display-5" style="text-align:center">Quản lý lớp học</div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-sm-12 col-md-6 col-xl-6 " style="padding:0px 12px 0px 12px">
+            <form action="@Url.Action("SelKhoaHoc", "HomeAdmin", new { area = "Admin" })" method="post" id="formSel" >
+                <label class="">Chọn khoá học:</label>
+                <select class="form-select mt-3" id="selkhoahoc" name="maKhoaInput" style="padding:6px 12px 6px 12px">
+                    <option value="">Nhấn để chọn</option>
+                    @foreach (var khoa in db.KhoaHocs.ToList())
+                    {
+                        <option value="@khoa.Ma_khoa_hoc">@khoa.Ten_khoa_hoc</option>
+                    }
+                </select>
+
+            </form>
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-6">
+            <p>Nhập mã lớp:</p>
+            <form class="input-group" method="post" action="@Url.Action("Find_Class", "HomeAdmin", new { area = "Admin" })">
+                <span class="input-group-text">Mã lớp học:</span>
+                <input type="text" class="form-control" name="maLopInput" placeholder="ex: gcb01,..">
+                <button type="submit" class="btn btn-success">Tìm</button>
+            </form>
+        </div>
+    </div>
+    <div class="row d-grid gap-2 mt-4 mb-3">
+        <a>@Html.ActionLink("Thêm lớp mới", "Add_Class", "HomeAdmin", new { area = "Admin" }, new { @class = "btn btn-success" })</a>
+    </div>
+    <hr />
+    <div class="row">
+        <h3 class="col" style="text-align:center">Bảng kết quả</h3>
+    </div>
+    <div class="row">
+        <div class="alert alert-danger text-center" role="alert" style="font-size: 20px; display: none;">
+            @ViewBag.ErrorMessage
+        </div>
+    </div>
+    <div class="row">
+        <table class="table " style="text-align:center">
+            <thead class="bg-info bg-gradient">
+                <tr>
+                    <th>Mã</th>
+                    <th>Khoá học</th>
+                    <th>Phòng</th>
+                    <th>Số lượng học viên</th>
+                    <th>Tên lớp</th>
+                    <th>Mô tả</th>
+                    <th>Mã thời gian biểu</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
+                    <th>Số tiết</th>
+                    <th colspan="2">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Ma_lop</td>
+                        @foreach (var i in db.KhoaHocs)
+                        {
+                            if (i.Ma_khoa_hoc == item.Ma_khoa_hoc)
+                            {
+                                <td>@i.Ten_khoa_hoc</td>
+                            }
+                        }
+                        <td>@item.Phong_hoc</td>
+                        <td>@item.So_luong_hoc_vien</td>
+                        <td>@item.Ten_lop_hoc</td>
+                        <td>@item.Mo_ta</td>
+                        <td>@item.Ma_thoi_gian_bieu</td>
+                        <td>@item.Ngay_bat_dau_formatted</td>
+                        <td>@item.Ngay_ket_thuc_formatted</td>
+                        <td>@item.So_tiet_hoc</td>
+                        <td colspan="2" style="display:inline-flex">
+                            <a>@Html.ActionLink("Sửa", "Edit_Class_Infor", "HomeAdmin", new { area = "Admin", maLop = @item.Ma_lop }, new { @class = "btn btn-primary" })</a>
+                            <form id="form-delete-@item.Ma_lop" action="@Url.Action("Delete_Class_Infor", "HomeAdmin", new { area = "Admin" })" method="post">
+                                <input type="hidden" name="maLop" value="@item.Ma_lop" />
+                                <button type="submit" class="btn btn-danger">Xoá</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Kiểm tra xem có thông báo lỗi không
+        var errorMessage = "@ViewBag.ErrorMessage";
+        if (errorMessage) {
+
+            $(".alert").show();
+
+            setTimeout(function () {
+                $(".alert").hide();
+            }, 5000);
+        }
+    });
+    $(document).ready(function () {
+        $("#formSel").submit(function () {
+            console.log($("#selkhoahoc").val());
+        });
+    });
+
+</script>
+

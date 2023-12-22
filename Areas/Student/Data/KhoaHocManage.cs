@@ -10,7 +10,7 @@ using web2.Models;
 
 namespace web2.Areas.Admin.Data
 {
-    public class KhoaHocManage :IEnumerable<KhoaHoc>
+    public class KhoaHocManage : IEnumerable<KhoaHoc>
     {
         public List<KhoaHoc> dsKH { get; set; }
         public KhoaHocManage()

@@ -1,0 +1,55 @@
+﻿@model List<web2.Models.LopHoc>
+
+
+@{
+    ViewBag.Title = "Manage Classes";
+    Layout = "~/Areas/Teacher/Views/Shared/_LayoutPageTeacher.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Manage Classes</h2>
+
+        @if (Model != null && Model.Any())
+        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Mã lớp học</th>
+                        <th>Mã khóa học</th>
+                        <th>Tên lớp học</th>
+                        <th>Phòng học</th>
+                        <th>Số lượng học viên</th>
+                        <th>Mô tả</th>
+                        <th>Mã thời khóa biểu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var lopHoc in Model)
+                    {
+                        <tr>
+                            <td>@lopHoc.Ma_lop</td>
+                            <td>@lopHoc.Ma_khoa_hoc</td>
+                            <td>@lopHoc.Ten_lop_hoc</td>
+                            <td>@lopHoc.Phong_hoc</td>
+                            <td>@lopHoc.So_luong_hoc_vien</td>
+                            <td>@lopHoc.Mo_ta</td>
+                            <td>@lopHoc.Ma_thoi_gian_bieu</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No classes available.</p>
+        }
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="@Url.Action("Index", "HomeTeacher")" class="btn btn-primary">Trở lại</a>
+                <a href="@Url.Action("MyClass", "HomeTeacher")" class="btn btn-primary">Lớp của tôi</a>
+            </div>
+        </div>
+    </div>
+</div>
