@@ -147,8 +147,6 @@
     <Compile Include="Areas\Admin\Data\HocVienManage.cs" />
     <Compile Include="Areas\Admin\Data\hocVienManage.cs" />
     <Compile Include="Areas\Admin\Data\NguoiDungManage.cs" />
-    <Compile Include="Areas\Student\Controllers\HomeStudentController.cs" />
-    <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Areas\Teacher\Controllers\HomeTeacherController.cs" />
     <Compile Include="Areas\Teacher\TeacherAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminshowController.cs" />
@@ -298,15 +296,6 @@
     <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Class_Infor.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Add_Course.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Course_Infor.cshtml" />
-    <Content Include="Areas\Student\Views\HomeStudent\AboutStudent.cshtml" />
-    <Content Include="Areas\Student\Views\HomeStudent\ContactStudent.cshtml" />
-    <Content Include="Areas\Student\Views\HomeStudent\CourseStudent.cshtml" />
-    <Content Include="Areas\Student\Views\HomeStudent\indexHomeStudent.cshtml" />
-    <Content Include="Areas\Student\Views\HomeStudent\ScheduleStudent.cshtml" />
-    <Content Include="Areas\Student\Views\HomeStudent\settingAccount.cshtml" />
-    <Content Include="Areas\Student\Views\HomeStudent\StudyStudent.cshtml" />
-    <Content Include="Areas\Student\Views\Shared\_LayoutStudent.cshtml" />
-    <Content Include="Areas\Student\Views\web.config" />
     <None Include="Models\.editorconfig" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

@@ -13,6 +13,5 @@ namespace web2.Areas.Student.Controllers
         {
             return View();
         }
-        
     }
 }
