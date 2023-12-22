@@ -162,7 +162,7 @@ namespace web2.Models
                 string query = "IF EXISTS ( " +
                                "    SELECT 1 " +
                                "    FROM LopHoc " +
-                               "    WHERE Ma_khoa_hoc = @Ma_khoa_hoc AND Ngay_ket_thuc IS NULL " +
+                               "    WHERE Ma_khoa_hoc = @Ma_khoa_hoc " +
                                ") " +
                                "    SELECT 1 " +
                                "ELSE " +

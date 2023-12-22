@@ -223,6 +223,7 @@
     <Compile Include="Models\ThoiGianBieu.cs">
       <DependentUpon>Modeladmin.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ThongBao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Adminshow\HomController.cs" />
   </ItemGroup>

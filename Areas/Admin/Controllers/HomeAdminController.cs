@@ -740,9 +740,15 @@ namespace web2.Areas.Admin.Controllers
             maLop = maLop.Trim();
             try
             {
-                if (string.IsNullOrEmpty(maLop) || dbHelper.KiemTraLopHocTonTai(maLop))
+                if (string.IsNullOrEmpty(maLop) )
                 {
                     TempData["ErrorMessage"] = "Mã lớp không hợp lệ";
+                    TempData.Peek("ErrorMessage");
+                    return RedirectToAction("Manage_Classes");
+                }
+                if(dbHelper.KiemTraLopHocTonTai(maLop))
+                {
+                    TempData["ErrorMessage"] = "Lớp còn học viên hoặc giáo viên nên không thể xoá";
                     TempData.Peek("ErrorMessage");
                     return RedirectToAction("Manage_Classes");
                 }
