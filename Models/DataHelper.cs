@@ -80,12 +80,13 @@ namespace web2.Models
                 }
             }
         }
-        public bool IsNameContainNumber(string ten)
+        public bool ContainsDigitOrSpecialChar(string input)
         {
-            if (ten.Any(char.IsDigit))
-            { return false; }
-            else { return true; }
+            string pattern = @"[\d]";
+            Regex regex = new Regex(pattern);
+            return regex.IsMatch(input);
         }
+
         public bool IsPhoneNumberIsValid(string sdt)
         {
             string pattern = @"^(?:\+84|0)[1-9]\d{8}$|^0[1-9]\d{8}$";

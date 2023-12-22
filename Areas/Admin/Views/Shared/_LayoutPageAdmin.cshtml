@@ -21,7 +21,7 @@
         <aside id="sidebar" class="collapsed" style="margin-top:60px;position:fixed;height:93%">
             <div class="h-100 bg-primary">
                 <div class="sidebar-logo">
-                    <a href="~/Areas/Admin/Views/HomeAdmin/Index.cshtml">Phố thị Music <br /><p>Trung tâm quản lý</p></a>
+                    <a href="@Url.Action("Index", "HomeAdmin", new { area = "Admin" })">Phố thị Music <br /><p>Trung tâm quản lý</p></a>
                 </div>
                 <!-- Sidebar Navigation -->
                 <ul class="sidebar-nav">
@@ -29,7 +29,7 @@
                         Các chức năng
                     </li>
                     <li class="sidebar-item">
-                        <a href="~/Areas/Admin/Views/HomeAdmin/Index.cshtml" class="sidebar-link">
+                        <a href="@Url.Action("Index", "HomeAdmin", new { area = "Admin" })" class="sidebar-link">
                             <i class="fa-solid fa-house pe-2"></i>
                             Trang chủ
                         </a>
@@ -66,19 +66,12 @@
                         </a>
                         <ul id="dashboard" class="sidebar-dropdown list-unstyled collapse bg-white" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a href="~/Areas/Admin/Views/HomeAdmin/Index.cshtml" class="sidebar-link text-black">Các biểu đồ phân tích</a>
+                                <a href="@Url.Action("Send_Notification", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Các biểu đồ phân tích</a>
                             </li>
                             <li class="sidebar-item">
                                 <a href="#" class="sidebar-link text-black">Các biểu đồ doanh thu</a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#auth"
-                           aria-expanded="false" aria-controls="auth">
-                            <i class="fa-regular fa-user pe-2"></i>
-                            Tài khoản
-                        </a>
                     </li>
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#notification"

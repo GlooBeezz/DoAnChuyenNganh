@@ -14,6 +14,7 @@ using web2.Models;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Drawing;
 
 namespace web2.Areas.Admin.Controllers
 {
@@ -116,13 +117,30 @@ namespace web2.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Submit_Edit_Student_Infor(string Ma, string Ten, DateTime NgaySinh, DateTime? NgaySinhNew, string Sdt, string Email, string DiaChi, string TaiKhoan, string MatKhau, string PhanQuyen, string Lop, string ThemLop, string HocPhi)
+        public ActionResult Submit_Edit_Student_Infor(string Ma, string Ten, DateTime NgaySinh,  string Sdt, string Email, string DiaChi, string TaiKhoan, string MatKhau, string PhanQuyen, string Lop,  string HocPhi)
         {
             try
             {
-                if(!dbHelper.IsNameContainNumber(Ten)&&!dbHelper.IsPhoneNumberIsValid(Sdt)&& !dbHelper.IsBirthDateBeforeToday(NgaySinh))
+                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+                dbHelper = new DataHelper(connStr);
+                HocVien hv = new HocVien
                 {
-                    return RedirectToAction("Manage_Student");
+                    Ma_hoc_vien = Ma,Ho_va_ten=Ten,Ngay_sinh=NgaySinh,Sdt=Sdt,Email=Email,Dia_chi=DiaChi,Tai_khoan=TaiKhoan,Mat_khau=MatKhau,Phan_quyen=true,Lop_hoc_tham_gia=Lop,Trang_thai_hoc_phi=(HocPhi=="true"?true:false)
+                };
+                if (dbHelper.ContainsDigitOrSpecialChar(Ten))
+                {
+                    ViewBag.ErrorMessage = "Tên chứa kí tự đặc biệt, vui lòng nhập lại.";
+                    return View("Edit_Student_Infor", hv);
+                }
+                if (!dbHelper.IsPhoneNumberIsValid(Sdt))
+                {
+                    ViewBag.ErrorMessage = "Số điện thoại không đúng, vui lòng nhập lại.";
+                    return View("Edit_Student_Infor", hv);
+                }
+                if (!dbHelper.IsBirthDateBeforeToday(NgaySinh))
+                {
+                    ViewBag.ErrorMessage = "Ngày sinh không hợp lệ, vui lòng nhập lại.";
+                    return View("Edit_Student_Infor", hv);
                 }
                 string updateNguoiDungQuery = "UPDATE NguoiDung SET Ho_va_ten = @Ho_va_ten, Ngay_sinh = @Ngay_sinh, Sdt = @Sdt, Email = @Email, Dia_chi = @Dia_chi, Tai_khoan = @Tai_khoan, Mat_khau = @Mat_khau, Phan_quyen = @Phan_quyen WHERE Ma = @Ma_hoc_vien";
                 string updateHocVienQuery = "UPDATE HocVien SET Lop_hoc_tham_gia = @Lop_hoc_tham_gia, Trang_thai_hoc_phi = @Trang_thai_hoc_phi WHERE Ma_hoc_vien = @Ma_hoc_vien";
@@ -131,18 +149,17 @@ namespace web2.Areas.Admin.Controllers
                 {
                     new SqlParameter("@Ma_hoc_vien", Ma),
                     new SqlParameter("@Ho_va_ten", Ten),
-                    new SqlParameter("@Ngay_sinh", NgaySinhNew != null ? NgaySinhNew:NgaySinh),
+                    new SqlParameter("@Ngay_sinh",NgaySinh),
                     new SqlParameter("@Sdt", Sdt),
                     new SqlParameter("@Email", Email),
                     new SqlParameter("@Dia_chi", DiaChi),
                     new SqlParameter("@Tai_khoan", TaiKhoan),
                     new SqlParameter("@Mat_khau", MatKhau),
                     new SqlParameter("@Phan_quyen", PhanQuyen),
-                    new SqlParameter("@Lop_hoc_tham_gia", ThemLop != null ? ThemLop : Lop),
+                    new SqlParameter("@Lop_hoc_tham_gia", Lop),
                     new SqlParameter("@Trang_thai_hoc_phi", HocPhi)
                 };
 
-                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
                 DataAccess dataAccess = new DataAccess(connStr);
 
                 // Thực hiện UPDATE cho bảng NguoiDung
@@ -270,7 +287,27 @@ namespace web2.Areas.Admin.Controllers
             SqlConnection conn = new SqlConnection(connStr);
             conn.Open();
             dbHelper = new DataHelper(connStr);
-            if (!dbHelper.IsMaExistsInNguoiDung(Ma)&&dbHelper.IsUserIdIsValid(Ma)&&dbHelper.IsNameContainNumber(Ten)&&dbHelper.IsPhoneNumberIsValid(Sdt)&&dbHelper.IsBirthDateBeforeToday(NgaySinh))
+            if (!dbHelper.IsUserIdIsValid(Ma))
+            {
+                ViewBag.ErrorMessage = "Mã đã đã nhập không đúng(tối đã chỉ 10 kí tự và phải bắt đầu bằng hv), vui lòng nhập lại.";
+                return View("Add_Student");
+            }
+            if (dbHelper.ContainsDigitOrSpecialChar(Ten))
+            {
+                ViewBag.ErrorMessage = "Tên chứa kí tự đặc biệt, vui lòng nhập lại.";
+                return View("Add_Student");
+            }
+            if (!dbHelper.IsPhoneNumberIsValid(Sdt))
+            {
+                ViewBag.ErrorMessage = "Số điện thoại không đúng, vui lòng nhập lại.";
+                return View("Add_Student");
+            }
+            if (!dbHelper.IsBirthDateBeforeToday(NgaySinh))
+            {
+                ViewBag.ErrorMessage = "Ngày sinh không hợp lệ, vui lòng nhập lại.";
+                return View("Add_Student");
+            }
+            if (!dbHelper.IsMaExistsInNguoiDung(Ma))
             {
                 SqlCommand insertCmd = new SqlCommand("INSERT INTO NguoiDung (Ma, Ho_va_ten, Ngay_sinh, Sdt, Email, Dia_chi, Tai_khoan, Mat_khau, Phan_quyen) " +
                                            "VALUES (@Ma, @Ho_va_ten, @Ngay_sinh, @Sdt, @Email, @Dia_chi, @Tai_khoan, @Mat_khau, @Phan_quyen); " +
@@ -311,7 +348,7 @@ namespace web2.Areas.Admin.Controllers
             else
             {
                 ViewBag.ErrorMessage = "Mã đã tồn tại. Vui lòng nhập mã khác.";
-                return View("Add_Course");
+                return View("Add_Student");
             }
             conn.Close();
             return RedirectToAction("Manage_Student");
@@ -410,7 +447,27 @@ namespace web2.Areas.Admin.Controllers
             SqlConnection conn = new SqlConnection(connStr);
             conn.Open();
             dbHelper = new DataHelper(connStr);
-            if (!dbHelper.IsMaExistsInNguoiDung(Ma) && dbHelper.IsUserIdIsValid(Ma) && dbHelper.IsNameContainNumber(Ten) && dbHelper.IsPhoneNumberIsValid(Sdt)&&dbHelper.IsBirthDateBeforeToday(NgaySinh))
+            if (!dbHelper.IsUserIdIsValid(Ma))
+            {
+                ViewBag.ErrorMessage = "Mã đã đã nhập không đúng(tối đã chỉ 10 kí tự và phải bắt đầu bằng hv), vui lòng nhập lại.";
+                return View("Add_Teacher");
+            }
+            if (dbHelper.ContainsDigitOrSpecialChar(Ten))
+            {
+                ViewBag.ErrorMessage = "Tên chứa kí tự đặc biệt, vui lòng nhập lại.";
+                return View("Add_Teacher");
+            }
+            if (!dbHelper.IsPhoneNumberIsValid(Sdt))
+            {
+                ViewBag.ErrorMessage = "Số điện thoại không đúng, vui lòng nhập lại.";
+                return View("Add_Teacher");
+            }
+            if (!dbHelper.IsBirthDateBeforeToday(NgaySinh))
+            {
+                ViewBag.ErrorMessage = "Ngày sinh không hợp lệ, vui lòng nhập lại.";
+                return View("Add_Teacher");
+            }
+            if (!dbHelper.IsMaExistsInNguoiDung(Ma))
             {
                 SqlCommand insertCmd = new SqlCommand("INSERT INTO NguoiDung (Ma, Ho_va_ten, Ngay_sinh, Sdt, Email, Dia_chi, Tai_khoan, Mat_khau, Phan_quyen)\r\nVALUES (@Ma, @Ho_va_ten, @Ngay_sinh, @Sdt, @Email, @Dia_chi, @Tai_khoan, @Mat_khau, @Phan_quyen);\r\n\r\nINSERT INTO GiaoVien (Ma_giao_vien, Ma_bang_luong, Ma_lop_giang_day, Ma_tai_lieu_tai_len, Luong_co_ban, Chuyen_mon)\r\nVALUES (@Ma_giao_vien, @Ma_bang_luong, @Ma_lop_giang_day, @Ma_tai_lieu_tai_len, @Luong_co_ban,@Chuyen_mon);", conn);
                 insertCmd.Parameters.AddWithValue("@Ma", Ma);
@@ -509,7 +566,47 @@ namespace web2.Areas.Admin.Controllers
         {
             try
             {
-                if (dbHelper.IsNameContainNumber(Ten) && dbHelper.IsPhoneNumberIsValid(Sdt) && dbHelper.IsBirthDateBeforeToday(NgaySinh))
+                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+                dbHelper = new DataHelper(connStr);
+                bool Lcb;
+                Decimal LcbDecimal;
+                Lcb = Decimal.TryParse(LuongCoBan, out LcbDecimal);
+                GiaoVien gv = new GiaoVien
+                {
+                    Ma_giao_vien = Ma,
+                    Ho_va_ten = Ten,
+                    Ngay_sinh = NgaySinh,
+                    Sdt = Sdt,
+                    Email = Email,
+                    Dia_chi = DiaChi,
+                    Tai_khoan = TaiKhoan,
+                    Mat_khau = MatKhau,
+                    Phan_quyen = false,
+                    Ma_lop_giang_day = Lop,
+                    Chuyen_mon = ChuyenMon,
+                    Luong_co_ban = LcbDecimal,
+                    Ma_bang_luong = MaBangLuong,
+                    Ma_tai_lieu_tai_len = MaTaiLieuTaiLen
+                };
+                if (dbHelper.ContainsDigitOrSpecialChar(Ten))
+                {
+                    ViewBag.ErrorMessage = "Tên chứa kí tự đặc biệt, vui lòng nhập lại.";
+                    ViewBag.Peak();
+                    return View("Edit_Teacher_Infor",gv);
+                }
+                if (!dbHelper.IsPhoneNumberIsValid(Sdt))
+                {
+                    ViewBag.ErrorMessage = "Số điện thoại không đúng, vui lòng nhập lại.";
+                    ViewBag.Peak();
+                    return View("Edit_Teacher_Infor", gv);
+                }
+                if (!dbHelper.IsBirthDateBeforeToday(NgaySinh))
+                {
+                    ViewBag.ErrorMessage = "Ngày sinh không hợp lệ, vui lòng nhập lại.";
+                    ViewBag.Peak();
+                    return View("Edit_Teacher_Infor", gv);
+                }
+                if (!dbHelper.ContainsDigitOrSpecialChar(Ten) && dbHelper.IsPhoneNumberIsValid(Sdt) && dbHelper.IsBirthDateBeforeToday(NgaySinh))
                 {
                     System.Diagnostics.Debug.WriteLine("B1");
 
@@ -548,11 +645,13 @@ namespace web2.Areas.Admin.Controllers
                     {
                         System.Diagnostics.Debug.WriteLine("B6.1");
                         TempData["SuccessMessage"] = "Cập nhật thông tin giáo viên thành công";
+                        TempData.Peek("ErrorMessage");
                     }
                     else
                     {
                         System.Diagnostics.Debug.WriteLine("B6.2");
                         TempData["ErrorMessage"] = "Cập nhật thông tin giáo viên không thành công";
+                        TempData.Peek("ErrorMessage");
                     }
                     System.Diagnostics.Debug.WriteLine("B7");
                     return RedirectToAction("Manage_Teacher");
@@ -563,6 +662,7 @@ namespace web2.Areas.Admin.Controllers
                 System.Diagnostics.Debug.WriteLine("Out");
                 System.Diagnostics.Debug.WriteLine(ex.Message);
                 TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
+                TempData.Peek("ErrorMessage");
                 return RedirectToAction("Manage_Teacher");
             }
             return RedirectToAction("Manage_Teacher");
@@ -799,8 +899,22 @@ namespace web2.Areas.Admin.Controllers
             conn.Open();
             dbHelper = new DataHelper(connStr);
             try {
-                if (!dbHelper.IsMaExistsInLopHoc(Ma)&&NgayBD<NgayKT&&ThoiGianBatDau<ThoiGianKetThuc)
+                System.Diagnostics.Debug.WriteLine("B1");
+                if (NgayBD > NgayKT)
                 {
+                    ViewBag.ErrorMessage = "Ngày bắt đầu và Ngày kết thúc không hợp lệ. Vui lòng nhập lại.";
+                    return View("Add_Class");
+                }
+                System.Diagnostics.Debug.WriteLine("B2");
+                if (ThoiGianBatDau > ThoiGianKetThuc)
+                {
+                    ViewBag.ErrorMessage = "Thời gian bắt đầu và Thời gian kết thúc khôgn hợp lệ. Vui lòng nhập lại.";
+                    return View("Add_Class");
+                }
+                System.Diagnostics.Debug.WriteLine("B3");
+                if (!dbHelper.IsMaExistsInLopHoc(Ma))
+                {
+                    System.Diagnostics.Debug.WriteLine("B3.1");
                     SqlCommand insertCmd = new SqlCommand(" INSERT INTO LopHoc (Ma_lop, Ma_khoa_hoc, Phong_hoc, So_luong_hoc_vien, Ten_lop_hoc, Mo_ta, Ma_thoi_gian_bieu, Ngay_bat_dau, Ngay_ket_thuc, So_tiet_hoc)\r\n        VALUES (@Ma_lop, @Ma_khoa_hoc, @Phong_hoc, @So_luong_hoc_vien, @Ten_lop_hoc, @Mo_ta, @Ma_thoi_gian_bieu, @Ngay_bat_dau, @Ngay_ket_thuc, @So_tiet_hoc); Insert Into ThoiGianBieu (Ma_thoi_gian_bieu,Thoi_gian_bat_dau,Thoi_gian_ket_thuc,Hoc_vao_thu) values (@Ma_thoi_gian_bieu,@Thoi_gian_bat_dau,@Thoi_gian_ket_thuc,@Hoc_vao_thu); ", conn);
                     insertCmd.Parameters.AddWithValue("@Ma_lop", Ma);
                     insertCmd.Parameters.AddWithValue("@Ma_khoa_hoc", KhoaHoc);
@@ -832,6 +946,7 @@ namespace web2.Areas.Admin.Controllers
                 }
                 else
                 {
+                    System.Diagnostics.Debug.WriteLine("B3.2");
                     ViewBag.ErrorMessage = "Mã đã tồn tại. Vui lòng nhập mã khác.";
                     return View("Add_Class");
                 }
@@ -839,8 +954,9 @@ namespace web2.Areas.Admin.Controllers
                 return RedirectToAction("Manage_Classes");
             }
             catch(Exception ex) {
+                System.Diagnostics.Debug.WriteLine("Out");
                 System.Diagnostics.Debug.WriteLine(ex.Message);
-                ViewBag.ErrorMessage = "Gặp lỗi: "+ex;
+                ViewBag.ErrorMessage = "Gặp lỗi: " + ex;
                 return View("Add_Class");
             }
             
