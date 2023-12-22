@@ -1,0 +1,117 @@
+﻿@model List<web2.Models.KhoaHoc>
+@{
+    ViewBag.Title = "StudyStudent";
+    Layout = "~/Areas/Student/Views/Shared/_LayoutStudent.cshtml";
+    ViewBag.Active = "studystudent";
+    web2.Models.quanLyTrungTamDayDanEntities db = new web2.Models.quanLyTrungTamDayDanEntities();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/Study.css" />
+    <style>
+        .card {
+            height: auto;
+        }
+
+            .card img {
+                height: 300px;
+                width: 350px;
+            }
+
+        .alert p {
+            font-size: 24px;
+        }
+        #scrollButton {
+            width: 45px;
+            height: 45px;
+            font-size: 15px;
+            padding: 0;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="text-center my-5">
+            <p class="display-3"><strong>CÁC KHOÁ HỌC</strong></p>
+        
+        </div>
+        <form class="d-flex" method="post" action="@Url.Action("StudyStudent", "HomeStudent")">
+            <input class="form-control me-2" type="search" name="tenKhoaHoc" placeholder="Nhập tên khóa học" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+        </form>
+        <hr />
+        <div class="row">
+            @foreach (var kh in Model)
+            {
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="card mb-5 shadow-sm">
+                        <img src="https://img.freepik.com/premium-vector/boy-girl-playing-piano_97632-600.jpg" class="img-fluid" />
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h2>@kh.Ten_khoa_hoc</h2>
+                            </div>
+                            <div class="card-text">
+                                <p>
+                                    @kh.Mo_ta
+                                </p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between">
+                                <div> <p class="card-text">Học Phí: <strong style="color:brown">@kh.Hoc_phi$</strong> </p></div>
+                                <div style="float: right;">
+                                    <button class="btn btn-outline-warning rounded-0 registerButton" data-course-id="@kh.Ma_khoa_hoc">Đăng Ký</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+            @*nút để lên đầu trang*@
+            <button type="button" class="btn btn-primary btn-lg rounded-circle position-fixed bottom-0 end-0 m-3" id="scrollButton">
+                <i class="fa-solid fa-chevron-up"></i>
+            </button>
+            <script>
+                $("#scrollButton").click(function () {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                });
+            </script>
+           @*tìm kiếm*@
+            <script>
+                $(document).ready(function () {
+                    $("#filterButton").click(function () {
+                        var courseName = $("#courseName").val().toLowerCase();
+                        $(".card").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(courseName) > -1)
+                        });
+                    });
+                });
+            </script>
+            @*đăng ký*@
+            <script>
+                 var registerButtons = document.querySelectorAll('.registerButton');
+                   registerButtons.forEach(function(button) {
+                    button.addEventListener('click', function(event) {
+                       event.preventDefault();
+                  var courseId = button.getAttribute('data-course-id');
+                  var confirmation = confirm("Bạn muốn đăng ký khoá học này?");
+                     if (confirmation) {
+                        var url = '@Url.Action("CourseStudent", "HomeStudent", new { area = "Student", courseId = "__courseId__" })';
+                        url = url.replace('__courseId__', courseId);
+                        window.location.href = url;
+                    } else {
+                        window.history.back();
+                    }
+                       });
+                    });
+            </script>
+        </div>
+    </div>
+</body>
+</html>
+

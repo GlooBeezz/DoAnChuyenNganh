@@ -140,12 +140,17 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\Admin\Data\DanhSachGiaoVien.cs" />
+    <Compile Include="Areas\Admin\Data\DanhSachNguoiDung.cs" />
     <Compile Include="Areas\Admin\Data\GiaoVienManage.cs" />
     <Compile Include="Areas\Admin\Data\DanhSachHocViencs.cs" />
     <Compile Include="Areas\Admin\Data\DataAccess.cs" />
     <Compile Include="Areas\Admin\Data\HocVienManage.cs" />
     <Compile Include="Areas\Admin\Data\ThongBaoModel.cs" />
     <Compile Include="Areas\Student\Controllers\HomeStudentController.cs" />
+    <Compile Include="Areas\Student\Data\DanhSachKhoaHoc.cs" />
+    <Compile Include="Areas\Student\Data\DataAccessStudent.cs" />
+    <Compile Include="Areas\Student\Data\DataStudentAccess.cs" />
+    <Compile Include="Areas\Student\Data\KhoaHocManage.cs" />
     <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Areas\Teacher\Controllers\HomeTeacherController.cs" />
     <Compile Include="Areas\Teacher\TeacherAreaRegistration.cs" />
@@ -391,6 +396,13 @@
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <Content Include="bin\web2.dll.config" />
+    <Content Include="Areas\Student\Views\HomeStudent\AboutStudent.cshtml" />
+    <Content Include="Areas\Student\Views\HomeStudent\ContactStudent.cshtml" />
+    <Content Include="Areas\Student\Views\HomeStudent\CourseStudent.cshtml" />
+    <Content Include="Areas\Student\Views\HomeStudent\indexHomeStudent.cshtml" />
+    <Content Include="Areas\Student\Views\HomeStudent\ScheduleStudent.cshtml" />
+    <Content Include="Areas\Student\Views\HomeStudent\settingAccount.cshtml" />
+    <Content Include="Areas\Student\Views\HomeStudent\StudyStudent.cshtml" />
     <None Include="Models\.editorconfig" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -433,8 +445,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\App_LocalResources\" />
-    <Folder Include="Areas\Student\Data\" />
-    <Folder Include="Areas\Student\Views\HomeStudent\" />
     <Folder Include="Areas\Student\Views\Shared\" />
     <Folder Include="Areas\Teacher\Data\" />
     <Folder Include="Views\Default\" />

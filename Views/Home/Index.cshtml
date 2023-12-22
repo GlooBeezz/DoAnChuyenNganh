@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Active = "home";
@@ -50,11 +49,17 @@
     }
 
     .section3 {
-        height: 350px;
+        
     }
 
     .section4 {
-        height: 650px;
+        margin: 0 auto;
+    }
+
+    .section4 img {
+            height: 75%; /* Độ cao cố định của ảnh */
+            width: 100%;
+            margin: 5px; /* Khoảng cách 10px giữa các ảnh */
     }
 
     .sec section5 {
@@ -80,21 +85,31 @@
     }
 </style>
 
-<body style="max-width:1300px">
+<body >
+
     @* ảnh tự chuyển động *@
-    <div class="bg-white " style="height:600px;width:100%">
-        
+    <div>
+
+        <img class="img-fluid" style="height:70%;width:100%" src="~/source/Frame 1.png" />
+
 
     </div>
+
+
 
     <div class="sec section1 container" style="">
         <div class="row ">
             <div class="col-6 sec1-left">
-                ben a
+                <p class="m-1" style="font:bold;font-size:30px;"> <span style="color:black">Phố thị</span><span style="color:orangered"> Music</span></p>
+                <br />
+                <p>abbcc</p>
             </div>
-            <div class="col-6 sec1-right">  
-                ben b
+            <div class="col-6 sec1-right">
+                <img src="~/source/index_sec1.png" />
             </div>
+
+
+
         </div>
 
 
@@ -104,20 +119,114 @@
 
         <div style="display: flex; align-items: center; width:300px">
             <button class="btn btn-outline-success btn-lg" id="customButtonStudy">Bắt đầu nào!</button>
-            <span style="display:none">@Html.ActionLink("Go to page!", "Study", "Home", null, new { id = "actionStudyLink" })</span>
+
         </div>
 
     </div>
 
     @* nói về giá trị mang lại của trung tâm *@
-    <div class="sec section3">
+    <div class="sec section3 container"style="padding-bottom:30px;">
+        <div class="col " style="padding-top:30px;">
+            <div class="row " style=" ">
+                <p class="align-content-center  " style="font-size:50px;text-align:center;"><span style="color:orangered">Phố Thị Music</span> <span style="color: black"> Mang Lại giá trị gì cho bạn</span></p>
+            </div>
+            <div class="row" style="text-align:center;">
+                Mời các bậc phụ huynh cùng tìm hiểu các giá trị đích thực mà tập thể đội ngũ Giáo viên và Cán bộ của Trung tâm muốn mang đến cho các con.
+            </div>
 
+            <div class="row " style="text-align:center;padding-top:30px;">
+                <div class="col-3">
+                    <img class="" src="~/source/icon-1.jpg" style="height:80px;width:80px;" />
+                    <div style="padding-top:30px">
+                        <span style="font:bold;font-size:30px">Đội Ngũ Giáo Viên</span>
+                   
+                        <p class="container">
+                            Các giáo viên có trình độ chuyên môn cao, chuyên nghiệp, nhiệt huyết và yêu trẻ.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <img class="" src="~/source/icon-2.jpg" style="height:80px;width:80px;" />
+                    <div style="padding-top:30px">
+                        <span style="font:bold;font-size:30px">GIÁO TRÌNH GIẢNG DẠY</span>
+                    </div>
+                    <div>
+                        <p>
+                            Giáo trình hiện đại, đa dạng từ các nước tiên tiến. PP giảng dạy khoa học & tâm lý.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <img class="" src="~/source/icon-3.jpg" style="height:80px;width:80px;" />
+                    <div style="padding-top:30px">
+                        <span style="font:bold;font-size:30px">CƠ SỞ VẬT CHẤT</span>
+                    </div>
+                    <div>
+                        <p>
+                            Trang thiết bị hiện đại và tiện nghi, môi trường học tập chuyên nghiệp – an toàn.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <img class="" src="~/source/icon-4.jpg" style="height:80px;width:80px;" />
+                    <div style="padding-top:30px">
+                        <span style="font:bold;font-size:30px">LIÊN LẠC VỚI GIA ĐÌNH</span>
+                    </div>
+                    <div>
+                        <p>
+                            Mọi sự tiến bộ của con bạn đều được ghi nhận và được báo cáo sau mỗi buổi học.
+                        </p>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
     </div>
 
     @* chương trình đào tạo của trung tâm *@
-    <div class="sec section4">
+
+    <div class="sec section4 container" >
+        <div class="row text-center">
+            <p style="font-size:30px;font:bold">
+                Chương trình đào tạo Phố Thị Music
+            </p><br />
+            <p style="font-size:20px;">
+                Âm nhạc và Nghệ thuật là một phần không thể thiếu trong quá trình phát triển nhân cách của trẻ nhỏ. Các em cần một sân chơi lành mạnh để thêm yêu thương, gắn kết, sẻ chia cũng như phát triển mọi kỹ năng sống của mình.
+            </p>
+
+        </div>
+        <div class="row">
+
+            <div class="col-3 ">
+                <img src="~/source/piano.png" />
+            </div>
+
+            <div class="col-3 " >
+                <img src="~/source/piano.png" />
+            </div>
+
+            <div class="col-3 ">
+                <img src="~/source/piano.png" />
+            </div>
+
+            <div class="col-3 ">
+                <img src="~/source/piano.png" />
+            </div>
+            @*<a class="" href="">
+            <img src="~/source/logo.jpg" alt="Avatar Logo" style="height:150px;" />
+            @Html.ActionLink("  ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </a>*@
 
 
+
+        </div>
     </div>
 
     @* nhận xét từ ph *@
@@ -137,59 +246,13 @@
                             <p class="text-center">aaaaa</p>
                         </div>
                     </div>
-
-                    <div class="Fly-cmt">
-                        <img class="rounded d-block mx-auto  " src="~/source/person1.png" style="position:center ;height:100px;width:100px;margin-top:20px" />
-                        <div style="margin-top:15px ; min-height:auto;min-height:auto;">
-                            <p class="text-center">bbbbbb</p>
-                        </div>
-                    </div>
-
-                    <div class="Fly-cmt">
-                        <img class="rounded d-block mx-auto  " src="~/source/person1.png" style="position:center ;height:100px;width:100px;margin-top:20px" />
-                        <div style="margin-top:15px ; min-height:auto;min-height:auto;">
-                            <p class="text-center">ccccccc</p>
-                        </div>
-
-                    </div>
+                   
 
                 </div>
             </div>
         </div>
-
-    </div>
-    @* kết thúc *@
-    <div class="sec section6 ">
-
-
-
-
-
-
-
     </div>
 
 
-
-    @* file java cho file index *@
-    <script src="~/Views/Home/style/Index.js"></script>
-    <link rel="stylesheet" href="~/Views/Home/style/_Layout.css" />
 </body>
 
-@*
-    #box{
-      width:100px;
-      height:100px;
-      background: red;
-      transition: all 0.7s ease-in-out;
-    /*   -moz-transition:all  1s ;
-      -webkit-transition: all 1s ; */
-
-    }
-    #box:hover{
-      background: yellow;
-      transform: translateX(500px);
-
-    }
-
-*@
