@@ -14,39 +14,130 @@
         });
     });
 </script>
-<style>
-    body {
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
 
+<div class="bg-white ">
+    @*<h2 class="text-primary">Phố Thị Music - Nơi tài năng toả sáng </h2>
+        <br />
+        <h4 class="text-warning">
+            Kính gửi mọi người yêu nghệ thuật,
+
+<style>
+    body{
+        margin-top:10px;
+        margin-bottom:10px;
+    }
     .sec {
         min-height: auto;
         min-width: auto;
     }
-
-    .section1 {
-        height: 500px;
-        z-index: 1;
+    .section1{
+        height:500px;
+        z-index:1;
         background-position: 50% 50%;
-        display: block;
-        position: relative;
+        display:block;
+       
+        position:relative;
     }
-
     .section2 {
-        height: 150px;
-        width: auto;
+        height:150px;
+        width:auto;
+      
+       
     }
-
-    .sec1-left {
-        max-width: 50%;
+    .sec1-left{
+       
+        max-width:50%;
         padding: 0 10px 20px 10px;
     }
+    .sec1-right{
+        position:relative;
+        display:block;
 
-    .sec1-right {
-        position: relative;
-        display: block;
     }
+    .section3{
+        height:350px;
+       
+    }
+    .section4{
+        height:650px;
+        
+    }
+/*    .section5{
+        height:350px;
+       
+    }*/
+
+
+</style>
+
+<body>
+    @* ảnh tự chuyển động *@
+    <div class="bg-white " style="height:600px;width:100%">
+        @*<h2 class="text-primary">Phố Thị Music - Nơi tài năng toả sáng </h2>
+
+            <br />
+            Chúng ta đang mở cửa cho một cuộc phiêu lưu sáng tạo đầy thú vị và cơ hội tham gia vào một khoá học nghệ thuật đặc biệt. Đây là cơ hội để bạn thể hiện tài năng, phát triển kỹ năng và khám phá bản thân qua nghệ thuật.
+
+        </h4>*@
+    <div class="row row-cols-2">
+        <div class="col-sm-8">
+            <img src="~/source/maxresdefault.jpg" class="img-fluid mx-auto d-block" />
+        </div>
+        <div class="col-sm-4">
+            <h1 class="display-2">Phố Thị Music</h1>
+            <div class="row-cols-sm-auto">
+                <div class="col-sm">
+                    <p style="font-size:25px">
+                        Với đội ngũ giảng viên với nhiều năm kinh nghiệm giảng dạy, sự tận tâm, năng nổ đi kèm
+                        với môi trường năng động, thoải mái cho quá trình học tập và phát triển của học viên,
+                        chúng tôi tự tin có thể cam kết chất lượng đầu ra đào tạo cho học viên, luôn tạo điều kiện để học viên có thể thoả sức
+                        sáng tạo và cháy hết mình với âm nhạc!
+                    </p>
+                    <div class="row-cols-sm-auto">
+                        <div class="col-sm-8"></div>
+                        <div class="col-sm-4">
+                            <div style="display: flex; align-items: center; width:300px">
+                                <button class="btn btn-outline-success btn-lg" id="customButtonStudy">Bắt đầu nào!</button>
+                                <span style="display:none">@Html.ActionLink("Go to page!", "Study", "Home", null, new { id = "actionStudyLink" })</span>
+                            </div>
+
+<head>
+    <style>
+        body {
+            margin-top: 10px;
+            background: url("~/source/section5a.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+
+        .sec {
+            min-height: auto;
+            min-width: auto;
+        }
+
+        .section1 {
+            height: 500px;
+            z-index: 1;
+            background-position: 50% 50%;
+            display: block;
+            position: relative;
+        }
+
+        .section2 {
+            height: 150px;
+            width: auto;
+        }
+
+        .sec1-left {
+            max-width: 50%;
+            padding: 0 10px 20px 10px;
+        }
+
+        .sec1-right {
+            position: relative;
+            display: block;
+        }
 
     .section3 {
         
@@ -66,24 +157,25 @@
         height: 350px;
     }
 
-    .sec5-left {
-        min-height: auto;
-        min-width: auto;
-        max-width: 40%;
-        height: 350px;
-    }
+        .sec5-left {
+            min-height: auto;
+            min-width: auto;
+            max-width: 40%;
+            height: 350px;
+        }
 
 
-    .sec5-right {
-        min-height: auto;
-        min-width: auto;
-        max-width: 60%;
-    }
+        .sec5-right {
+            min-height: auto;
+            min-width: auto;
+            max-width: 60%;
+        }
 
-    .section6 {
-        height: 150px;
-    }
-</style>
+        .section6 {
+            height: 150px;
+        }
+    </style>
+</head>
 
 <body >
 
@@ -244,10 +336,14 @@
                         <img class="rounded d-block mx-auto  " src="~/source/person1.png" style="position:center ;height:100px;width:100px;margin-top:20px" />
                         <div style="margin-top:15px ; min-height:auto;min-height:auto;">
                             <p class="text-center">aaaaa</p>
+
                         </div>
                     </div>
                    
 
+            <div class="row row-cols-2">
+                <div class="col-sm-4">
+                    <h3>This is slide 1</h3>
                 </div>
             </div>
         </div>

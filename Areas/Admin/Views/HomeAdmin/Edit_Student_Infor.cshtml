@@ -6,7 +6,12 @@
 
 }
 <div class="row">
-    <div class="col display-5" style="text-align:center">Chỉnh sửa học viên</div>
+    <div class="col display-5" style="text-align:center">Chỉnh sửa thông tin học viên</div>
+</div>
+<div class="row">
+    <div class="alert alert-danger text-center" role="alert" style="font-size: 20px; display: none;">
+        @ViewBag.ErrorMessage
+    </div>
 </div>
 <Hr />
 <form class="row" action="@Url.Action("Submit_Edit_Student_Infor", "HomeAdmin", new { area = "Admin" })" method="post" id="inputForm">
@@ -20,11 +25,7 @@
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Ngày sinh:</label>
-        <input type="text" class="form-control" id="tenhv" placeholder="Tên" name="NgaySinh" value="@Model.Ngay_sinh_formatted">
-    </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Cập nhật ngày sinh:</label>
-        <input type="date" class="form-control" id="ngaysinh" name="NgaySinhNew" />
+        <input type="date" class="form-control" id="ngaysinh" name="NgaySinh" value="@Model.Ngay_sinh.ToString("yyyy-MM-dd")"/>
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="" class="form-label">Sđt:</label>
@@ -55,17 +56,13 @@
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label>Thay đổi lớp học:</label>
-        <select class="form-select mt-2" id="sellophv" name="ThemLop">
+        <select class="form-select mt-2" id="sellophv" name="Lop">
             <option value="">Nhấn để chọn</option>
             @foreach (var lop in db.LopHocs.ToList())
             {
-                <option value="@lop.Ma_lop">@lop.Ten_lop_hoc</option>
+                <option value="@lop.Ma_lop" @(lop.Ma_lop == Model.Lop_hoc_tham_gia ? "selected" : "")>@lop.Ten_lop_hoc</option>
             }
         </select>
-    </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
-        <label for="" class="form-label">Lớp học hiện tại:</label>
-        <input type="text" class="form-control" id="lop" placeholder="lớp" name="Lop" value="@Model.Lop_hoc_tham_gia">
     </div>
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label>Trạng thái học phí:</label>
@@ -105,5 +102,19 @@
                 }
             });
         });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        // Kiểm tra xem có thông báo lỗi không
+        var errorMessage = "@ViewBag.ErrorMessage";
+        if (errorMessage) {
+
+            $(".alert").show();
+
+            setTimeout(function () {
+                $(".alert").hide();
+            }, 5000);
+        }
     });
 </script>

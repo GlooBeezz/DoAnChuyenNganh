@@ -16,12 +16,15 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            background-color: #f8f9fa;
         }
 
-        .fixed-top {
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
+        header {
+            background-color: #343a40; 
+            color: #ffffff; 
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .content {
@@ -29,56 +32,43 @@
             padding: 20px;
         }
 
-        .fixed-bottom {
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
             width: 100%;
-            margin-top: auto;
-            z-index: 1000;
         }
     </style>
 </head>
-<body class="bg-light">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+<body>
+
+    <header>
         <div class="container-fluid">
-            <a href="@Url.Action("Index", "HomeTeacher", new { area = "Teacher" })" class="navbar-brand">
-                <i class="fas fa-chalkboard-teacher"></i>
+            <h1>
+                <a href="@Url.Action("Index", "HomeTeacher")" class="fas fa-chalkboard-teacher"></a>
                 Quản lý giáo viên
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
-                <div class="container-fluid">
-                    <a href="@Url.Action("Index", "HomeTeacher", new { area = "Teacher" })" class="navbar-brand" href="#">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                        Quản lý giáo viên
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Tên người dùng
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Tài khoản</a>
-                            <a class="dropdown-item" href="#">Chỉnh sửa thông tin</a>
-                            <a class="dropdown-item" href="@Url.Action("Index","Home",new {area = ""})" >Đăng xuất</a>
-                        </div>
-                    </div>
+            </h1>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Tên người dùng
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Tài khoản</a>
+                    <a class="dropdown-item" href="#">Chỉnh sửa thông tin</a>
+                    <a class="dropdown-item" href="@Url.Action("Index","Home",new {area = ""})">Đăng xuất</a>
                 </div>
-            </nav>
-
-
+            </div>
         </div>
-    </nav>
+    </header>
 
     <div class="container mt-5 content">
         @RenderBody()
     </div>
 
-    <footer class="bg-dark text-light text-center py-3 fixed-bottom">
-        <div class="container">
-            <p class="mb-0">&copy; 2023 Teacher Hub. All rights reserved.</p>
+    <footer>
+        <div class="container-fluid">
+            <p style="font-size:25px">&copy;Quản lý trung tâm dạy đàn</p>
         </div>
     </footer>
 

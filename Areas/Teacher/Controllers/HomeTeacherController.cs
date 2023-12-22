@@ -12,7 +12,6 @@ namespace web2.Areas.Teacher.Controllers
     public class HomeTeacherController : Controller
     {
         private quanLyTrungTamDayDanEntities db = new quanLyTrungTamDayDanEntities();
-
         public ActionResult Manage_Document()
         {
             var documents = db.TaiLieux.ToList();
@@ -29,25 +28,26 @@ namespace web2.Areas.Teacher.Controllers
                 // Pass the data to the view
                 return View(classes);
             }
-        }
+        } 
         public ActionResult Manage_Schedule()
         {
-            return View();
+            try
+            {
+                // Retrieve all schedules
+                var schedules = db.ThoiGianBieux.ToList();
+                return View(schedules);
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception
+                return RedirectToAction("Index"); // Redirect to another action or display an error page
+            }
         }
         public ActionResult Index()
         {
-            using (var context = new quanLyTrungTamDayDanEntities())
-            {
-                // Lấy danh sách tất cả giáo viên
-                var allTeachers = context.GiaoViens.ToList();
+            selectedTeacher = GetRandomTeacher();
+            return View(selectedTeacher);
 
-                // Chọn một giáo viên ngẫu nhiên
-                var randomTeacher = allTeachers[new Random().Next(allTeachers.Count)];
-
-                // Truyền thông tin giáo viên đến view
-                return View(randomTeacher);
-
-            }
         }
         public ActionResult AddDocument()
         {
@@ -58,17 +58,17 @@ namespace web2.Areas.Teacher.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ProcessAddDocument(TaiLieu newDocument)
         {
-                if (!ModelState.IsValid)
-                {
-                    return View("AddDocument", newDocument);
-                }
-                try
-                {
-                    db.TaiLieux.Add(newDocument);
-                    db.SaveChanges();
+            if (!ModelState.IsValid)
+            {
+                return View("AddDocument", newDocument);
+            }
+            try
+            {
+                db.TaiLieux.Add(newDocument);
+                db.SaveChanges();
 
-                    return RedirectToAction("Manage_Document");
-                }
+                return RedirectToAction("Manage_Document");
+            }
             catch (DbEntityValidationException ex)
             {
                 foreach (var validationErrors in ex.EntityValidationErrors)
@@ -176,6 +176,34 @@ namespace web2.Areas.Teacher.Controllers
             {
                 // Log or handle the exception
                 return RedirectToAction("Manage_Document");
+            }
+        }
+        private GiaoVien selectedTeacher;
+        public ActionResult MyClass(string teacherId)
+        {
+            var teacher = string.IsNullOrEmpty(teacherId) ? GetRandomTeacher() : db.GiaoViens.Find(teacherId);
+
+            if (teacher == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var classesTaughtByTeacher = db.LopHocs
+                .Include(c => c.HocViens)
+                .Where(c => c.Ma_lop == teacher.Ma_lop_giang_day)
+                .ToList();
+            return View(classesTaughtByTeacher);
+        }
+
+
+
+
+        private GiaoVien GetRandomTeacher()
+        {
+            using (var context = new quanLyTrungTamDayDanEntities())
+            {
+                var allTeachers = context.GiaoViens.ToList();
+                var randomTeacher = allTeachers[new Random().Next(allTeachers.Count)];
+                return randomTeacher;
             }
         }
     }

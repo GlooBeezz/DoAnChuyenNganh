@@ -29,6 +29,7 @@ namespace web2.Areas.Admin.Data
         {
             dsKH.Add(khoaHoc);
         }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

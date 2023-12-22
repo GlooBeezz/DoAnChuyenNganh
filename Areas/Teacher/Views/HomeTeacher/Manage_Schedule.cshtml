@@ -3,44 +3,95 @@
     Layout = "~/Areas/Teacher/Views/Shared/_LayoutPageTeacher.cshtml";
 }
 
-<h2 class="mb-4">Manage Schedule</h2>
+@model List<web2.Models.ThoiGianBieu>
 
-<div class="row">
-    <div class="col-md-12">
-        <h3>Class Timetable</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thời Khóa Biểu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
-        <table class="table table-bordered">
+        .container1 {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Thời Khóa Biểu</h1>
+    </header>
+
+    <div class="container1">
+        <table>
             <thead>
                 <tr>
-                    <th>Time</th>
+                    <th>Date/Time</th>
+                    <th>Sunday</th>
                     <th>Monday</th>
                     <th>Tuesday</th>
                     <th>Wednesday</th>
                     <th>Thursday</th>
                     <th>Friday</th>
                     <th>Saturday</th>
-                    <th>Sunday</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach (var timeSlot in Model.OrderBy(g => g.Thoi_gian_bat_dau))
+                {
+                    <tr>
+                        <td>
+                            @timeSlot.Thoi_gian_bat_dau.ToString("hh\\:mm") - @timeSlot.Thoi_gian_ket_thuc.ToString("hh\\:mm")
+                        </td>
 
-                <tr>
-                    <td>8:AM</td>
-                    <td>Class A</td>
-                    <td>Class B</td>
-                    <td>Class C</td>
-                    <td>Class D</td>
-                    <td>Class E</td>
-                    <td>Class F</td>
-                    <td>Class G</td>
-                </tr>
+                        @foreach (var dayOfWeek in Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>())
+                        {
+                            var previousDay = dayOfWeek == 0 ? DayOfWeek.Saturday : dayOfWeek - 1;
+                            var currentDay = dayOfWeek;
 
+                            var classForTimeAndDay = Model.FirstOrDefault(c => c.Hoc_vao_thu?.ToLower() == currentDay.ToString().ToLower() &&
+                                                                                c.Thoi_gian_bat_dau == timeSlot.Thoi_gian_bat_dau);
+                            <td>
+                                @if (classForTimeAndDay != null)
+                                {
+                                    <strong>@classForTimeAndDay.Ma_thoi_gian_bieu</strong><br />
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <a href="@Url.Action("Index", "HomeTeacher")" class="btn btn-primary">Trở lại</a>
-        </div>
-    </div>
-</div>
+    <a style="text-align:right" href="@Url.Action("Index", "HomeTeacher")" class="btn btn-primary ml-auto">Trở lại quản lý giáo viên</a>
+</body>
+</html>

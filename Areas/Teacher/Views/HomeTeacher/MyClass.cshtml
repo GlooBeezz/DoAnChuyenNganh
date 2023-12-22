@@ -1,5 +1,104 @@
-﻿@{
+﻿@model List<web2.Models.LopHoc>
+
+@{
+    ViewBag.Title = "MyClass";
     Layout = "~/Areas/Teacher/Views/Shared/_LayoutPageTeacher.cshtml";
 }
 
+<script>
+    function toggleStudents(id) {
+        var studentsDiv = document.getElementById("studentsCollapse-" + id);
+        studentsDiv.style.display = (studentsDiv.style.display === 'none' || studentsDiv.style.display === '') ? 'block' : 'none';
+    }
+</script>
 
+<div class="row">
+    <div class="col-md-12">
+        <h2>Manage Classes</h2>
+
+        @if (Model != null && Model.Any())
+        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Mã lớp</th>
+                        <th>Mã khóa học</th>
+                        <th>Tên lớp học</th>
+                        <th>Phòng học</th>
+                        <th>Số lượng học viênt</th>
+                        <th>Mô tả</th>
+                        <th>Mã thời khóa biểu</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var lopHoc in Model)
+                    {
+                        <tr>
+                            <td>@lopHoc.Ma_lop</td>
+                            <td>@lopHoc.Ma_khoa_hoc</td>
+                            <td>@lopHoc.Ten_lop_hoc</td>
+                            <td>@lopHoc.Phong_hoc</td>
+                            <td>@lopHoc.So_luong_hoc_vien</td>
+                            <td>@lopHoc.Mo_ta</td>
+                            <td>@lopHoc.Ma_thoi_gian_bieu</td>
+                            <td>
+                                @if (lopHoc.HocViens != null && lopHoc.HocViens.Any())
+                                {
+                                    <button class="btn btn-info" onclick="toggleStudents('@lopHoc.Ma_lop')">
+                                        Danh sách học sinh
+                                    </button>
+                                }
+                                else
+                                {
+                                    <p>Không có học sinh.</p>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="7">
+                                <div id="studentsCollapse-@lopHoc.Ma_lop" style="display: none;">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Mã học sinh</th>
+                                                <th>Họ và tên</th>
+                                                <th>Ngày sinh</th>
+                                                <th>Số điện thoại</th>
+                                                <th>Email</th>
+                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var hocVien in lopHoc.HocViens)
+                                            {
+                                                <tr>
+                                                    <td>@hocVien.Ma_hoc_vien</td>
+                                                    <td>@hocVien.NguoiDung.Ho_va_ten</td>
+                                                    <td>@hocVien.Ngay_sinh</td>
+                                                    <td>@hocVien.NguoiDung.Sdt</td>
+                                                    <td>@hocVien.NguoiDung.Email</td>
+                                                   
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No classes available.</p>
+        }
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="@Url.Action("Manage_Classes", "HomeTeacher")" class="btn btn-primary">Trở lại</a>
+            </div>
+        </div>
+    </div>
+</div>
