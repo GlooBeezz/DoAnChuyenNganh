@@ -46,57 +46,53 @@ namespace web2.Controllers
         [HttpPost]
         public ActionResult Check_Dangnhap(String user, String pass)
         {
-            System.Diagnostics.Debug.WriteLine(user);
-            System.Diagnostics.Debug.WriteLine(pass);
             var dsnguoidung = new DanhSachNguoiDung().listNguoiDung;
 
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DBHieu"].ConnectionString)) 
             {
                 conn.Open();
-                try
+
+                // Thực hiện truy vấn kiểm tra mật khẩu, tài khoản và phân quyền
+                using (SqlCommand cmd = new SqlCommand("SELECT Tai_khoan, Mat_khau, Phan_quyen FROM NguoiDung WHERE Tai_khoan = @Tai_khoan AND Mat_khau = @Mat_khau", conn))
                 {
-                    using (SqlCommand cmd = new SqlCommand("SELECT Tai_khoan, Mat_khau, Phan_quyen FROM NguoiDung WHERE Tai_khoan = @Tai_khoan AND Mat_khau = @Mat_khau", conn))
+                    cmd.Parameters.AddWithValue("@Tai_khoan", user);
+                    cmd.Parameters.AddWithValue("@Mat_khau", pass);
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-                        cmd.Parameters.AddWithValue("@Tai_khoan", user);
-                        cmd.Parameters.AddWithValue("@Mat_khau", pass);
-
-                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        if (dr.Read())
                         {
-                            if (dr.Read())
+                            // Tài khoản và mật khẩu đúng
+                            bool phanQuyen = (bool)dr["Phan_quyen"];
+
+                            // Thực hiện kiểm tra phân quyền và trả về giá trị tương ứng
+                            if (phanQuyen)
                             {
-                                // Tài khoản và mật khẩu đúng
-                                bool phanQuyen = (bool)dr["Phan_quyen"];
-
-                                // Thực hiện kiểm tra phân quyền và trả về giá trị tương ứng
-                                if (phanQuyen)
-                                {
-                                    // Phân quyền là true, đi tới học viên
-                                    return View("Index");
-
-                                }
-                                else
-                                {
-                                    // Phân quyền là false đi tới giao viên
-                                    return RedirectToAction("Index","HomeTeacher", new { area = "Teacher" });
-                                }
+                                // Phân quyền là true, đi tới học viên
+                                return RedirectToAction("Index", "HomeAdmin");
+                               
                             }
                             else
                             {
-                                // Tài khoản hoặc mật khẩu không đúng
-
-                                return Content("Sai Mat khau or tai khoan!!!!"); // Trả về giá trị 0 hoặc thực hiện xử lý khác tùy ý
+                                // Phân quyền là false đi tới giao viên
+                                return Content("2"); 
                             }
                         }
+                        else
+                        {
+                            // Tài khoản hoặc mật khẩu không đúng
+                            
+                            return Content("Sai Mat khau or tai khoan!!!!"); // Trả về giá trị 0 hoặc thực hiện xử lý khác tùy ý
+                        }
                     }
-
                 }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
-                    return View("Login");
-                }
-                // Thực hiện truy vấn kiểm tra mật khẩu, tài khoản và phân quyền
             }
+
+
+
+
+
+                return View("Login");
 
         }
 
