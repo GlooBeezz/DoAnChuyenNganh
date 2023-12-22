@@ -7,17 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang quản lý Phố Thị Music</title>
     <link rel="stylesheet" href="~/Areas/Admin/Style/adminSite.css" />
-    <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="...">
+    <script>
+        var manageStudentUrl = '@Url.Action("Manage_Student", "HomeAdmin", new { area = "Admin" })';
+        var manageTeacherUrl = '@Url.Action("Manage_Teacher", "HomeAdmin", new { area = "Admin" })';
+        // Thêm các biến khác nếu cần
+    </script>
+
 </head>
 <body>
     <div class="wrapper ">
         <!-- Sidebar -->
-        <aside id="sidebar"class="collapsed" style="margin-top:60px;position:fixed;height:93%">
+        <aside id="sidebar" class="collapsed" style="margin-top:60px;position:fixed;height:93%">
             <div class="h-100 bg-primary">
                 <div class="sidebar-logo">
-                    <a href="~/Areas/Admin/Views/HomeAdmin/Index.cshtml">Phố thị Music <br /><p>Trung tâm quản lý</p></a>
+                    <a href="@Url.Action("Index", "HomeAdmin", new { area = "Admin" })">Phố thị Music <br /><p>Trung tâm quản lý</p></a>
                 </div>
                 <!-- Sidebar Navigation -->
                 <ul class="sidebar-nav">
@@ -25,7 +29,7 @@
                         Các chức năng
                     </li>
                     <li class="sidebar-item">
-                        <a href="~/Areas/Admin/Views/HomeAdmin/Index.cshtml" class="sidebar-link">
+                        <a href="@Url.Action("Index", "HomeAdmin", new { area = "Admin" })" class="sidebar-link">
                             <i class="fa-solid fa-house pe-2"></i>
                             Trang chủ
                         </a>
@@ -49,6 +53,9 @@
                             <li class="sidebar-item">
                                 <a href="@Url.Action("Manage_Course", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Khoá học</a>
                             </li>
+                            <li class="sidebar-item">
+                                <a href="@Url.Action("Manage_Invoice", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Hoá đơn</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="sidebar-item">
@@ -59,7 +66,7 @@
                         </a>
                         <ul id="dashboard" class="sidebar-dropdown list-unstyled collapse bg-white" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link text-black">Các biểu đồ phân tích</a>
+                                <a href="@Url.Action("Send_Notification", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Các biểu đồ phân tích</a>
                             </li>
                             <li class="sidebar-item">
                                 <a href="#" class="sidebar-link text-black">Các biểu đồ doanh thu</a>
@@ -67,35 +74,17 @@
                         </ul>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#auth"
-                           aria-expanded="false" aria-controls="auth">
-                            <i class="fa-regular fa-user pe-2"></i>
-                            Tài khoản
-                        </a>
-                        <ul id="auth" class="sidebar-dropdown list-unstyled collapse bg-white" data-bs-parent="#sidebar">
-                            <li class="sidebar-item">
-                                <a href="#" class="sidebar-link text-black">Tạo tài khoản</a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="#" class="sidebar-link text-black">Chỉnh sửa tài khoản</a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="#" class="sidebar-link text-danger">Xoá tài khoản </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#notification"
                            aria-expanded="false" aria-controls="notification">
                             <i class="fa-solid fa-sliders pe-2"></i>
-                            Thông báo
+                            Các chức năng khác
                         </a>
                         <ul id="notification" class="sidebar-dropdown list-unstyled collapse bg-white" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link text-black">Tạo thông báo</a>
+                                <a href="@Url.Action("Send_Notification", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Tạo thông báo</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link text-black">Chỉnh sửa thông báo</a>
+                                <a href="@Url.Action("Manage_Schedule", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Thời khoá biểu</a>
                             </li>
                         </ul>
                     </li>
@@ -103,7 +92,7 @@
             </div>
         </aside>
         <!-- Main Component -->
-        <div class="main ">
+        <div class="main">
             <nav class="navbar navbar-expand px-3 border-bottom bg-primary fixed-top">
                 <!-- Button for sidebar toggle -->
                 <div class="container-fluid">
@@ -112,22 +101,15 @@
                     </button>
                     <span style="width:50%;min-width:0"></span>
                     <div class="input-group input-group-sm ps-5 pe-5">
-                        <input class="form-control input-sm" type="text" placeholder="Nhập thông tin tìm kiếm">
-                        <button class="btn btn-success" type="submit">Tìm</button>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="search-input" placeholder="Nhập thông tin tìm kiếm">
+                            <div class="dropdown">
+                                <ul class="dropdown-menu" id="search-results"></ul>
+                            </div>
+                        </div>
                     </div>
-                    @*<div class="nav-item dropdown ">
-                        <a class="navbar-brand nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown">
-                            <img src="~/source/logo.jpg" alt="Avatar Logo" style="width:40px;" class="rounded-pill">
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><h5 class="dropdown-item">Tên người dùng</h5></li>
-                            <li><a class="dropdown-item" href="#">Chỉnh sửa thông tin</a></li>
-                            <li><a class="dropdown-item text-danger" href="#">Đăng xuất</a></li>
-                        </ul>
-                    </div>*@
                     <div class="btn-group">
-                        <button type="button" class="btn  dropdown-toggle text-white user-profile-dropdown" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton">
+                        <button type="button" class="btn  dropdown-toggle text-white user-profile-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton">
                             <img src="~/source/logo.jpg" alt="Profile Picture" class="rounded-circle" width="30" height="30">
                             Tên người dùng
                         </button>
@@ -135,10 +117,10 @@
                             <a class="dropdown-item" href="#">Tài khoản</a>
                             <a class="dropdown-item" href="#">Chỉnh sửa thông tin</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="#">Đăng xuất</a>
+                            <a class="dropdown-item text-danger" href="~/Views/Home/Index.cshtml">Đăng xuất</a>
                         </div>
                     </div>
-                </div> 
+                </div>
             </nav>
             <main class="content px-3 py-2" style="margin-top:60px; height:100%">
                 <div class="container-fluid">
@@ -148,11 +130,50 @@
                 </div>
             </main>
         </div>
+
     </div>
+
+    <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="..." crossorigin="anonymous"></script>
     <script src="~/Areas/Admin/Scripts/adminSite.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="..." crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            var functions = [
+                { name: 'Quản lý học viên', link: manageStudentUrl },
+                { name: 'Quản lý giáo viên', link: manageTeacherUrl },
+                // Thêm các chức năng khác vào đây
+            ];
+
+            $('#search-input').on('input', function () {
+                var keyword = $(this).val().toLowerCase();
+                var searchResults = $('#search-results');
+                searchResults.empty();
+
+                functions.forEach(function (func) {
+                    if (func.name.toLowerCase().includes(keyword)) {
+                        var resultItem = $('<li>', {
+                            class: 'dropdown-item',
+                            html: $('<a>', {
+                                href: func.link,
+                                text: func.name
+                            })
+                        });
+
+                        searchResults.append(resultItem);
+                    }
+                });
+
+                if (searchResults.children().length > 0) {
+                    searchResults.parent().addClass('show');
+                } else {
+                    searchResults.parent().removeClass('show');
+                }
+            });
+        });
+
+    </script>
+
 </body>
 </html>
 

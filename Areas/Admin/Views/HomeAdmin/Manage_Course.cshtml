@@ -28,6 +28,9 @@
         <div class="alert alert-danger text-center" role="alert" style="font-size: 20px; display: none;">
             @ViewBag.ErrorMessage
         </div>
+        <div class="alert alert-danger text-center" role="alert" style="font-size: 20px; display: none;">
+            @TempData["ErrorMessage"]
+        </div>
     </div>
     <div class="row">
         <table class="table " style="text-align:center">
@@ -44,12 +47,9 @@
             </thead>
             <tbody>
                 @{
-<<<<<<<<< Temporary merge branch 1
-                    if(Model != null){
-=========
                     if (Model != null)
                     {
->>>>>>>>> Temporary merge branch 2
+
                         foreach (var item in Model)
                         {
                             <tr>
@@ -67,16 +67,11 @@
                                     </form>
                                 </td>
                             </tr>
+
                             
                         }
-<<<<<<<<< Temporary merge branch 1
-                    }else{
-                        <h1>eeeee</h1>
-=========
->>>>>>>>> Temporary merge branch 2
                     }
                 }
-
             </tbody>
         </table>
 
@@ -89,7 +84,16 @@
         // Kiểm tra xem có thông báo lỗi không
         var errorMessage = "@ViewBag.ErrorMessage";
         if (errorMessage) {
-            
+
+            $(".alert").show();
+
+            setTimeout(function () {
+                $(".alert").hide();
+            }, 5000);
+        }
+        var errorMessage1 = "@TempData["ErrorMessage"]";
+        if (errorMessage1) {
+
             $(".alert").show();
 
             setTimeout(function () {
@@ -97,6 +101,7 @@
             }, 5000);
         }
     });
+
     var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
     var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new bootstrap.Popover(popoverTriggerEl);

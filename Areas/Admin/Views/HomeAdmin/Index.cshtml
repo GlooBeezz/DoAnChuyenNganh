@@ -1,44 +1,21 @@
-﻿
+﻿@model web2.Areas.Admin.Data.ChartView
 @{
     ViewBag.Title = "Trang chủ";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
 }
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
-</script>
+
 <div class="container">
     <div class="row">
         <div class="col-3"></div>
-        <H2 class="col-6 justify-content-center">Bảng thống kê  </H2>
+        <H2 class="col-6 " style="text-align:center">Bảng thống kê  </H2>
         <div class="col-3"></div>
     </div>
     <div class="row">
         <div class="col-sm-2"></div>
         <div class="col-sm-8">
-            <canvas id="incomeChart" ></canvas>
-            <script>
-                const xValues = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
-                const yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15,20];
-
-                new Chart("incomeChart", {
-                    type: "bar",
-                    data: {
-                        labels: xValues,
-                        datasets: [{
-                            fill: false,
-                            lineTension: 0,
-                            backgroundColor: "rgba(0,0,255,1.0)",
-                            borderColor: "rgba(0,0,255,0.1)",
-                            data: yValues
-                        }]
-                    },
-                    options: {
-                        legend: { display: false },
-                        scales: {
-                            yAxes: [{ ticks: { min: 6, max: 16 } }],
-                        }
-                    }
-                });
-            </script>
+            <div>
+                <canvas id="myChart"></canvas>
+            </div>
         </div>
         <div class="col-sm-2"></div>
     </div>
@@ -46,16 +23,8 @@
         <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
             <div class="card">
                 <div class="card-body d-grid">
-                    <h4 class="card-title">Xem các biểu đồ</h4>
-                    <a href="#" class="btn btn-primary btn-block">Xem</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
-            <div class="card">
-                <div class="card-body d-grid">
                     <h4 class="card-title">Quản lý giáo viên</h4>
-                    <a href="#" class="btn btn-primary btn-block">Xem</a>
+                    <a href="@Url.Action("Manage_Teacher", "HomeAdmin", new { area = "Admin" })" class="btn btn-primary btn-block">Xem</a>
                 </div>
             </div>
         </div>
@@ -63,7 +32,7 @@
             <div class="card">
                 <div class="card-body d-grid">
                     <h4 class="card-title">Quản lý học viên</h4>
-                    <a href="#" class="btn btn-primary btn-block">Xem</a>
+                    <a href="@Url.Action("Manage_Student", "HomeAdmin", new { area = "Admin" })" class="btn btn-primary btn-block">Xem</a>
                 </div>
             </div>
         </div>
@@ -71,7 +40,7 @@
             <div class="card">
                 <div class="card-body d-grid">
                     <h4 class="card-title">Quản lý lớp học</h4>
-                    <a href="#" class="btn btn-primary btn-block">Xem</a>
+                    <a href="@Url.Action("Manage_Classes", "HomeAdmin", new { area = "Admin" })" class="btn btn-primary btn-block">Xem</a>
                 </div>
             </div>
         </div>
@@ -79,41 +48,78 @@
             <div class="card">
                 <div class="card-body d-grid">
                     <h4 class="card-title">Quản lý Khoá học</h4>
-                    <a href="#" class="btn btn-primary btn-block">Xem</a>
+                    <a href="@Url.Action("Manage_Course", "HomeAdmin", new { area = "Admin" })" class="btn btn-primary btn-block">Xem</a>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
             <div class="card">
                 <div class="card-body d-grid">
-                    <h4 class="card-title">Tạo tài khoản cho người dùng mới</h4>
-                    <a href="#" class="btn btn-primary btn-block">Xem</a>
+                    <h4 class="card-title">Gửi thông báo qua mail</h4>
+                    <a href="@Url.Action("Send_Notification", "HomeAdmin", new { area = "Admin" })" class="btn btn-primary btn-block">Xem</a>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
             <div class="card">
                 <div class="card-body d-grid">
-                    <h4 class="card-title">Xoá tài khoản của người dùng</h4>
-                    <a href="#" class="btn btn-primary btn-block">Xem</a>
+                    <h4 class="card-title">Quản lý hoá đơn</h4>
+                    <a href="@Url.Action("Manage_Invoice", "HomeAdmin", new { area = "Admin" })" class="btn btn-primary btn-block">Xem</a>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
             <div class="card">
                 <div class="card-body d-grid">
-                    <h4 class="card-title">Tạo thông báo</h4>
-                    <a href="#" class="btn btn-primary btn-block">Xem</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3 pt-5">
-            <div class="card">
-                <div class="card-body d-grid">
-                    <h4 class="card-title">Chỉnh sửa thông báo</h4>
-                    <a href="#" class="btn btn-primary btn-block">Xem</a>
+                    <h4 class="card-title">Xem thời khoá biểu</h4>
+                    <a href="@Url.Action("Manage_Schedule", "HomeAdmin", new { area = "Admin" })" class="btn btn-primary btn-block">Xem</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script>
+      var ctx = document.getElementById('myChart').getContext('2d');
+    var minValue = 0;  
+    var maxValue = Math.max(@Model.NumberOfStudents, @Model.NumberOfTeachers, @Model.NumberOfCourses, @Model.NumberOfClasses) + 1;
+
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Students', 'Teachers', 'Courses', 'Classes'],
+            datasets: [{
+                label: 'Number of Entities',
+                data: [@Model.NumberOfStudents, @Model.NumberOfTeachers, @Model.NumberOfCourses, @Model.NumberOfClasses],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    beginAtZero: true,
+                    max: maxValue,  
+                    ticks: {
+                        stepSize: 1 
+                    }
+                }
+            }
+        }
+    });
+
+</script>

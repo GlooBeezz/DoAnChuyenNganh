@@ -12,7 +12,7 @@ namespace web2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DangKyHoc
+    public partial class DangKyHoc:HoaDon
     {
         public string Ma_dang_ky { get; set; }
         public string Ma_hoc_vien { get; set; }

@@ -12,7 +12,7 @@ namespace web2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class LopHoc
+    public partial class LopHoc:ThoiGianBieu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LopHoc()
