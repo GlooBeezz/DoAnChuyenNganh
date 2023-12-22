@@ -4,7 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Active = "home";
 }
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 <script>
     $(document).ready(function () {
         $("#customButtonStudy").click(function () {
@@ -12,13 +15,13 @@
         });
     });
 </script>
-<<<<<<< Updated upstream
+
 <div class="bg-white ">
     @*<h2 class="text-primary">Phố Thị Music - Nơi tài năng toả sáng </h2>
         <br />
         <h4 class="text-warning">
             Kính gửi mọi người yêu nghệ thuật,
-=======
+
 <style>
     body{
         margin-top:10px;
@@ -72,11 +75,10 @@
     @* ảnh tự chuyển động *@
     <div class="bg-white " style="height:600px;width:100%">
         @*<h2 class="text-primary">Phố Thị Music - Nơi tài năng toả sáng </h2>
->>>>>>> Stashed changes
+
             <br />
             Chúng ta đang mở cửa cho một cuộc phiêu lưu sáng tạo đầy thú vị và cơ hội tham gia vào một khoá học nghệ thuật đặc biệt. Đây là cơ hội để bạn thể hiện tài năng, phát triển kỹ năng và khám phá bản thân qua nghệ thuật.
 
-<<<<<<< Updated upstream
         </h4>*@
     <div class="row row-cols-2">
         <div class="col-sm-8">
@@ -92,16 +94,6 @@
                         chúng tôi tự tin có thể cam kết chất lượng đầu ra đào tạo cho học viên, luôn tạo điều kiện để học viên có thể thoả sức
                         sáng tạo và cháy hết mình với âm nhạc!
                     </p>
-=======
-            </h4>*@
-        
-            <div class="row row-cols-2">
-                <div class="col-sm-8">
-                    <img src="~/source/maxresdefault.jpg" class="img-fluid mx-auto d-block" />
-                </div>
-                <div class="col-sm-4">
-                    <h1 class="display-2">Phố Thị Music</h1>
->>>>>>> Stashed changes
                     <div class="row-cols-sm-auto">
                         <div class="col-sm-8"></div>
                         <div class="col-sm-4">
@@ -109,24 +101,157 @@
                                 <button class="btn btn-outline-success btn-lg" id="customButtonStudy">Bắt đầu nào!</button>
                                 <span style="display:none">@Html.ActionLink("Go to page!", "Study", "Home", null, new { id = "actionStudyLink" })</span>
                             </div>
+
+<head>
+    <style>
+        body {
+            margin-top: 10px;
+            background: url("~/source/section5a.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+
+        .sec {
+            min-height: auto;
+            min-width: auto;
+        }
+
+        .section1 {
+            height: 500px;
+            z-index: 1;
+            background-position: 50% 50%;
+            display: block;
+            position: relative;
+        }
+
+        .section2 {
+            height: 150px;
+            width: auto;
+        }
+
+        .sec1-left {
+            max-width: 50%;
+            padding: 0 10px 20px 10px;
+        }
+
+        .sec1-right {
+            position: relative;
+            display: block;
+        }
+
+        .section3 {
+            height: 350px;
+        }
+
+        .section4 {
+            height: 650px;
+        }
+
+        .sec section5 {
+            height: 350px;
+        }
+
+        .sec5-left {
+            min-height: auto;
+            min-width: auto;
+            max-width: 40%;
+            height: 350px;
+        }
+
+
+        .sec5-right {
+            min-height: auto;
+            min-width: auto;
+            max-width: 60%;
+        }
+
+        .section6 {
+            height: 150px;
+        }
+    </style>
+</head>
+
+<body style="max-width:1300px">
+    @* ảnh tự chuyển động *@
+
+    <div class="bg-white " style="height:600px;width:100%">
+        
+
+    </div>
+
+    <div class="sec section1 container" style="">
+        <div class="row ">
+            <div class="col-6 sec1-left">
+                ben a
+            </div>
+            <div class="col-6 sec1-right">  
+                ben b
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="sec section2 container  ">
+
+        <div style="display: flex; align-items: center; width:300px">
+            <button class="btn btn-outline-success btn-lg" id="customButtonStudy">Bắt đầu nào!</button>
+            <span style="display:none">@Html.ActionLink("Go to page!", "Study", "Home", null, new { id = "actionStudyLink" })</span>
+        </div>
+
+    </div>
+
+    @* nói về giá trị mang lại của trung tâm *@
+    <div class="sec section3">
+
+    </div>
+
+    @* chương trình đào tạo của trung tâm *@
+    <div class="sec section4">
+
+
+    </div>
+
+    @* nhận xét từ ph *@
+    <div class="sec section5 container">
+        <div class="row">
+            <div class="col-4 sec5-left">
+                <img src="~/source/section5a.png" class="img-thumbnail" style="border:none" />
+            </div>
+            <div class="col-8 sec5-right">
+                <div style="height:40px"></div>
+                <h3 class="text-center fw-bold"> <span style="color:black">Cảm Nhận</span> <span style="color:orangered">Của Phụ Huynh</span></h3>
+
+                <div class="CMT">
+                    <div class="Fly-cmt">
+                        <img class="rounded d-block mx-auto  " src="~/source/person1.png" style="position:center ;height:100px;width:100px;margin-top:20px" />
+                        <div style="margin-top:15px ; min-height:auto;min-height:auto;">
+                            <p class="text-center">aaaaa</p>
+
                         </div>
                     </div>
+
+                    <div class="Fly-cmt">
+                        <img class="rounded d-block mx-auto  " src="~/source/person1.png" style="position:center ;height:100px;width:100px;margin-top:20px" />
+                        <div style="margin-top:15px ; min-height:auto;min-height:auto;">
+                            <p class="text-center">bbbbbb</p>
+                        </div>
+                    </div>
+
+                    <div class="Fly-cmt">
+                        <img class="rounded d-block mx-auto  " src="~/source/person1.png" style="position:center ;height:100px;width:100px;margin-top:20px" />
+                        <div style="margin-top:15px ; min-height:auto;min-height:auto;">
+                            <p class="text-center">ccccccc</p>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
-<<<<<<< Updated upstream
-        </div>
-    </div>
-    <div class="row row-cols-2">
-        <div class="col-sm-4">
-            <h3>This is slide 1</h3>
-        </div>
-        <div class="col-sm-8">
-            <img src="~/source/1180w-463h_010920-riviera-art-gallery-780x440.jpg" class="img-fluid mx-auto d-block" />
-        </div>
-    </div>
-</div>
 
-=======
+        </div>
+
             <div class="row row-cols-2">
                 <div class="col-sm-4">
                     <h3>This is slide 1</h3>
@@ -135,7 +260,15 @@
                     <img src="~/source/1180w-463h_010920-riviera-art-gallery-780x440.jpg" class="img-fluid mx-auto d-block" />
                 </div>
             </div>
-        
+
+    </div>
+    @* kết thúc *@
+    <div class="sec section6 ">
+
+
+
+
+
 
 
     </div>
@@ -166,4 +299,27 @@
 
 
 </body>
->>>>>>> Stashed changes
+
+    @* file java cho file index *@
+    <script src="~/Views/Home/style/Index.js"></script>
+    <link rel="stylesheet" href="~/Views/Home/style/_Layout.css" />
+</body>
+
+@*
+    #box{
+      width:100px;
+      height:100px;
+      background: red;
+      transition: all 0.7s ease-in-out;
+    /*   -moz-transition:all  1s ;
+      -webkit-transition: all 1s ; */
+
+    }
+    #box:hover{
+      background: yellow;
+      transform: translateX(500px);
+
+    }
+
+*@
+

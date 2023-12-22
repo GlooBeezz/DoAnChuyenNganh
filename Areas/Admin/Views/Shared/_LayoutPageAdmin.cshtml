@@ -1,375 +1,179 @@
 ﻿<!DOCTYPE html>
-
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css' />
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    <!-- Thư viện JavaScript của Bootstrap 5 (bao gồm Popper.js) -->
-    <link rel="stylesheet" type="text/css" href="~/Content/adminSite.css" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="~/Scripts/adminSite.js"></script>
-</head>
+    <title>Trang quản lý Phố Thị Music</title>
+    <link rel="stylesheet" href="~/Areas/Admin/Style/adminSite.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="...">
+    <script>
+        var manageStudentUrl = '@Url.Action("Manage_Student", "HomeAdmin", new { area = "Admin" })';
+        var manageTeacherUrl = '@Url.Action("Manage_Teacher", "HomeAdmin", new { area = "Admin" })';
+        // Thêm các biến khác nếu cần
+    </script>
 
+</head>
 <body>
-    <!-- start: Sidebar -->
-    <div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
-        <div class="d-flex align-items-center p-3">
-            <a href="#" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">Foxy</a>
-            <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
-        </div>
-        <ul class="sidebar-menu p-3 m-0 mb-0">
-            <li class="sidebar-menu-item active">
-                <a href="#">
-                    <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
-                    Dashboard
-                </a>
-            </li>
-            <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Custom</li>
-            <li class="sidebar-menu-item has-dropdown">
-                <a href="#">
-                    <i class="ri-pages-line sidebar-menu-item-icon"></i>
-                    Pages
-                    <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-                </a>
-                <ul class="sidebar-dropdown-menu">
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            User Profile
+    <div class="wrapper ">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="collapsed" style="margin-top:60px;position:fixed;height:93%">
+            <div class="h-100 bg-primary">
+                <div class="sidebar-logo">
+                    <a href="@Url.Action("Index", "HomeAdmin", new { area = "Admin" })">Phố thị Music <br /><p>Trung tâm quản lý</p></a>
+                </div>
+                <!-- Sidebar Navigation -->
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">
+                        Các chức năng
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="@Url.Action("Index", "HomeAdmin", new { area = "Admin" })" class="sidebar-link">
+                            <i class="fa-solid fa-house pe-2"></i>
+                            Trang chủ
                         </a>
                     </li>
-                    <li class="sidebar-dropdown-menu-item has-dropdown">
-                        <a href="#">
-                            Blog
-                            <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#pages"
+                           aria-expanded="false" aria-controls="pages">
+                            <i class="fa-regular fa-folder pe-2"></i>
+                            Quản lí
                         </a>
-                        <ul class="sidebar-dropdown-menu">
-                            <li class="sidebar-dropdown-menu-item">
-                                <a href="#">
-                                    Home
-                                </a>
+                        <ul id="pages" class="sidebar-dropdown list-unstyled collapse bg-white" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="@Url.Action("Manage_Student", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Học viên</a>
                             </li>
-                            <li class="sidebar-dropdown-menu-item">
-                                <a href="#">
-                                    Post
-                                </a>
+                            <li class="sidebar-item">
+                                <a href="@Url.Action("Manage_Teacher", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Giáo viên</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="@Url.Action("Manage_Classes", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Lớp học</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="@Url.Action("Manage_Course", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Khoá học</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="@Url.Action("Manage_Invoice", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Hoá đơn</a>
                             </li>
                         </ul>
                     </li>
-                    <li class="sidebar-dropdown-menu-item has-dropdown">
-                        <a href="#">
-                            Email Template
-                            <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard"
+                           aria-expanded="false" aria-controls="dashboard">
+                            <i class="fa-solid fa-chart-simple pe-2"></i>
+                            Các biểu đồ
                         </a>
-                        <ul class="sidebar-dropdown-menu">
-                            <li class="sidebar-dropdown-menu-item">
-                                <a href="#">
-                                    Reset Password
-                                </a>
+                        <ul id="dashboard" class="sidebar-dropdown list-unstyled collapse bg-white" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="@Url.Action("Send_Notification", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Các biểu đồ phân tích</a>
                             </li>
-                            <li class="sidebar-dropdown-menu-item">
-                                <a href="#">
-                                    Changed Password
-                                </a>
-                            </li>
-                            <li class="sidebar-dropdown-menu-item">
-                                <a href="#">
-                                    Verify Email
-                                </a>
-                            </li>
-                            <li class="sidebar-dropdown-menu-item">
-                                <a href="#">
-                                    Invitation
-                                </a>
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link text-black">Các biểu đồ doanh thu</a>
                             </li>
                         </ul>
                     </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Pricing
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#notification"
+                           aria-expanded="false" aria-controls="notification">
+                            <i class="fa-solid fa-sliders pe-2"></i>
+                            Các chức năng khác
                         </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            About Us
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Contact Us
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Our Team
-                        </a>
+                        <ul id="notification" class="sidebar-dropdown list-unstyled collapse bg-white" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="@Url.Action("Send_Notification", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Tạo thông báo</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="@Url.Action("Manage_Schedule", "HomeAdmin", new { area = "Admin" })" class="sidebar-link text-black">Thời khoá biểu</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
-            </li>
-            <li class="sidebar-menu-item has-dropdown">
-                <a href="#">
-                    <i class="ri-user-line sidebar-menu-item-icon"></i>
-                    Authentication
-                    <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-                </a>
-                <ul class="sidebar-dropdown-menu">
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Login
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Registration
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Reset Password
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Change Password
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Confirm Password
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Deactivate Account
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sidebar-menu-item has-dropdown">
-                <a href="#">
-                    <i class="ri-window-line sidebar-menu-item-icon"></i>
-                    Widgets
-                    <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-                </a>
-                <ul class="sidebar-dropdown-menu">
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Charts
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Tables
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Apps</li>
-            <li class="sidebar-menu-item has-dropdown">
-                <a href="#">
-                    <i class="ri-shopping-cart-2-line sidebar-menu-item-icon"></i>
-                    eCommerce
-                    <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-                </a>
-                <ul class="sidebar-dropdown-menu">
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Shop
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Checkout
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Details
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
-                            Wishlist
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sidebar-menu-item">
-                <a href="#">
-                    <i class="ri-mail-line sidebar-menu-item-icon"></i>
-                    Email
-                </a>
-            </li>
-            <li class="sidebar-menu-item">
-                <a href="#">
-                    <i class="ri-calendar-line sidebar-menu-item-icon"></i>
-                    Calendar
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="sidebar-overlay"></div>
-    <!-- end: Sidebar -->
-    <!-- start: Main -->
-    <main class="bg-light">
-        <div class="p-2">
-            <!-- start: Navbar -->
-            <nav class="px-3 py-2 bg-white rounded shadow-sm">
-                <i class="ri-menu-line sidebar-toggle me-3 d-block d-md-none"></i>
-                <h5 class="fw-bold mb-0 me-auto">Dashboard</h5>
-                <div class="dropdown me-3 d-none d-sm-block">
-                    <div class="cursor-pointer dropdown-toggle navbar-link" data-bs-toggle="dropdown"
-                         aria-expanded="false">
-                        <i class="ri-notification-line"></i>
-                    </div>
-                    <div class="dropdown-menu fx-dropdown-menu">
-                        <h5 class="p-3 bg-indigo text-light">Notification</h5>
-                        <div class="list-group list-group-flush">
-                            <a href="#"
-                               class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                                <div class="me-auto">
-                                    <div class="fw-semibold">Subheading</div>
-                                    <span class="fs-7">Content for list item</span>
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </a>
-                            <a href="#"
-                               class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                                <div class="me-auto">
-                                    <div class="fw-semibold">Subheading</div>
-                                    <span class="fs-7">Content for list item</span>
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </a>
-                            <a href="#"
-                               class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                                <div class="me-auto">
-                                    <div class="fw-semibold">Subheading</div>
-                                    <span class="fs-7">Content for list item</span>
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </a>
-                            <a href="#"
-                               class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                                <div class="me-auto">
-                                    <div class="fw-semibold">Subheading</div>
-                                    <span class="fs-7">Content for list item</span>
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </a>
-                            <a href="#"
-                               class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                                <div class="me-auto">
-                                    <div class="fw-semibold">Subheading</div>
-                                    <span class="fs-7">Content for list item</span>
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </a>
+            </div>
+        </aside>
+        <!-- Main Component -->
+        <div class="main">
+            <nav class="navbar navbar-expand px-3 border-bottom bg-primary fixed-top">
+                <!-- Button for sidebar toggle -->
+                <div class="container-fluid">
+                    <button class="btn" type="button" data-bs-theme="dark">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <span style="width:50%;min-width:0"></span>
+                    <div class="input-group input-group-sm ps-5 pe-5">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="search-input" placeholder="Nhập thông tin tìm kiếm">
+                            <div class="dropdown">
+                                <ul class="dropdown-menu" id="search-results"></ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="dropdown">
-                    <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown"
-                         aria-expanded="false">
-                        <span class="me-2 d-none d-sm-block">John Doe</span>
-                        <img class="navbar-profile-image"
-                             src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                             alt="Image">
+                    <div class="btn-group">
+                        <button type="button" class="btn  dropdown-toggle text-white user-profile-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton">
+                            <img src="~/source/logo.jpg" alt="Profile Picture" class="rounded-circle" width="30" height="30">
+                            Tên người dùng
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Tài khoản</a>
+                            <a class="dropdown-item" href="#">Chỉnh sửa thông tin</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="~/Views/Home/Index.cshtml">Đăng xuất</a>
+                        </div>
                     </div>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
                 </div>
             </nav>
-            <!-- end: Navbar -->
-            <!-- start: Content -->
-            <div class="py-4">
-                <!-- start: Summary -->
-                <div class="row g-3">
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <a href="#"
-                           class="text-dark text-decoration-none bg-white p-3 rounded shadow-sm d-flex justify-content-between summary-primary">
-                            <div>
-                                <i class="ri-shopping-cart-2-line summary-icon bg-primary mb-2"></i>
-                                <div>Sales</div>
-                            </div>
-                            <h4>$435</h4>
-                        </a>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <a href="#"
-                           class="text-dark text-decoration-none bg-white p-3 rounded shadow-sm d-flex justify-content-between summary-indigo">
-                            <div>
-                                <i class="ri-shopping-cart-2-line summary-icon bg-indigo mb-2"></i>
-                                <div>Sales</div>
-                            </div>
-                            <h4>$435</h4>
-                        </a>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <a href="#"
-                           class="text-dark text-decoration-none bg-white p-3 rounded shadow-sm d-flex justify-content-between summary-success">
-                            <div>
-                                <i class="ri-shopping-cart-2-line summary-icon bg-success mb-2"></i>
-                                <div>Sales</div>
-                            </div>
-                            <h4>$435</h4>
-                        </a>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <a href="#"
-                           class="text-dark text-decoration-none bg-white p-3 rounded shadow-sm d-flex justify-content-between summary-danger">
-                            <div>
-                                <i class="ri-shopping-cart-2-line summary-icon bg-danger mb-2"></i>
-                                <div>Sales</div>
-                            </div>
-                            <h4>$435</h4>
-                        </a>
+            <main class="content px-3 py-2" style="margin-top:60px; height:100%">
+                <div class="container-fluid">
+                    <div class="mb-3">
+                        @RenderBody()
                     </div>
                 </div>
-                <!-- end: Summary -->
-                <!-- start: Graph -->
-                <div class="row g-3 mt-2">
-                    <div class="col-12 col-md-7 col-xl-8">
-                        <div class="card border-0 shadow-sm h-100">
-                            <div class="card-header bg-white">
-                                Sales
-                            </div>
-                            <div class="card-body">
-                                <canvas id="sales-chart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-5 col-xl-4">
-                        <div class="card border-0 shadow-sm h-100">
-                            <div class="card-header bg-white">
-                                Visitors
-                            </div>
-                            <div class="card-body">
-                                <canvas id="visitors-chart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end: Graph -->
-                @RenderBody()
-            </div>
-            <!-- end: Content -->
+            </main>
         </div>
-    </main>
-    <!-- end: Main -->
-    
+
+    </div>
+
+    <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="..." crossorigin="anonymous"></script>
+    <script src="~/Areas/Admin/Scripts/adminSite.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="..." crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            var functions = [
+                { name: 'Quản lý học viên', link: manageStudentUrl },
+                { name: 'Quản lý giáo viên', link: manageTeacherUrl },
+                // Thêm các chức năng khác vào đây
+            ];
+
+            $('#search-input').on('input', function () {
+                var keyword = $(this).val().toLowerCase();
+                var searchResults = $('#search-results');
+                searchResults.empty();
+
+                functions.forEach(function (func) {
+                    if (func.name.toLowerCase().includes(keyword)) {
+                        var resultItem = $('<li>', {
+                            class: 'dropdown-item',
+                            html: $('<a>', {
+                                href: func.link,
+                                text: func.name
+                            })
+                        });
+
+                        searchResults.append(resultItem);
+                    }
+                });
+
+                if (searchResults.children().length > 0) {
+                    searchResults.parent().addClass('show');
+                } else {
+                    searchResults.parent().removeClass('show');
+                }
+            });
+        });
+
+    </script>
 
 </body>
-
 </html>
 

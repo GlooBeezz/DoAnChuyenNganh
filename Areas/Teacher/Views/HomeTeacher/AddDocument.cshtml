@@ -1,0 +1,69 @@
+﻿@model web2.Models.TaiLieu
+@{
+    Layout = "~/Areas/Teacher/Views/Shared/_LayoutPageTeacher.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Thêm Tài liệu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iK4t5+q3R+pq8hXhPdb5NVsDnyJdEe12a8bIok1az0St5Gm9CDImlHdTE" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Thêm Tài liệu</h2>
+        @using (Html.BeginForm("ProcessAddDocument", "HomeTeacher", FormMethod.Post, new { @class = "needs-validation", id = "add-document-form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label for="documentId" class="form-label">Mã tài liệu:</label>
+                @Html.TextBoxFor(model => model.Ma_tai_lieu, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="mb-3">
+                <label for="title" class="form-label">Tiêu đề:</label>
+                @Html.TextBoxFor(model => model.Ten_tai_lieu, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="mb-3">
+                <label for="content" class="form-label">Đường dẫn:</label>
+                @Html.TextAreaFor(model => model.Duong_dan, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="mb-3">
+                <label for="uploadDate" class="form-label">Ngày upload:</label>
+                <div class="input-group">
+                    @Html.TextBoxFor(model => model.Ngay_upload, new { @class = "form-control", type = "date", required = "required" })
+                    <button type="button" class="btn btn-outline-secondary" id="getCurrentDateTime">Now</button>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="teacher" class="form-label">Giáo viên:</label>
+                @Html.TextBoxFor(model => model.Ma_giang_vien, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="mb-3">
+                <label for="allowedStudent" class="form-label">Học viên được xem:</label>
+                @Html.TextBoxFor(model => model.Hoc_vien_duoc_xem, new { @class = "form-control" })
+            </div>
+
+            <button type="submit" class="btn btn-success">Thêm</button>
+            <a href="@Url.Action("Manage_Document", "HomeTeacher")" class="btn btn-secondary">Quay lại</a>
+        }
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofP+NBa5Ck9t0UO5z9g6BhF2Lk25tRX8J" crossorigin="anonymous"></script>
+
+    <script>
+        document.getElementById('getCurrentDateTime').addEventListener('click', function () {
+            var currentDate = new Date();
+            var formattedDate = currentDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+            document.getElementById('Ngay_upload').value = formattedDate;
+        });
+    </script>
+</body>
+</html>

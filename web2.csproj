@@ -45,16 +45,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Core.5.2.9\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.WebHost.5.2.9\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -122,11 +139,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
-    <Compile Include="Areas\Admin\Data\hocVienManage.cs" />
-    <Compile Include="Areas\Student\Data\DanhSachKhoaHoc.cs" />
-    <Compile Include="Areas\Student\Data\KhoaHocManage.cs" />
+    <Compile Include="Areas\Admin\Data\ChartView.cs" />
+    <Compile Include="Areas\Admin\Data\DanhSachGiaoVien.cs" />
+    <Compile Include="Areas\Admin\Data\DanhSachLopHoc.cs" />
+    <Compile Include="Areas\Admin\Data\GiaoVienManage.cs" />
+    <Compile Include="Areas\Admin\Data\DanhSachHocViencs.cs" />
+    <Compile Include="Areas\Admin\Data\DataAccess.cs" />
+    <Compile Include="Areas\Admin\Data\HocVienManage.cs" />
+    <Compile Include="Areas\Admin\Data\ThongBaoModel.cs" />
     <Compile Include="Areas\Student\Controllers\HomeStudentController.cs" />
-    <Compile Include="Areas\Student\Data\DataAccessStudent.cs" />
     <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Areas\Teacher\Controllers\HomeTeacherController.cs" />
     <Compile Include="Areas\Teacher\TeacherAreaRegistration.cs" />
@@ -135,9 +156,154 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BaiTap.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BaiTapDaNop.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BangDiem.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BangLuong.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChiTiet_BangDiem.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChiTiet_TaiLieu.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DangKyHoc.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataHelper.cs" />
+    <Compile Include="Models\GiaoVien.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HoaDon.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HocVien.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\KhoaHoc.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LopHoc.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Modeladmin.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Modeladmin.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Modeladmin.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Modeladmin.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Modeladmin.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NguoiDung.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SoTietDay.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaiLieu.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ThoiGianBieu.cs">
+      <DependentUpon>Modeladmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ThongBao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Adminshow\HomController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Scripts\chart.js" />
+    <Content Include="Areas\Admin\Scripts\adminSite.js" />
+    <Content Include="Areas\Admin\Style\adminSite.css" />
+    <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\Antlr3.Runtime.pdb" />
+    <Content Include="bin\EntityFramework.dll" />
+    <Content Include="bin\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\EntityFramework.SqlServer.xml" />
+    <Content Include="bin\EntityFramework.xml" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
+    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\Newtonsoft.Json.xml" />
+    <Content Include="bin\roslyn\csc.exe" />
+    <Content Include="bin\roslyn\csi.exe" />
+    <Content Include="bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll" />
+    <Content Include="bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll" />
+    <Content Include="bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll" />
+    <Content Include="bin\roslyn\Microsoft.Win32.Primitives.dll" />
+    <Content Include="bin\roslyn\System.AppContext.dll" />
+    <Content Include="bin\roslyn\System.Collections.Immutable.dll" />
+    <Content Include="bin\roslyn\System.Console.dll" />
+    <Content Include="bin\roslyn\System.Diagnostics.DiagnosticSource.dll" />
+    <Content Include="bin\roslyn\System.Diagnostics.FileVersionInfo.dll" />
+    <Content Include="bin\roslyn\System.Diagnostics.StackTrace.dll" />
+    <Content Include="bin\roslyn\System.Globalization.Calendars.dll" />
+    <Content Include="bin\roslyn\System.IO.Compression.dll" />
+    <Content Include="bin\roslyn\System.IO.Compression.ZipFile.dll" />
+    <Content Include="bin\roslyn\System.IO.FileSystem.dll" />
+    <Content Include="bin\roslyn\System.IO.FileSystem.Primitives.dll" />
+    <Content Include="bin\roslyn\System.Net.Http.dll" />
+    <Content Include="bin\roslyn\System.Net.Sockets.dll" />
+    <Content Include="bin\roslyn\System.Reflection.Metadata.dll" />
+    <Content Include="bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.Algorithms.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.Encoding.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.Primitives.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.X509Certificates.dll" />
+    <Content Include="bin\roslyn\System.Text.Encoding.CodePages.dll" />
+    <Content Include="bin\roslyn\System.Threading.Tasks.Extensions.dll" />
+    <Content Include="bin\roslyn\System.ValueTuple.dll" />
+    <Content Include="bin\roslyn\System.Xml.ReaderWriter.dll" />
+    <Content Include="bin\roslyn\System.Xml.XmlDocument.dll" />
+    <Content Include="bin\roslyn\System.Xml.XPath.dll" />
+    <Content Include="bin\roslyn\System.Xml.XPath.XDocument.dll" />
+    <Content Include="bin\roslyn\vbc.exe" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe" />
+    <Content Include="bin\System.Net.Http.Formatting.dll" />
+    <Content Include="bin\System.Net.Http.Formatting.xml" />
+    <Content Include="bin\System.Web.Helpers.dll" />
+    <Content Include="bin\System.Web.Helpers.xml" />
+    <Content Include="bin\System.Web.Http.dll" />
+    <Content Include="bin\System.Web.Http.WebHost.dll" />
+    <Content Include="bin\System.Web.Http.WebHost.xml" />
+    <Content Include="bin\System.Web.Http.xml" />
+    <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\System.Web.Mvc.xml" />
+    <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\System.Web.Optimization.xml" />
+    <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\System.Web.Razor.xml" />
+    <Content Include="bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="bin\System.Web.WebPages.Deployment.xml" />
+    <Content Include="bin\System.Web.WebPages.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.xml" />
+    <Content Include="bin\System.Web.WebPages.xml" />
+    <Content Include="bin\web2.dll" />
+    <Content Include="bin\web2.pdb" />
+    <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\adminSite.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -156,9 +322,20 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Study.css" />
+    <Content Include="Content\_Layout.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Modeladmin.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Modeladmin.Context.cs</LastGenOutput>
+      <DependentUpon>Modeladmin.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Modeladmin.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Modeladmin.edmx</DependentUpon>
+      <LastGenOutput>Modeladmin.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\adminSite.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -170,8 +347,58 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutPageAdmin.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
+    <Content Include="Areas\Student\Views\web.config" />
+    <Content Include="Areas\Teacher\Views\web.config" />
+    <EntityDeploy Include="Models\Modeladmin.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Modeladmin.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Modeladmin.edmx.diagram">
+      <DependentUpon>Modeladmin.edmx</DependentUpon>
+    </Content>
     <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Student.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Classes.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Teacher.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Course.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Student_Infor.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Class_Infor.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Class.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Course.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Student.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Teacher.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Course_Infor.cshtml" />
+    <Content Include="Areas\Teacher\Views\Shared\_LayoutPageTeacher.cshtml" />
+    <Content Include="Areas\Teacher\Views\HomeTeacher\Index.cshtml" />
+    <Content Include="Areas\Teacher\Views\HomeTeacher\Manage_Classes.cshtml" />
+    <Content Include="Areas\Teacher\Views\HomeTeacher\Manage_Document.cshtml" />
+    <Content Include="Areas\Teacher\Views\HomeTeacher\Manage_Schedule.cshtml" />
+    <Content Include="Areas\Teacher\Views\HomeTeacher\AddDocument.cshtml" />
+    <Content Include="Areas\Teacher\Views\HomeTeacher\EditDocument.cshtml" />
+    <Content Include="Areas\Teacher\Views\HomeTeacher\DeleteDocument.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Teacher.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Send_Notification.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Teacher_Infor.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Class.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Class_Infor.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Course.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Course_Infor.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Invoice.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Add_Invoice.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Edit_Invoice_Infor.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Schedule.cshtml" />
+    <Content Include="Areas\Teacher\Views\HomeTeacher\MyClass.cshtml" />
+    <Content Include="bin\roslyn\csc.exe.config" />
+    <Content Include="bin\roslyn\csc.rsp" />
+    <Content Include="bin\roslyn\csi.exe.config" />
+    <Content Include="bin\roslyn\csi.rsp" />
+    <Content Include="bin\roslyn\Microsoft.CSharp.Core.targets" />
+    <Content Include="bin\roslyn\Microsoft.Managed.Core.targets" />
+    <Content Include="bin\roslyn\Microsoft.VisualBasic.Core.targets" />
+    <Content Include="bin\roslyn\vbc.exe.config" />
+    <Content Include="bin\roslyn\vbc.rsp" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="bin\web2.dll.config" />
+    <None Include="Models\.editorconfig" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -184,6 +411,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\popper.js" />
+    <Content Include="source\person1.png" />
+    <Content Include="source\section5a.png" />
+    <Content Include="Views\Home\style\Index.js" />
+    <Content Include="Views\Home\style\_layout.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -205,15 +436,14 @@
     </Content>
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <None Include="Views\Home\style\.editorconfig" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Models\" />
     <Folder Include="App_Data\App_LocalResources\" />
-    <Folder Include="Areas\Student\Views\Search\" />
+    <Folder Include="Areas\Student\Data\" />
+    <Folder Include="Areas\Student\Views\HomeStudent\" />
+    <Folder Include="Areas\Student\Views\Shared\" />
     <Folder Include="Areas\Teacher\Data\" />
-    <Folder Include="Views\Adminshow\" />
     <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +472,9 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
