@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Thêm các thiết lập cần thiết cho trang sửa tài liệu -->
 </head>
 <body>
     <h2>Sửa Tài liệu</h2>
@@ -15,7 +14,7 @@
     {
         @Html.AntiForgeryToken()
 
-        @Html.HiddenFor(model => model.Ma_tai_lieu) <!-- Add this line -->
+        @Html.HiddenFor(model => model.Ma_tai_lieu) 
 
         <div class="form-group">
             <label for="Ten_tai_lieu">Tiêu đề:</label>
@@ -42,14 +41,9 @@
             @Html.TextBoxFor(model => model.Hoc_vien_duoc_xem, new { @class = "form-control", required = "required" })
         </div>
 
-        <!-- Thêm các trường còn lại -->
+        
 
         <button type="submit" class="btn btn-warning">Lưu</button>
     }
-
-    <!-- Thêm mã JavaScript cần thiết cho trang sửa tài liệu -->
-    <script>
-        // Thêm mã JavaScript cần thiết tại đây (ví dụ: datepicker)
-    </script>
 </body>
 </html>

@@ -7,7 +7,7 @@
     ViewBag.Active = "course";
 }
 
-<h2>Course_Piano</h2>
+<h1 style="text-align:center" class="pb-5">Khoá học Piano từ cơ bản đến nâng cao</h1>
 <body>
 
     <div class="container">
@@ -19,10 +19,10 @@
                 </div>
 
                 <div class="col-7">
-                    <div class="row" style="background-color:red">
-                        <p style="text-align:center;font-size:30px;">Piano </p>
-                        <p>
-                            <span style="">Khóa học piano</span><br>
+                    <div class="row" style="">
+                        
+                        <h3 style="text-decoration:none" >
+                            <strong>Khóa học piano</strong><br>
                             là hành trình âm nhạc đầy phấn khích,
                             nơi mà những nốt nhạc trở nên sống động dưới đôi bàn tay tài năng của học viên.
                             Với sự hướng dẫn kỹ lưỡng từ giáo viên chuyên nghiệp,
@@ -30,7 +30,7 @@
                             Từ các bài hát cổ điển đến những sáng tác hiện đại,
                             khóa học piano mở ra một thế giới âm nhạc đa dạng,
                             nơi mà niềm đam mê và tài năng âm nhạc của bạn có thể phát triển và lớn mạnh.
-                        </p>
+                        </h3>
                     </div>
 
                 </div>
@@ -38,7 +38,7 @@
 
             </div>
         </div>
-        <div class="col-12">
+        <div class="col-12 pt-5">
             <div class="row">
 
                 <table class="table " style="text-align:center">
@@ -66,6 +66,9 @@
                     <td>@item.Thoi_gian_bat_dau</td>
                     <td>@item.Thoi_gian_ket_thuc</td>
                     <td>@item.Hoc_vao_thu</td>
+                    <td>
+                        <a>@Html.ActionLink("chitiet", "ChiTiet", "Home", new {   maLop =item.Ma_lop }, new { @class = "btn btn-primary" })</a>
+                    </td>
                 </tr>
             }
                         

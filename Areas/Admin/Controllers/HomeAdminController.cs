@@ -1382,6 +1382,14 @@ namespace web2.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Submit_Edit_Course_Infor(string Ma, string Ten, string MoTa, decimal HocPhi, string NguonAnh, string NguonAnhNew)
         {
+            System.Diagnostics.Debug.WriteLine(Ma);
+            String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+            dbHelper=new DataHelper(connStr);
+            if (!dbHelper.checkHocPhi(HocPhi))
+            {
+                ViewBag.ErrorMessage = "Học phí bé hơn 0.";
+                return RedirectToAction("Edit_Course_Infor");
+            }
             try
             {
                 string updateKhoaHocQuery = "UPDATE KhoaHoc SET Ten_khoa_hoc = @Ten_khoa_hoc, Mo_ta = @Mo_ta, Hoc_phi = @Hoc_phi, Nguon_anh = @Nguon_anh WHERE Ma_khoa_hoc = @Ma_khoa_hoc";
@@ -1393,7 +1401,6 @@ namespace web2.Areas.Admin.Controllers
                     new SqlParameter("@Hoc_phi", HocPhi),
                     new SqlParameter("@Nguon_anh", NguonAnhNew != null?NguonAnhNew:NguonAnh)
                 };
-                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
                 DataAccess dataAccess = new DataAccess(connStr);
                 int rowsAffected = dataAccess.ExecuteNonQuery(updateKhoaHocQuery, parameters);
 
@@ -1414,6 +1421,7 @@ namespace web2.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
                 TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
                 return RedirectToAction("Manage_Course");
             }

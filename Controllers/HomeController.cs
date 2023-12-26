@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -82,12 +83,11 @@ namespace web2.Controllers
                             }
                             else
                             {
-                                // Tài khoản hoặc mật khẩu không đúng
                                 if(user=="admin" && pass == "admin")
                                 {
                                     return RedirectToAction("Index", "HomeAdmin", new { area = "Admin" });
                                 }
-                                return Content("Sai Mat khau or tai khoan!!!!"); // Trả về giá trị 0 hoặc thực hiện xử lý khác tùy ý
+                                return Content("Sai Mat khau or tai khoan!!!!");
                             }
                         }
                     }
@@ -98,7 +98,7 @@ namespace web2.Controllers
                     System.Diagnostics.Debug.WriteLine(ex.Message);
                     return View("Login");
                 }
-                // Thực hiện truy vấn kiểm tra mật khẩu, tài khoản và phân quyền
+                
             }
 
         }
@@ -143,7 +143,7 @@ namespace web2.Controllers
             String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
             SqlConnection conn = new SqlConnection(connStr);
             conn.Open();
-            SqlCommand cmd = new SqlCommand("select lop.Ngay_bat_dau,lop.Ngay_ket_thuc,lop.Ten_lop_hoc,kh.Hoc_phi,tg.Thoi_gian_bat_dau,tg.Thoi_gian_ket_thuc,tg.Hoc_vao_thu" +
+            SqlCommand cmd = new SqlCommand("select lop.Ma_lop, lop.Ngay_bat_dau,lop.Ngay_ket_thuc,lop.Ten_lop_hoc,kh.Hoc_phi,tg.Thoi_gian_bat_dau,tg.Thoi_gian_ket_thuc,tg.Hoc_vao_thu" +
                 "\r\nfrom LopHoc lop, KhoaHoc kh, ThoiGianBieu tg" +
                 "\r\nwhere lop.Ma_khoa_hoc=kh.Ma_khoa_hoc" +
                 " \r\nand lop.Ma_thoi_gian_bieu= tg.Ma_thoi_gian_bieu" +
@@ -160,6 +160,7 @@ namespace web2.Controllers
                     Thoi_gian_bat_dau = (TimeSpan)dr["Thoi_gian_bat_dau"],
                     Thoi_gian_ket_thuc = (TimeSpan)dr["Thoi_gian_ket_thuc"],
                     Hoc_vao_thu = dr["Hoc_vao_thu"].ToString(),
+                    Ma_lop = dr["Ma_lop"].ToString()
                 };
                 dslophoc.Add(dsLophoc);
             }
@@ -236,6 +237,57 @@ namespace web2.Controllers
         public ActionResult Login()
         {
             return View();
+        }
+        public ActionResult detail(LopHoc lopHoc) {
+        return View(lopHoc);
+        }
+        public ActionResult ChiTiet(string maLop) {
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(maLop);
+                maLop = maLop.Trim();
+                string query = "SELECT LopHoc.Ma_lop, LopHoc.Ma_khoa_hoc, LopHoc.Phong_hoc, LopHoc.So_luong_hoc_vien, LopHoc.Ten_lop_hoc, LopHoc.Mo_ta, LopHoc.Ma_thoi_gian_bieu, LopHoc.Ngay_bat_dau, LopHoc.Ngay_ket_thuc, LopHoc.So_tiet_hoc,ThoiGianBieu.Thoi_gian_bat_dau, ThoiGianBieu.Thoi_gian_ket_thuc, ThoiGianBieu.Hoc_vao_thu FROM LopHoc join ThoiGianBieu on LopHoc.Ma_thoi_gian_bieu=ThoiGianBieu.Ma_thoi_gian_bieu WHERE Ma_lop = @Ma_lop";
+                SqlParameter parameter = new SqlParameter("@Ma_lop", maLop);
+                String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+                DataAccess dataAccess = new DataAccess(connStr);
+                DataTable dataTable = dataAccess.ExecuteQuery(query, new SqlParameter[] { parameter });
+
+                if (dataTable.Rows.Count > 0)
+                {
+                    DataRow row = dataTable.Rows[0];
+                    LopHoc lopHoc = new LopHoc
+                    {
+                        Ma_lop = row["Ma_lop"].ToString(),
+                        Ma_khoa_hoc = row["Ma_khoa_hoc"].ToString(),
+                        Phong_hoc = row["Phong_hoc"].ToString(),
+                        So_luong_hoc_vien = Convert.ToInt32(row["So_luong_hoc_vien"]),
+                        Ten_lop_hoc = row["Ten_lop_hoc"].ToString(),
+                        Mo_ta = row["Mo_ta"].ToString(),
+                        Ma_thoi_gian_bieu = row["Ma_thoi_gian_bieu"].ToString(),
+                        Ngay_bat_dau = (DateTime)row["Ngay_bat_dau"],
+                        Ngay_ket_thuc = (DateTime)row["Ngay_ket_thuc"],
+                        So_tiet_hoc = Convert.ToInt32(row["So_tiet_hoc"]),
+                        Thoi_gian_bat_dau = (TimeSpan)row["Thoi_gian_bat_dau"],
+                        Thoi_gian_ket_thuc = (TimeSpan)row["Thoi_gian_ket_thuc"],
+                        Hoc_vao_thu = row["Hoc_vao_thu"].ToString()
+                    };
+                    return View("detail", lopHoc);
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Không tìm thấy lớp học";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi: " + ex.Message;
+                return RedirectToAction("Course_Piano");
+            }
+            
+
         }
 
 

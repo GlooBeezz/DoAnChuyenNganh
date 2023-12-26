@@ -16,7 +16,7 @@
         </div>
     }
 </div>
-<form class="row" action="@Url.Action("Submit_Add_Course", "HomeAdmin", new { area = "Admin" })" id="inputForm">
+<form class="row" action="@Url.Action("Submit_Edit_Course_Infor", "HomeAdmin", new { area = "Admin" })" id="inputForm" method="post">
     <div class="col-sm-12 col-md-6 col-xl-4 mb-3 mt-3">
         <label for="ma" class="form-label">Mã khoá học:</label>
         <input type="text" class="form-control" id="ma" placeholder="Mã" name="Ma" value="@Model.Ma_khoa_hoc" readonly>

@@ -15,5 +15,6 @@ namespace web2.Areas.Admin.Data
         public TimeSpan Thoi_gian_bat_dau { get; set; }
         public TimeSpan Thoi_gian_ket_thuc { get; set; }
         public String Hoc_vao_thu { get; set; }
+        public String Ma_lop {  get; set; }
     }
 }

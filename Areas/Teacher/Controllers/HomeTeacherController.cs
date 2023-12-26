@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
@@ -19,28 +21,45 @@ namespace web2.Areas.Teacher.Controllers
         }
         public ActionResult Manage_Classes()
         {
-            // Assuming you have a DbContext called 'YourDbContext'
+           
             using (var context = new quanLyTrungTamDayDanEntities())
             {
-                // Fetch the data from the database
+               
                 var classes = context.LopHocs.ToList();
 
-                // Pass the data to the view
                 return View(classes);
             }
-        } 
+        }
         public ActionResult Manage_Schedule()
         {
+            List<LopHoc> ds = new List<LopHoc>();
+            String connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
+            SqlConnection conn = new SqlConnection(connStr);
+            conn.Open();
             try
             {
-                // Retrieve all schedules
-                var schedules = db.ThoiGianBieux.ToList();
-                return View(schedules);
+                SqlCommand Cmd = new SqlCommand("select Ten_lop_hoc,Hoc_vao_thu, Thoi_gian_bat_dau,Thoi_gian_ket_thuc,Phong_hoc,Ma_lop from LopHoc join ThoiGianBieu on LopHoc.Ma_thoi_gian_bieu=ThoiGianBieu.Ma_thoi_gian_bieu", conn);
+                SqlDataReader dr = Cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    LopHoc lop = new LopHoc
+                    {
+                        Ma_lop = dr["Ma_lop"].ToString(),
+                        Ten_lop_hoc = dr["Ten_lop_hoc"].ToString(),
+                        Hoc_vao_thu = dr["Hoc_vao_thu"].ToString(),
+                        Thoi_gian_bat_dau = (TimeSpan)dr["Thoi_gian_bat_dau"],
+                        Thoi_gian_ket_thuc = (TimeSpan)dr["Thoi_gian_ket_thuc"],
+                        Phong_hoc = dr["Phong_hoc"].ToString()
+                    };
+                    ds.Add(lop);
+                }
+                return View( ds);
+
             }
             catch (Exception ex)
             {
-                // Log or handle the exception
-                return RedirectToAction("Index"); // Redirect to another action or display an error page
+                System.Diagnostics.Debug.WriteLine("Exception: " + ex.Message);
+                return View("Index");
             }
         }
         public ActionResult Index()
@@ -130,7 +149,7 @@ namespace web2.Areas.Teacher.Controllers
             }
             catch (Exception ex)
             {
-                // Log or handle the exception
+                
                 return RedirectToAction("Manage_Document");
             }
         }
@@ -149,7 +168,7 @@ namespace web2.Areas.Teacher.Controllers
             }
             catch (Exception ex)
             {
-                // Log or handle the exception
+                
                 return RedirectToAction("Manage_Document");
             }
         }
@@ -174,7 +193,7 @@ namespace web2.Areas.Teacher.Controllers
             }
             catch (Exception ex)
             {
-                // Log or handle the exception
+                
                 return RedirectToAction("Manage_Document");
             }
         }

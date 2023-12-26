@@ -418,6 +418,7 @@
     <Content Include="Areas\Student\Views\HomeStudent\ScheduleStudent.cshtml" />
     <Content Include="Areas\Student\Views\HomeStudent\settingAccount.cshtml" />
     <Content Include="Areas\Student\Views\HomeStudent\StudyStudent.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Manage_Schedule.cshtml" />
     <None Include="Models\.editorconfig" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -432,7 +433,11 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="source\person1.png" />
+    <Content Include="source\piano.png" />
+    <Content Include="source\piano1.png" />
+    <Content Include="source\pianocb.png" />
     <Content Include="source\section5a.png" />
+    <Content Include="source\Starry-Night-canvas-Vincent-van-Gogh-New-1889.png" />
     <Content Include="Views\Home\style\Index.js" />
     <Content Include="Views\Home\style\_layout.css" />
     <Content Include="Web.config" />
@@ -456,14 +461,14 @@
     </Content>
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="source\Starry-Night-canvas-Vincent-van-Gogh-New-1889.webp" />
+    <Content Include="Views\Home\detail.cshtml" />
     <None Include="Views\Home\style\.editorconfig" />
+    <Content Include="Views\Home\Test_Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\App_LocalResources\" />
-    <Folder Include="Areas\Student\Views\Shared\" />
     <Folder Include="Areas\Teacher\Data\" />
-    <Folder Include="Models\" />
-    <Folder Include="Views\Adminshow\" />
     <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>

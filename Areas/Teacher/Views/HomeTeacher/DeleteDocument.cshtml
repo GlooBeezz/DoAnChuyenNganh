@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Thêm các thiết lập cần thiết cho trang xóa tài liệu -->
 </head>
 <body>
     <h2>Xóa Tài liệu</h2>
@@ -15,7 +14,7 @@
     {
         @Html.AntiForgeryToken()
 
-        @Html.HiddenFor(model => model.Ma_tai_lieu) <!-- Add this line -->
+        @Html.HiddenFor(model => model.Ma_tai_lieu) 
 
         <div class="form-group">
             <label for="Ma_tai_lieu">Mã tài liệu:</label>

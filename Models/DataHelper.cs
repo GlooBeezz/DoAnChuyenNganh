@@ -180,6 +180,11 @@ namespace web2.Models
                 return false;
             }
         }
-
+        public bool checkHocPhi(Decimal hocPhi)
+        {
+            if(hocPhi < 0)
+                return false;
+            return true;
+        }
     }
 }

@@ -1,9 +1,9 @@
-﻿@{
+﻿@model List<web2.Models.LopHoc>
+@{
     ViewBag.Title = "Manage Schedule";
     Layout = "~/Areas/Teacher/Views/Shared/_LayoutPageTeacher.cshtml";
 }
 
-@model List<web2.Models.ThoiGianBieu>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,51 +47,61 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1>Thời Khóa Biểu</h1>
-    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col display-5" style="text-align:center">Quản lý thời khoá biểu</div>
+        </div>
+        <hr />
+        <div class="row table-responsive">
+            @{
+                var weekdays = new List<string> { "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật" };
 
-    <div class="container1">
-        <table>
-            <thead>
-                <tr>
-                    <th>Date/Time</th>
-                    <th>Sunday</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var timeSlot in Model.OrderBy(g => g.Thoi_gian_bat_dau))
+                var timeSlots = new List<TimeSpan>();
+                for (int i = 7; i <= 21; i += 2)
                 {
+                    timeSlots.Add(TimeSpan.FromHours(i));
+                }
+            }
+
+            <table class="table table-bordered border-1 border-dark " style="text-align:center">
+                <thead class="table-primary">
                     <tr>
-                        <td>
-                            @timeSlot.Thoi_gian_bat_dau.ToString("hh\\:mm") - @timeSlot.Thoi_gian_ket_thuc.ToString("hh\\:mm")
-                        </td>
-
-                        @foreach (var dayOfWeek in Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>())
+                        <th>Thời Gian</th>
+                        @foreach (var weekday in weekdays)
                         {
-                            var previousDay = dayOfWeek == 0 ? DayOfWeek.Saturday : dayOfWeek - 1;
-                            var currentDay = dayOfWeek;
-
-                            var classForTimeAndDay = Model.FirstOrDefault(c => c.Hoc_vao_thu?.ToLower() == currentDay.ToString().ToLower() &&
-                                                                                c.Thoi_gian_bat_dau == timeSlot.Thoi_gian_bat_dau);
-                            <td>
-                                @if (classForTimeAndDay != null)
-                                {
-                                    <strong>@classForTimeAndDay.Ma_thoi_gian_bieu</strong><br />
-                                }
-                            </td>
+                            <th>@weekday</th>
                         }
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="table-group-divider">
+                    @foreach (var timeSlot in timeSlots)
+                    {
+                        <tr>
+                            <td scope="row" class="bg-light" width="30px">@timeSlot.ToString("hh\\:mm") - @((timeSlot + TimeSpan.FromHours(2)).ToString("hh\\:mm"))</td>
+                            @foreach (var weekday in weekdays)
+                            {
+                                <td width="100px">
+                                    @foreach (var thoiKhoaBieu in Model)
+                                    {
+                                        if (thoiKhoaBieu.Hoc_vao_thu == weekday && thoiKhoaBieu.Thoi_gian_bat_dau <= timeSlot && thoiKhoaBieu.Thoi_gian_ket_thuc >= timeSlot + TimeSpan.FromHours(2))
+                                        {
+                                            <div>
+                                                <p>
+                                                    Mã lớp: @thoiKhoaBieu.Ma_lop <br />
+                                                    Tên lớp: @thoiKhoaBieu.Ten_lop_hoc <br />
+                                                    Phòng học: @thoiKhoaBieu.Phong_hoc
+                                                </p>
+                                            </div>
+                                        }
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
     </div>
-    <a style="text-align:right" href="@Url.Action("Index", "HomeTeacher")" class="btn btn-primary ml-auto">Trở lại quản lý giáo viên</a>
 </body>
 </html>

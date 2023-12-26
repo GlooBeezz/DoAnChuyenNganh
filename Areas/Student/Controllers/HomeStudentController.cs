@@ -241,7 +241,7 @@ namespace web2.Areas.Student.Controllers
         {
 
             KhoaHoc khoahoc = null;
-            string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities3"].ConnectionString;
+            string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
             try
             {
                 using (SqlConnection conn = new SqlConnection(connStr))
@@ -280,7 +280,7 @@ namespace web2.Areas.Student.Controllers
         {
 
             LopHoc lopHoc = null;
-            string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities3"].ConnectionString;
+            string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
             try
             {
                 using (SqlConnection conn = new SqlConnection(connStr))
@@ -334,7 +334,7 @@ namespace web2.Areas.Student.Controllers
         {
             List<KhoaHoc> dsKH = new List<KhoaHoc>();
 
-            string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities3"].ConnectionString;
+            string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["quanLyTrungTamDayDanEntities2"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connStr))
             {
                 conn.Open();
